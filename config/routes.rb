@@ -1,5 +1,5 @@
 Weave::Application.routes.draw do
-  match "referer", to: "NewReferrer#welcome"
+  resources :referrers
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
