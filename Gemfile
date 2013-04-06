@@ -24,10 +24,11 @@ gem 'jquery-rails'
 
 group :development, :test do
   gem 'rspec-rails', '2.1.0'
+  gem 'pry', '0.9.11'
 end
 
 
-gem 'omniauth-facebook', '1.4.1'
+gem 'omniauth-facebook', '1.4.0'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

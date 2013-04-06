@@ -1,0 +1,31 @@
+jQuery ->
+   $('body').prepend('<div id="fb-root"></div>')
+
+   $.ajax
+    url: "#{window.location.protocol}//connect.facebook.net/en_US/all.js"
+    dataType: 'script'
+    cache: 'true'
+
+window.fbAsyncInit = ->
+  FB.init
+    appId: '<%= ENV["FACEBOOK_APP_ID"] %>'
+    status: true
+    cookie: true
+
+  $('#sign_in').click (e)->
+    debugger
+    e.preventDefault()
+    FB.login (response)->
+      if response.authResponse
+        # TODO(syu): ajax instead of using window.location
+        window.location = '/auth/facebook/callback' 
+        FB.api '/me', ->
+          console.log 'Good to seeyou, ' + response.name + '.'
+      else
+        console.log "user didn't authorize"
+
+  $('#sign_out').click (e)->
+    debugger
+    FB.getLoginStatus(response) ->
+      FB.logout() if response.authResponse
+    true
