@@ -11,21 +11,23 @@ window.fbAsyncInit = ->
     appId: '<%= ENV["FACEBOOK_APP_ID"] %>'
     status: true
     cookie: true
+  FB.getLoginStatus (response)-> console.log "FB login status " , response
+
 
   $('#sign_in').click (e)->
-    debugger
     e.preventDefault()
     FB.login (response)->
       if response.authResponse
         # TODO(syu): ajax instead of using window.location
-        window.location = '/auth/facebook/callback' 
-        FB.api '/me', ->
-          console.log 'Good to seeyou, ' + response.name + '.'
+        $.ajax
+          url: "/auth/facebook/callback" 
+          success: ->
+            FB.api '/me', (response)->
+              console.log 'Good to seeyou, ' + response.name + '.'
       else
         console.log "user didn't authorize"
 
   $('#sign_out').click (e)->
-    debugger
-    FB.getLoginStatus(response) ->
+    FB.getLoginStatus (response)->
       FB.logout() if response.authResponse
     true
