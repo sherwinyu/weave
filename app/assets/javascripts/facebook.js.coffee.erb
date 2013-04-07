@@ -23,7 +23,7 @@ window.fbAsyncInit = ->
           url: "/auth/facebook/callback" 
           success: ->
             FB.api '/me', (response)->
-              console.log 'Good to seeyou, ' + response.name + '.'
+              console.log 'Good to see you, ' + response.name + '.'
       else
         console.log "user didn't authorize"
 
@@ -31,3 +31,29 @@ window.fbAsyncInit = ->
     FB.getLoginStatus (response)->
       FB.logout() if response.authResponse
     true
+
+  window.fb = (query) ->
+    dfd = new $.Deferred()
+    FB.api query, (response) ->
+      dfd.resolve(response)
+    dfd.promise()
+window.doIt = ->
+  window.friendCounts = {}
+  window.promiseOfFriends = fb '/me/friends'
+  promiseOfFriends.then( (response)->
+    friends = response.data
+    muts = for friend in friends
+      do (friend) ->
+        expectingFriend = fb "/#{friend.id}/mutualFriends"
+        expectingFriend.then (r) ->
+          friendCounts[friend.id] = r.data.length
+    $.when.apply($, muts)
+    ).then( (args...) -> 
+      debugger
+    )
+
+  
+
+
+
+
