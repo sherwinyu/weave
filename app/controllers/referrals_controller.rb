@@ -24,7 +24,8 @@ class ReferralsController < ApplicationController
   # GET /referrals/new
   # GET /referrals/new.json
   def new
-    @me = fb_api.get_object "me"
+    
+    @me = fb_api.get_object "me" rescue "invalid token"
     @referral = Referral.new
 
     respond_to do |format|

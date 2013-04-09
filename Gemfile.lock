@@ -70,6 +70,7 @@ GEM
     method_source (0.8.1)
     mime-types (1.22)
     multi_json (1.7.2)
+    multimap (1.1.2)
     multipart-post (1.2.0)
     oauth2 (0.8.1)
       faraday (~> 0.8)
@@ -115,6 +116,8 @@ GEM
     rake (10.0.4)
     rdoc (3.12.2)
       json (~> 1.4)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     rspec (2.1.0)
       rspec-core (~> 2.1.0)
       rspec-expectations (~> 2.1.0)
@@ -155,9 +158,11 @@ DEPENDENCIES
   figaro (= 0.6.3)
   jquery-rails
   koala (= 1.6.0)
+  multimap
   omniauth-facebook (= 1.4.0)
   pry (= 0.9.11)
   rails (= 3.2.13)
+  rest-client
   rspec-rails (= 2.1.0)
   sass-rails (~> 3.2.3)
   sqlite3

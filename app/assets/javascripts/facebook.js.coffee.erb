@@ -37,6 +37,7 @@ window.fbAsyncInit = ->
     FB.api query, (response) ->
       dfd.resolve(response)
     dfd.promise()
+
 window.doIt = ->
   window.friendCounts = {}
   window.promiseOfFriends = fb '/me/friends'
