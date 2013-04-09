@@ -24,6 +24,7 @@ class ReferralsController < ApplicationController
   # GET /referrals/new
   # GET /referrals/new.json
   def new
+    @me = fb_api.get_object "me"
     @referral = Referral.new
 
     respond_to do |format|

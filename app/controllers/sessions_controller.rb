@@ -8,6 +8,7 @@ class SessionsController < ApplicationController
     session[:fb_user][:oauth_token] = omni.credentials.token
     session[:fb_user][:oauth_token_expires_at] = Time.at omni.credentials.expires_at
     # session[:omniauth] = env["omniauth.auth"]
+
     redirect_to "/"
   end
 
@@ -17,4 +18,6 @@ class SessionsController < ApplicationController
     redirect_to root_url
 
   end
+
+
 end

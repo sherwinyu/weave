@@ -6,4 +6,10 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :current_user
+
+  def fb_api oauth_token=nil
+    oauth_token ||= session[:fb_user][:oauth_token]
+    @facebook_api ||= Koala::Facebook::GraphAPI.new oauth_token
+  end
+  
 end
