@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130412034618) do
+ActiveRecord::Schema.define(:version => 20130412043852) do
 
   create_table "authorizations", :force => true do |t|
     t.string   "uid"
@@ -29,6 +29,16 @@ ActiveRecord::Schema.define(:version => 20130412034618) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "customizations_referrals", :id => false, :force => true do |t|
+    t.integer "customization_id"
+    t.integer "referral_id"
+  end
+
+  create_table "customizations_segments", :id => false, :force => true do |t|
+    t.integer "customization_id"
+    t.integer "segment_id"
+  end
+
   create_table "products", :force => true do |t|
     t.string   "name"
     t.string   "description"
@@ -37,10 +47,19 @@ ActiveRecord::Schema.define(:version => 20130412034618) do
     t.datetime "updated_at",  :null => false
   end
 
+  create_table "products_segments", :id => false, :force => true do |t|
+    t.integer "product_id"
+    t.integer "segment_id"
+  end
+
   create_table "referrals", :force => true do |t|
     t.string   "content"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.integer  "recipient_id"
+    t.integer  "sender_id"
+    t.integer  "recipient_info_id"
+    t.integer  "product_id"
   end
 
   create_table "segments", :force => true do |t|
