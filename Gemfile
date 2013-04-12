@@ -28,6 +28,7 @@ group :development, :test do
 end
 
 
+gem 'devise' 
 gem 'omniauth-facebook', '1.4.0'
 gem 'koala', '1.6.0'
 gem 'rest-client'

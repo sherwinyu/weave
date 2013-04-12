@@ -1,4 +1,6 @@
 Weave::Application.routes.draw do
+  devise_for :users
+
   resources :referrers
 
   match 'auth/:provider/callback', to: 'sessions#create'
