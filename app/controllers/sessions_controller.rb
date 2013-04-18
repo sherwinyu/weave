@@ -16,8 +16,6 @@ class SessionsController < ApplicationController
     session[:user_id] = nil
     session.delete :fb_user
     redirect_to root_url
-
   end
-
 
 end
