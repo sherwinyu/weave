@@ -24,4 +24,8 @@ RSpec.configure do |config|
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
+
+  # Allows FactoryGirl build, create, etc methods to be called from a global
+  # scope (without prefacing with 'FactoryGirl.x')
+  config.include FactoryGirl::Syntax::Methods
 end
