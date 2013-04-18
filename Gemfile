@@ -13,10 +13,6 @@ gem 'figaro', '0.6.3'
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
-
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platforms => :ruby
-
   gem 'uglifier', '>= 1.0.3'
 end
 
@@ -25,14 +21,20 @@ gem 'jquery-rails'
 group :development, :test do
   gem 'rspec-rails', '2.4.0'
   gem 'pry', '0.9.11'
+  gem 'pry-debugger', '0.2.2'
+  gem 'factory_girl_rails', '4.2.1'
+end
+
+group :test do
+  gem 'guard-rspec', '1.2.1'
 end
 
 
-gem 'devise' 
+gem 'devise', '2.2.3'
 gem 'omniauth-facebook', '1.4.0'
 gem 'koala', '1.6.0'
-gem 'rest-client'
-gem 'multimap'
+gem 'rest-client', '1.6.7'
+gem 'multimap' 
 
 
 # To use ActiveModel has_secure_password
