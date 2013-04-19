@@ -19,7 +19,7 @@ end
 gem 'jquery-rails'
 
 group :development, :test do
-  gem 'rspec-rails', '2.4.0'
+  gem 'rspec-rails', '2.10.1'
   gem 'pry', '0.9.11'
   gem 'pry-debugger', '0.2.2'
   gem 'factory_girl_rails', '4.2.1'
