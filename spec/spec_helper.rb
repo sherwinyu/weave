@@ -28,4 +28,8 @@ RSpec.configure do |config|
   # Allows FactoryGirl build, create, etc methods to be called from a global
   # scope (without prefacing with 'FactoryGirl.x')
   config.include FactoryGirl::Syntax::Methods
+
+  # Include devise helpers and controller macros (https://github.com/plataformatec/devise/wiki/How-To%3a-Controllers-and-Views-tests-with-Rails-3-%28and-rspec%29)
+  config.include Devise::TestHelpers, :type => :controller
+  # config.extend ControllerMacros, :type => :controller
 end
