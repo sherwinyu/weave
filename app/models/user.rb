@@ -18,16 +18,16 @@ class User < ActiveRecord::Base
   # if such a user exists, return it
   # otherwise, build a user with the authorization set and return that
   def self.find_or_initialize_from_omniauth  auth_hash
-    auth = Authorization.where(auth_hash.slice :provider, :uid).first
+    auth = Authorization.find_or_initialize_from_omniauth auth_hash
 
     #user = includes(:authorizations).merge(
       #Authorization.where(auth_hash.slice :provider, :uid)).first
-    if auth
+    if auth.persisted?
       raise "Expected authorization#{auth} to have an user" unless auth.user
       auth.user
     else
       user = User.new # TODO(syu): handle creation of user infos?
-      user.authorizations.build auth_hash.slice :provider, :uid
+      user.authorizations << auth
       user
     end
   end
