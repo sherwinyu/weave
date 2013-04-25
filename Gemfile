@@ -18,6 +18,9 @@ end
 
 gem 'jquery-rails'
 
+group :development do
+  gem 'nifty-generators'
+end
 group :development, :test do
   gem 'rspec-rails', '2.10.1'
   gem 'pry', '0.9.11'
@@ -51,3 +54,5 @@ gem 'multimap'
 
 # To use debugger
 # gem 'debugger'
+
+gem "mocha", :group => :test

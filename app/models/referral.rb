@@ -2,9 +2,11 @@ class Referral < ActiveRecord::Base
   attr_accessible :content
   belongs_to :sender, class_name: "User", inverse_of: :sent_referrals
   belongs_to :recipient, class_name: "User", inverse_of: :received_referrals
-  belongs_to :recipient_info, class_name: "UserInfo", inverse_of: :received_referral
   belongs_to :product, inverse_of: :referrals
   has_and_belongs_to_many :customizations
+
+  belongs_to :referral_batch
+  has_many :incentives
 
   def self.mail_gun_test
 

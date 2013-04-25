@@ -1,0 +1,26 @@
+<% title "Incentive" %>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @incentive.amount %>
+</p>
+<p>
+  <strong>Name:</strong>
+  <%= @incentive.name %>
+</p>
+<p>
+  <strong>Description:</strong>
+  <%= @incentive.description %>
+</p>
+<p>
+  <strong>Condition:</strong>
+  <%= @incentive.condition %>
+</p>
+<p>
+  <strong>Free:</strong>
+  <%= @incentive.free %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_incentive_path(@incentive) %> |
+</p>

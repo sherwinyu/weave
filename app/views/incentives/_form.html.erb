@@ -1,0 +1,24 @@
+<%= form_for @incentive do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :amount %><br />
+    <%= f.text_field :amount %>
+  </p>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :description %><br />
+    <%= f.text_field :description %>
+  </p>
+  <p>
+    <%= f.label :condition %><br />
+    <%= f.text_field :condition %>
+  </p>
+  <p>
+    <%= f.label :free %><br />
+    <%= f.check_box :free %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130412192430) do
+ActiveRecord::Schema.define(:version => 20130425033042) do
 
   create_table "authorizations", :force => true do |t|
     t.string   "uid"
@@ -20,6 +20,28 @@ ActiveRecord::Schema.define(:version => 20130412192430) do
     t.string   "oauth_token"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+  end
+
+  create_table "campaigns", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.string   "outreach_email_content"
+    t.string   "sender_page_content"
+    t.string   "recipient_page_content"
+    t.boolean  "live"
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
+    t.integer  "product_id"
+  end
+
+  create_table "campaigns_recipient_incentives", :id => false, :force => true do |t|
+    t.integer "campaign_id"
+    t.integer "incentive_id"
+  end
+
+  create_table "campaigns_sender_incentives", :id => false, :force => true do |t|
+    t.integer "campaign_id"
+    t.integer "incentive_id"
   end
 
   create_table "customizations", :force => true do |t|
@@ -39,6 +61,31 @@ ActiveRecord::Schema.define(:version => 20130412192430) do
     t.integer "segment_id"
   end
 
+  create_table "incentive_instances", :force => true do |t|
+    t.string   "code"
+    t.boolean  "claimed",           :default => false
+    t.datetime "claimed_at"
+    t.datetime "expiration"
+    t.boolean  "for_sender",        :default => false
+    t.boolean  "for_recipient",     :default => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
+    t.integer  "user_id",                              :null => false
+    t.integer  "referral_id"
+    t.integer  "referral_batch_id"
+    t.integer  "incentive_id"
+  end
+
+  create_table "incentives", :force => true do |t|
+    t.string   "amount"
+    t.string   "name"
+    t.string   "description"
+    t.string   "condition"
+    t.boolean  "free"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
   create_table "products", :force => true do |t|
     t.string   "name"
     t.string   "description"
@@ -52,14 +99,29 @@ ActiveRecord::Schema.define(:version => 20130412192430) do
     t.integer "segment_id"
   end
 
+  create_table "referral_batches", :force => true do |t|
+    t.boolean  "sender_page_visited"
+    t.boolean  "sender_page_personalized"
+    t.boolean  "outreach_email_sent"
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+    t.integer  "campaign_id"
+    t.integer  "sender_id"
+  end
+
   create_table "referrals", :force => true do |t|
     t.string   "content"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
     t.integer  "recipient_id"
     t.integer  "sender_id"
-    t.integer  "recipient_info_id"
     t.integer  "product_id"
+    t.boolean  "delivered",           :default => false
+    t.datetime "delivered_at"
+    t.boolean  "recipient_opened"
+    t.datetime "recipient_opened_at"
+    t.boolean  "converted"
+    t.integer  "referral_batch_id"
   end
 
   create_table "segments", :force => true do |t|
@@ -77,10 +139,10 @@ ActiveRecord::Schema.define(:version => 20130412192430) do
 
   create_table "users", :force => true do |t|
     t.string   "name"
-    t.string   "email",                  :default => "", :null => false
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "email",                  :default => "",    :null => false
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+    t.string   "encrypted_password",     :default => "",    :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -89,6 +151,7 @@ ActiveRecord::Schema.define(:version => 20130412192430) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.boolean  "materialized",           :default => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

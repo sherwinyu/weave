@@ -1,0 +1,30 @@
+<% title "Incentive Instance" %>
+
+<p>
+  <strong>Code:</strong>
+  <%= @incentive_instance.code %>
+</p>
+<p>
+  <strong>Claimed:</strong>
+  <%= @incentive_instance.claimed %>
+</p>
+<p>
+  <strong>Claimed At:</strong>
+  <%= @incentive_instance.claimed_at %>
+</p>
+<p>
+  <strong>Expiration:</strong>
+  <%= @incentive_instance.expiration %>
+</p>
+<p>
+  <strong>For Sender:</strong>
+  <%= @incentive_instance.for_sender %>
+</p>
+<p>
+  <strong>For Recipient:</strong>
+  <%= @incentive_instance.for_recipient %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_incentive_instance_path(@incentive_instance) %> |
+</p>

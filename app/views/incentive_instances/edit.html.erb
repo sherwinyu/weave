@@ -1,0 +1,32 @@
+<% title "Edit Incentive Instance" %>
+
+<%= form_for @incentive_instance do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :code %><br />
+    <%= f.text_field :code %>
+  </p>
+  <p>
+    <%= f.label :claimed %><br />
+    <%= f.check_box :claimed %>
+  </p>
+  <p>
+    <%= f.label :claimed_at %><br />
+    <%= f.datetime_select :claimed_at %>
+  </p>
+  <p>
+    <%= f.label :expiration %><br />
+    <%= f.datetime_select :expiration %>
+  </p>
+  <p>
+    <%= f.label :for_sender %><br />
+    <%= f.check_box :for_sender %>
+  </p>
+  <p>
+    <%= f.label :for_recipient %><br />
+    <%= f.check_box :for_recipient %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>
+
+
