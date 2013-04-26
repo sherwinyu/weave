@@ -6,6 +6,25 @@ jQuery ->
     dataType: 'script'
     cache: 'true'
 
+window.facebook =
+  login: ->
+    FB.login (response) ->
+      if response.authResponse
+        $.ajax
+          url: '<%= Weave::Application.routes.url_helpers.user_omniauth_callback_path :facebook %>'
+          success: ->
+            FB.api '/me', (response) ->
+              console.log 'Good to see you, ' + response.name + '.'
+      else
+        console.log "user didn't auth"
+
+  logout: ->
+    FB.logout()
+  status: ->
+    FB.getLoginStatus (response) ->
+      console.log "status: ", response
+
+
 window.fbAsyncInit = ->
   FB.init
     appId: '<%= ENV["FACEBOOK_APP_ID"] %>'
@@ -14,23 +33,12 @@ window.fbAsyncInit = ->
   FB.getLoginStatus (response)-> console.log "FB login status " , response
 
 
-  $('#sign_in').click (e)->
+  $('#sign-in-facebook').click (e)->
     e.preventDefault()
-    FB.login (response)->
-      if response.authResponse
-        # TODO(syu): ajax instead of using window.location
-        $.ajax
-          url: "/auth/facebook/callback" 
-          success: ->
-            FB.api '/me', (response)->
-              console.log 'Good to see you, ' + response.name + '.'
-      else
-        console.log "user didn't authorize"
+    facebook.login()
 
-  $('#sign_out').click (e)->
-    FB.getLoginStatus (response)->
-      FB.logout() if response.authResponse
-    true
+  $('#sign-out').click (e)->
+    facebook.logout()
 
   window.fb = (query) ->
     dfd = new $.Deferred()
