@@ -194,6 +194,9 @@
     <%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook), id: "" %>
   <% end %>
   <%= @me.inspect %>
+  <div class="well">
+      <%= render partial: "referral_batches/invite_friends" %>
+    </div>
     
     <div id="page">
       <div id="sidebar">
