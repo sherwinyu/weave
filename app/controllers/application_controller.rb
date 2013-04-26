@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  private
 =begin
   def current_user
     @current_user ||= session[:user_id] # nil # User.find(session[:user_id]) if session[:user_id]
