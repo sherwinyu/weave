@@ -195,7 +195,12 @@
   <% end %>
   <%= @me.inspect %>
   <div class="well">
-      <%= render partial: "referral_batches/invite_friends" %>
+    <%= simple_form_for :referral_batch do |f| %>
+        <%= render 'referral_batches/invite_friends', f: f %>
+      sup
+      <%= f.button :submit %>
+    <% end %>
+
     </div>
     
     <div id="page">
