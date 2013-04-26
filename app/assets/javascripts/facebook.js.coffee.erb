@@ -20,49 +20,44 @@ window.facebook =
 
   logout: ->
     FB.logout()
+
   status: ->
     FB.getLoginStatus (response) ->
       console.log "status: ", response
 
+  query: (query) ->
+    dfd = new $.Deferred()
+    FB.api query, (response) ->
+      dfd.resolve(response)
+    dfd.promise()
+
+  mutualFriends: ->
+    window.friendCounts = {}
+    window.promiseOfFriends = fb '/me/friends'
+    promiseOfFriends.then( (response)->
+      friends = response.data
+      muts = for friend in friends
+        do (friend) ->
+          expectingFriend = fb "/#{friend.id}/mutualFriends"
+          expectingFriend.then (r) ->
+            friendCounts[friend.id] = r.data.length
+      $.when.apply($, muts)
+      ).then( (args...) ->
+        debugger
+      )
+
+  initBindings: ->
+    $('#sign-in-facebook').click (e)->
+      e.preventDefault()
+      facebook.login()
+
+    $('#sign-out').click (e)->
+      facebook.logout()
 
 window.fbAsyncInit = ->
   FB.init
     appId: '<%= ENV["FACEBOOK_APP_ID"] %>'
     status: true
     cookie: true
+  facebook.initBindings()
   FB.getLoginStatus (response)-> console.log "FB login status " , response
-
-
-  $('#sign-in-facebook').click (e)->
-    e.preventDefault()
-    facebook.login()
-
-  $('#sign-out').click (e)->
-    facebook.logout()
-
-  window.fb = (query) ->
-    dfd = new $.Deferred()
-    FB.api query, (response) ->
-      dfd.resolve(response)
-    dfd.promise()
-
-window.doIt = ->
-  window.friendCounts = {}
-  window.promiseOfFriends = fb '/me/friends'
-  promiseOfFriends.then( (response)->
-    friends = response.data
-    muts = for friend in friends
-      do (friend) ->
-        expectingFriend = fb "/#{friend.id}/mutualFriends"
-        expectingFriend.then (r) ->
-          friendCounts[friend.id] = r.data.length
-    $.when.apply($, muts)
-    ).then( (args...) -> 
-      debugger
-    )
-
-  
-
-
-
-
