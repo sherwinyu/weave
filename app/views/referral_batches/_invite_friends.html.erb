@@ -1,0 +1,16 @@
+<%= form_for @referral_batch do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :sender_page_visited %><br />
+    <%= f.check_box :sender_page_visited %>
+  </p>
+  <p>
+    <%= f.label :sender_page_personalized %><br />
+    <%= f.check_box :sender_page_personalized %>
+  </p>
+  <p>
+    <%= f.label :outreach_email_sent %><br />
+    <%= f.check_box :outreach_email_sent %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>
