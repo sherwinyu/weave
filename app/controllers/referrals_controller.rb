@@ -26,6 +26,7 @@ class ReferralsController < ApplicationController
   def new
     
     @me = fb_api.get_object "me" rescue "invalid token"
+    @referral_batch = ReferralBatch.new
     @referral = Referral.new
 
     respond_to do |format|
