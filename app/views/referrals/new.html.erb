@@ -1,5 +1,5 @@
 <div class="well">
-  <%= simple_form_for :referral_batch, action: :create do |f| %>
+  <%= simple_form_for @referral do |f| %>
     <%= render 'referral_batches/invite_friends', f: f %>
     <%= f.button :submit %>
   <% end %>

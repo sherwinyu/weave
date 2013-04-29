@@ -2,7 +2,7 @@
 
 <%# render 'form' %>
 <div class="well">
-  <%= simple_form_for :referral_batch, action: :create do |f| %>
+  <%= simple_form_for @referral_batch do |f| %>
     <%= render 'invite_friends', f: f %>
     <%= f.button :submit %>
   <% end %>

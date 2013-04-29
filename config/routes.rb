@@ -15,6 +15,6 @@ Weave::Application.routes.draw do
   # match 'af', to: redirect("/auth/facebook")
   match 'welcome', to: 'referrers#welcome'
 
-  root to: 'referrals#new'
+  root to: 'referral_batches#new'
 
 end
