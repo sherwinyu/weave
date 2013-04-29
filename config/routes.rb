@@ -7,6 +7,8 @@ Weave::Application.routes.draw do
 
   resources :referral_batches
 
+  resources :referrals
+
   devise_for :users, controllers: {omniauth_callbacks: "omniauth_callbacks"}
   # match 'auth/:provider/callback', to: 'sessions#create'
   # match 'auth/failure', to: redirect('/')

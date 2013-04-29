@@ -1,5 +1,17 @@
 # facebookToken = '<%# app.current_user.authorizations.last.oauth_token %>'
 window.referrals =
+  ajax:
+    createReferral: (args) ->
+      utils.ajax
+        type: 'POST'
+        url: '<%= Weave::Application.routes.url_helpers.referrals_path %>'
+        data: args
+
+    updateReferral: (args) ->
+      utils.put
+        url: '<%= Weave::Application.routes.url_helpers.referrals_path %>/1'
+        data: args
+
   friends: null
   nameAutoComplete: ->
     @friends ||= facebook.query("/me/friends").then( (results) ->
@@ -15,7 +27,6 @@ window.referrals =
     regexs.every (regex) -> regex.test name
 
   initBindings: ->
-    # $('input#name-or-email').
 
     # TODO(syu): mix in gmail
     $("#name-or-email").autocomplete
