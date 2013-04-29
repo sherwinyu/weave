@@ -9,21 +9,31 @@ window.referrals =
         # {
     )
 
+  nameFilter: (term, name) ->
+    terms = term.trim().split(/\s+/)
+    regexs = (new RegExp "\\b#{term}", "i" for term in terms)
+    regexs.every (regex) -> regex.test name
+
   initBindings: ->
     # $('input#name-or-email').
 
+    # TODO(syu): mix in gmail
     $("#name-or-email").autocomplete
       select: (event, ui) ->
         # Fill in the input fields
-        $("#name-or-field").val ui.item.label
-        $("#fbuid").val ui.item.value
+        $("#name-or-email").val ui.item.label
+        $("#fb-uid").val ui.item.value.id
+        $("#fb-uinfo").val JSON.stringify(ui.item.value.info)
         # Prevent the value from being inserted in "#name"
         false
       minLength: 2
       source: (request, response) ->
         referrals.nameAutoComplete().then (results) ->
-          regex = new RegExp request.term, "i"
-          filtered = results.filter (e) -> regex.test(e.label)
+          filtered = results.filter (e) -> referrals.nameFilter(request.term, e.label)
+          filtered.map (e) ->
+            facebook.query("#{e.value.id}?fields=location,education,political").done( (results) ->
+              e.value["info"] = results
+            )
           response(filtered)
 
         ###
