@@ -29,6 +29,7 @@ class User < ActiveRecord::Base
     else
       user = User.new # TODO(syu): handle creation of user infos?
       user.authorizations << auth
+      auth.user = user
       user
     end
   end
