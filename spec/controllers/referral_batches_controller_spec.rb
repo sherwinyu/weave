@@ -11,13 +11,14 @@ describe ReferralBatchesController do
       ReferralBatch.any_instance.stub(:visit_sender_page).and_return false
     end
 
-    it "responds with json" do
+    it "responds with referral batch json" do
       get :outreach_show, @params
       raw_json = response.body
       json = JSON.parse raw_json
 
       raw_json.should == controller.json_for(@referral_batch)
       json.should have_key "referral_batch"
+      #TODO(syu): add additional tests for json output
     end
 
     it "visits_sender_page of @referral_batch" do
@@ -25,10 +26,14 @@ describe ReferralBatchesController do
       get :outreach_show , @params
     end
 
-    it "looks up and assigns referral_batch by url code"
-    it "raises an error when no referral_batch exists with that url code"
-    it "responds with json referral_batch, including id, campaign (sender incentives, recipient incentives, product and customizations)" do end
-
+    it "looks up and assigns referral_batch by url code" do
+      get :outreach_show , @params
+      assigns(:referral_batch).should eq @referral_batch
+    end
+    it "raises an error when no referral_batch exists with that url code" do
+      @params.merge! url_code: "nonexistent_code"
+      expect {get :outreach_show, @params}.to raise_error /referral batch.*url code.*to exist/
+    end
 
   end
 end
