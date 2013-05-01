@@ -7,16 +7,19 @@ describe OmniauthCallbacksController do
   end
 
   describe "#oauthorize" do
+    before :each do
+      request.env['omniauth.auth'] = {
+        credentials: {token: "walawala" }
+      }
+
+    end
 
     context " on authorization with existing user when not signed in" do
       before :each do
         @auth = create(:authorization)
         @user = @auth.user
 
-        request.env['omniauth.auth'] = {
-          provider: @auth.provider,
-          uid: @auth.uid
-        }
+        request.env['omniauth.auth'].merge! provider: @auth.provider, uid: @auth.uid
 
         get :oauthorize
       end
@@ -36,7 +39,7 @@ describe OmniauthCallbacksController do
     context " on new (user-less) authorization when not signed in" do
       before :each do
         @auth_attributes = attributes_for :authorization
-        request.env['omniauth.auth'] = @auth_attributes.slice :provider, :uid
+        request.env['omniauth.auth'].merge! @auth_attributes.slice :provider, :uid
         get :oauthorize
       end
 =begin
@@ -71,7 +74,7 @@ describe OmniauthCallbacksController do
       context "on new authorization" do
         before :each do
           @auth_attributes = attributes_for :authorization
-          request.env['omniauth.auth'] = @auth_attributes.slice :provider, :uid
+          request.env['omniauth.auth'].merge! @auth_attributes.slice :provider, :uid
           get :oauthorize
         end
         it "attachs authorization to current user" do
@@ -91,7 +94,7 @@ describe OmniauthCallbacksController do
         before :each do
           @auth = create(:authorization)
           @user = @auth.user
-          request.env['omniauth.auth'] = @auth.attributes.with_indifferent_access.slice :provider, :uid
+          request.env['omniauth.auth'].merge! @auth.attributes.with_indifferent_access.slice :provider, :uid
           sign_in @user
         end
         it "sets the notice" do
