@@ -4,4 +4,4 @@ module ApplicationHelper
     options[:url_options] ||= url_options
     target.active_model_serializers.new(target, options).to_json
   end
-ed
+end
