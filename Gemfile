@@ -38,6 +38,7 @@ gem 'omniauth-facebook', '1.4.0'
 gem 'koala', '1.6.0'
 gem 'rest-client', '1.6.7'
 gem 'multimap' 
+gem "active_model_serializers", "~> 0.7.0"
 
 
 # To use ActiveModel has_secure_password

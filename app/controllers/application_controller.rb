@@ -6,6 +6,12 @@ class ApplicationController < ActionController::Base
   end
 =end
 
+  def json_for (target, options={})
+    options[:scope] ||= self
+    options[:url_options] ||= url_options
+    target.active_model_serializer.new(target, options).to_json
+  end
+
   helper_method :current_user
 
   def fb_api oauth_token=nil
@@ -20,5 +26,5 @@ class ApplicationController < ActionController::Base
   def other_token
     fb_oauth.get_user_info_from_cookies cookies
   end
-  
+
 end
