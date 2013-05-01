@@ -21,10 +21,6 @@ gem 'jquery-ui-rails'
 gem 'bootstrap-sass', '~> 2.3.1.0'
 gem 'simple_form', '2.1.0'
 
-group :development do
-  gem 'nifty-generators'
-end
-
 group :development, :test do
   gem 'rspec-rails', '2.10.1'
   gem 'pry', '0.9.11'

@@ -5,7 +5,7 @@ class Campaign < ActiveRecord::Base
   has_and_belongs_to_many :recipient_incentives, class_name: "Incentive", join_table: "campaigns_recipient_incentives"
 
   has_many :referral_batches
-  has_many :referrals, through: :referral_batches
+  has_many :referrals, through: :referral_batches, inverse_of: :campaign
   has_many :senders, through: :referral_batches
   belongs_to :product
 end

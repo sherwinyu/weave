@@ -10,7 +10,6 @@ Weave::Application.routes.draw do
   resources :referral_batches
 
   resources :referrers
-
   # match 'auth/:provider/callback', to: 'sessions#create'
   # match 'signout', to: 'sessions#destroy', as: 'signout'
 

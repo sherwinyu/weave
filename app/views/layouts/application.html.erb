@@ -23,8 +23,10 @@
       <% end %>
     </div>
     <div class="well debug">
+      Session:
       <%= simple_format session.to_yaml %>
-      <%= @me.inspect %>
+      Current User:
+      <%= current_user %>
     </div>
     <div id="container">
       <% flash.each do |name, msg| %>

@@ -1,9 +1,22 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe ReferralBatchesController do
-  fixtures :all
-  render_views
+  describe "#outreach_show" do
+    before :each do
+      @rb = create :ReferralBatch
+    end
 
+    it "responds with only json" do
+      puts @rb
+    end
+    it "calls ReferralBatch.visited_by_url_code using the url_code"
+    it "assigns referral_batch" 
+    it "responds with json referral_batch, including id, campaign (sender incentives, recipient incentives, product and customizations)" do end
+
+
+  end
+end
+=begin
   it "create action should render new template when model is invalid" do
     ReferralBatch.any_instance.stubs(:valid?).returns(false)
     post :create
@@ -37,4 +50,4 @@ describe ReferralBatchesController do
     put :update, :id => ReferralBatch.first
     response.should redirect_to(root_url)
   end
-end
+=end

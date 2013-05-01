@@ -1,22 +1,66 @@
 # facebookToken = '<%# app.current_user.authorizations.last.oauth_token %>'
-referrals =
-  initBindings: ->
-    # $('input#name-or-email').
+window.referrals =
+  ajax:
+    createReferral: (args) ->
+      utils.ajax
+        type: 'POST'
+        url: '<%= Weave::Application.routes.url_helpers.referrals_path %>'
+        data: args
 
+    updateReferral: (args) ->
+      utils.put
+        url: '<%= Weave::Application.routes.url_helpers.referrals_path %>/1'
+        data: args
+
+  friends: null
+  nameAutoComplete: ->
+    @friends ||= facebook.query("/me/friends").then( (results) ->
+      results.data.map (item) ->
+        {label: item.name, value: item}
+      # results.map (item) ->
+        # {
+    )
+
+  nameFilter: (term, name) ->
+    terms = term.trim().split(/\s+/)
+    regexs = (new RegExp "\\b#{term}", "i" for term in terms)
+    regexs.every (regex) -> regex.test name
+
+  initBindings: ->
+
+    # TODO(syu): mix in gmail
     $("#name-or-email").autocomplete
-      source: (request, add) ->
+      select: (event, ui) ->
+        # Fill in the input fields
+        $("#name-or-email").val ui.item.label
+        $("#fb-uid").val ui.item.value.id
+        $("#fb-uinfo").val JSON.stringify(ui.item.value.info)
+        # Prevent the value from being inserted in "#name"
+        false
+      minLength: 2
+      source: (request, response) ->
+        referrals.nameAutoComplete().then (results) ->
+          filtered = results.filter (e) -> referrals.nameFilter(request.term, e.label)
+          filtered.map (e) ->
+            facebook.query("#{e.value.id}?fields=location,education,political").done( (results) ->
+              e.value["info"] = results
+            )
+          response(filtered)
+
+        ###
+        #(request, add) ->
         $this = $(@)
         # accessToken = response.authResponse.accessToken
         tokenUrl = "https://graph.facebook.com/me/friends?access_token=" + facebookToken + "&callback=?"
-        
+
         # Call out to the Graph API for the friends list
-        tokenUrl =  
+        tokenUrl =
         $.ajax
           url: tokenUrl
           dataType: "jsonp"
           success: (results) ->
             console.log results
-            # Filter the results and return a label/value object array  
+            # Filter the results and return a label/value object array
             formatted = []
             i = 0
             while i < results.data.length
@@ -28,18 +72,9 @@ referrals =
             add formatted
           error: (results) ->
             console.log results
+            ####
 
 
-      select: (event, ui) ->
-        
-        # Fill in the input fields
-        $("#name").val ui.item.label
-        $("#fbuid").val ui.item.value
-        
-        # Prevent the value from being inserted in "#name"
-        false
-
-      minLength: 2
 
 jQuery ->
   referrals.initBindings()
@@ -63,7 +98,7 @@ $ ->
       if response.authResponse # if the user is authorized...
         accessToken = response.authResponse.accessToken
         tokenUrl = "https://graph.facebook.com/me/friends?access_token=" + accessToken + "&callback=?"
-        
+
         # Place <input id="name" /> and <input id="fbuid" /> into HTML
 
 

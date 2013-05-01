@@ -12,5 +12,13 @@ class ApplicationController < ActionController::Base
     oauth_token ||= session[:fb_user][:oauth_token] if session[:fb_user]
     @facebook_api ||= Koala::Facebook::GraphAPI.new oauth_token
   end
+
+  def fb_oauth
+    @facebook_oauth ||= Koala::Facebook::OAuth.new(Figaro.env.FACEBOOK_APP_ID, Figaro.env.FACEBOOK_SECRET)
+  end
+
+  def other_token
+    fb_oauth.get_user_info_from_cookies cookies
+  end
   
 end

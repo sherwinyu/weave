@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130425033042) do
+ActiveRecord::Schema.define(:version => 20130501022406) do
 
   create_table "authorizations", :force => true do |t|
     t.string   "uid"
@@ -107,6 +107,7 @@ ActiveRecord::Schema.define(:version => 20130425033042) do
     t.datetime "updated_at",               :null => false
     t.integer  "campaign_id"
     t.integer  "sender_id"
+    t.datetime "sender_page_visited_at"
   end
 
   create_table "referrals", :force => true do |t|
@@ -122,6 +123,7 @@ ActiveRecord::Schema.define(:version => 20130425033042) do
     t.datetime "recipient_opened_at"
     t.boolean  "converted"
     t.integer  "referral_batch_id"
+    t.string   "url_code"
   end
 
   create_table "segments", :force => true do |t|
