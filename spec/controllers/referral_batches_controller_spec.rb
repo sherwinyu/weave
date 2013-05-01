@@ -3,14 +3,26 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe ReferralBatchesController do
   describe "#outreach_show" do
     before :each do
-      @rb = create :ReferralBatch
+      @referral_batch = create :referral_batch, url_code: "zcbmnvx01"
+      @params = {url_code: "zcbmnvx01" } 
+
+      User.any_instance.stub(:materialize!)
+      ReferralBatch.any_instance.stub :visit_sender_page
+      request.params
     end
 
     it "responds with only json" do
-      puts @rb
+      get :outreach_show, @params
+      response.should eq @referral_batch.to_json
     end
-    it "calls ReferralBatch.visited_by_url_code using the url_code"
-    it "assigns referral_batch" 
+
+    it "visits_sender_page of @referral_batch" do
+      ReferralBatch.any_instance.should_receive :visit_sender_page
+      get :outreach_show , @params
+    end
+
+    it "looks up and assigns referral_batch by url code" 
+    it "raises an error when no referral_batch exists with that url code" 
     it "responds with json referral_batch, including id, campaign (sender incentives, recipient incentives, product and customizations)" do end
 
 

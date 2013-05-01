@@ -4,4 +4,8 @@ class ReferralBatch < ActiveRecord::Base
   has_many :sent_referrals, class_name: "Referral", inverse_of: :referral_batch
   belongs_to :campaign, inverse_of: :referral_batches
   has_many :sender_incentives, class_name: "IncentiveInstance", inverse_of: :referral_batch
+
+  def visit_sender_page
+    raise "wala"
+  end
 end

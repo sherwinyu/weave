@@ -107,6 +107,7 @@ ActiveRecord::Schema.define(:version => 20130501022406) do
     t.datetime "updated_at",               :null => false
     t.integer  "campaign_id"
     t.integer  "sender_id"
+    t.string   "url_code"
     t.datetime "sender_page_visited_at"
   end
 

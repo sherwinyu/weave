@@ -1,4 +1,7 @@
 FactoryGirl.define do
+  sequence(:random_string) {|n| "wala#{n}" }
+  sequence(:number) {|n| n }
+
   factory :user do |user|
     user.name "sherwin"
     user.sequence(:email) { |n| "email#{n}@example.org" }
@@ -6,6 +9,7 @@ FactoryGirl.define do
     user.password_confirmation "somepassword"
     user.materialized false
     
+    trait(:materialized) { materialized true }
     factory :sender do |sender|
       sender.name "sherwinthe sender"
     end
@@ -16,9 +20,10 @@ FactoryGirl.define do
     sequence(:uid) { |n| "facebook_id_#{n}" }
     user
   end
-  factory :ReferralBatch do
-    sender user
-    campaign
+  factory :referral_batch do |rb|
+    rb.sender { create :user, name: "sherwin the sender" }
+    association :campaign, :with_customizations
+    # rb.campaign {  :with_customizations }
   end
 
   factory :campaign do |campaign|
@@ -28,7 +33,7 @@ FactoryGirl.define do
     sender_page_content ""
     recipient_page_content ""
     trait :with_customizations do
-      product :with_customizations 
+      association :product, :with_customizations 
     end
 
   end
@@ -45,7 +50,7 @@ FactoryGirl.define do
   end
 
   factory :customization do |customization|
-    content "this product is perfect for the tech savvy asshole"
+    content { "#{generate :random_string} this product is perfect for the tech savvy asshole! totally rad!" }
   end
 
 end

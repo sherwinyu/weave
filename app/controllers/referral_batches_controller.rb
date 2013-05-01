@@ -12,9 +12,15 @@ class ReferralBatchesController < ApplicationController
   #   the referral_batch.sender user is the canonical user for this referral.
   #   we might be missing the case of:: previous materialized user can be identified via cookie and is actually a new outreach'd user
   def outreach_show
-    @referral_batch = ReferralBatch.visited_by_url_code params[:url_code]
+    @referral_batch = ReferralBatch.find_by_url_code params[:url_code]
+    raise "expected referral batch with url code #{params[:url_code]} to exist" unless @referral_batch
+    @referral_batch.visit_sender_page
+
     @sender = @referral_batch.sender
     @sender.materialize! #TODO(syu): do we want this?? What does materialize mean?!
+    respond_to do |format|
+      format.json { render json: @referral_batch }
+    end
   end
 
   def create
