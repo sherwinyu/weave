@@ -34,7 +34,7 @@ describe ReferralBatchesController do
       @params.merge! url_code: "nonexistent_code"
       expect {get :outreach_show, @params}.to raise_error /referral batch.*url code.*to exist/
     end
-
+    pending "it sets the current_user's referral_batch"
   end
 end
 =begin

@@ -8,4 +8,8 @@ class ReferralBatch < ActiveRecord::Base
   def visit_sender_page
     raise "wala"
   end
+  def build_referral
+    # TODO(syu): look at association extensions //
+    # http://stackoverflow.com/questions/2890761/rails-overriding-activerecord-association-method
+  end
 end

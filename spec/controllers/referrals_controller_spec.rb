@@ -1,6 +1,33 @@
 require 'spec_helper'
 
 describe ReferralsController do
+  describe "#create_with_recipient" do
+    it "is requested with referral batch id, recipient info"
+    it "builds a referral with RB.build_referral"
+    it "raises an error if recipient.content was passed as a param"
+    it "looks up the recipient via user info if it already exists"
+    it "creates and saves a new recipient and user info if no existing recipient is found"
+    it "sets current_user.referral to @referral"
+    it "responds with errors if invalid"
+    it "responds with @referral"
+  end
+  describe "#update_with_body" do
+    pending "requested with referral id and customization ids"
+    pending "updates referral's customizations and content"
+    pending "calls @referral.send if params send"
+    describe "errors" do
+      it "responds with errors if content or customizations are invalid"
+    end
+  end
+  pending "#update_recipient_email" do
+    it "asserts that @referral.recipient exists"
+    it "asserts that @referral.recipient.email does not exist"
+    it "look up existing users by email"
+    it "merges params email to existing recipient"
+    it "calls @referral.send if params send"
+  end
+  pending "#set_active_referral_helper"
+  pending "#set_active_referral_batch_helper"
 
   def mock_referral(stubs={})
     (@mock_referral ||= mock_model(Referral).as_null_object).tap do |referral|

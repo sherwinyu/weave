@@ -10,8 +10,8 @@ describe ReferralBatch do
     pending "sets referral_page_visited_at to current time"
     pending "raises an error if no referral batch url is found"
   end
-  def visit_sender_page
-    raise "wala"
+  pending "validations"
+    "included referrals must share customizations"
   end
-
+  pending "#attach_sender_incentive_instances"
 end
