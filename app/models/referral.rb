@@ -35,4 +35,7 @@ class Referral < ActiveRecord::Base
     RestClient.post url, data
     # https://api.mailgun.net/v2
   end
+  def attach_incentives
+    raise "wala"
+  end
 end
