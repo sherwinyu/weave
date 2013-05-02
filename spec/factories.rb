@@ -7,12 +7,27 @@ FactoryGirl.define do
     user.sequence(:email) { |n| "email#{n}@example.org" }
     user.password "somepassword"
     user.password_confirmation "somepassword"
-    user.materialized false
     
     trait(:materialized) { materialized true }
+    trait(:not_materialized) { materialized false }
+
     factory :sender do |sender|
       sender.name "sherwinthe sender"
     end
+
+    factory :recipient do |sender|
+      sender.name "sherwin the recipient"
+    end
+
+    trait(:with_user_info) do
+      after :create  do |user|
+        create_list :user_info, 1, user: user
+      end
+    end
+  end
+
+  factory :user_info do
+    email { "user_info_email#{generate :number}@example.org" }
   end
 
   factory :authorization do
@@ -20,10 +35,21 @@ FactoryGirl.define do
     sequence(:uid) { |n| "facebook_id_#{n}" }
     user
   end
-  factory :referral_batch do |rb|
-    rb.sender { create :user, name: "sherwin the sender" }
+
+  factory :referral_batch do |referral_batch|
+    association :sender, factory: :sender
     association :campaign, :with_customizations
-    # rb.campaign {  :with_customizations }
+  end
+
+  factory :referral do |referral|
+    content "you should totally buy this!"
+    sender
+    recipient
+    referral_batch
+    trait(:no_content) {content nil}
+    trait(:no_sender) {sender nil}
+    trait(:no_recipient) {recipient nil}
+    factory :blank_referral, traits: [:no_content, :no_sender, :no_recipient]
   end
 
   factory :campaign do |campaign|

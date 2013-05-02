@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "Associations" do
   it "should work" do
     u = User.new
-    u.sent_referrals
+    u.referral_batches
     u.received_referrals
     u.authorizations
     u.user_infos
@@ -11,10 +11,8 @@ describe "Associations" do
     r = Referral.new
     r.sender
     r.recipient
-    r.recipient_info
     r.customizations
     r.product
-
 
     c = Customization.new
     c.referrals
@@ -28,7 +26,6 @@ describe "Associations" do
 
     ui = UserInfo.new
     ui.user
-    ui.received_referral
 
     a = Authorization.new
     a.user

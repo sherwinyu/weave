@@ -1,15 +1,53 @@
 require 'spec_helper'
 
 describe ReferralsController do
+  before :each do
+    @referral_batch = create(:referral_batch)
+      @referral_params = attributes_for(:blank_referral).merge(
+        recipient_attributes: attributes_for(:recipient).merge( user_infos_attributes: [attributes_for(:user_info)] ))
+  end
   describe "#create_with_recipient" do
-    it "is requested with referral batch id, recipient info"
-    it "builds a referral with RB.build_referral"
-    it "raises an error if recipient.content was passed as a param"
-    it "looks up the recipient via user info if it already exists"
-    it "creates and saves a new recipient and user info if no existing recipient is found"
-    it "sets current_user.referral to @referral"
-    it "responds with errors if invalid"
-    it "responds with @referral"
+    before :each do
+      @sender = create :sender
+      @referral_params.merge!({
+        sender_id: @sender.id,
+        referral_batch_id: @referral_batch.id
+      })
+      @params = { referral: @referral_params, format: :json }
+    end
+
+    it "raises an error if recipient.content was passed as a param" do 
+      @params[:referral].merge! content: "You should totally buy this!"
+      expect {get :create_with_recipient, @params}.to raise_error /create_with_recipient.*not.*request.*referral.*content/
+    end
+
+    it "creates and saves a new recipient and user info if no existing recipient is found" do
+      get :create_with_recipient, @params
+      created_referral = Referral.last
+      created_referral.content.should be_nil
+      # created_referral.
+
+      # expect {get :create_with_recipient, @params}.to change(
+    end
+    pending "sets current_user.referral to @referral"
+    pending "responds with errors if invalid"
+    it "assigns @referral with the correct properties" do
+      get :create_with_recipient, @params
+      assigns(:referral).referral_batch.should eq @referral_batch
+      assigns(:referral).sender.should eq @sender
+      assigns(:referral).recipient.should be_persisted
+      assigns(:referral).content.should be_nil
+      assigns(:referral).incentives.should be_empty
+      assigns(:referral).customizations.should be_empty
+    end
+    it "responds with @referral json" do
+      get :create_with_recipient, @params
+      raw_json = response.body
+      json = JSON.parse raw_json
+      json.should have_key "referral"
+      json["referral"].should have_key "id"
+    end
+    pending "looks up the recipient via user info if it already exists"
   end
   describe "#update_with_body" do
     pending "requested with referral id and customization ids"
@@ -29,6 +67,7 @@ describe ReferralsController do
   pending "#set_active_referral_helper"
   pending "#set_active_referral_batch_helper"
 
+=begin
   def mock_referral(stubs={})
     (@mock_referral ||= mock_model(Referral).as_null_object).tap do |referral|
       referral.stub(stubs) unless stubs.empty?
@@ -150,5 +189,6 @@ describe ReferralsController do
       response.should redirect_to(referrals_url)
     end
   end
+=end
 
 end

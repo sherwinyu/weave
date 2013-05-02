@@ -3,6 +3,7 @@ require "spec_helper"
 describe ReferralsController do
   describe "routing" do
 
+=begin
     it "recognizes and generates #index" do
       { :get => "/referrals" }.should route_to(:controller => "referrals", :action => "index")
     end
@@ -30,6 +31,7 @@ describe ReferralsController do
     it "recognizes and generates #destroy" do
       { :delete => "/referrals/1" }.should route_to(:controller => "referrals", :action => "destroy", :id => "1")
     end
+=end
 
   end
 end

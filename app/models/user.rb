@@ -6,12 +6,14 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :email, :password, :password_confirmation, :remember_me
+  attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :user_infos_attributes, :user_infos
   has_many :sent_referrals, class_name: "Referral", inverse_of: :sender
   has_many :referral_batches, inverse_of: :sender
   has_many :received_referrals, class_name: "Referral", inverse_of: :recipient
   has_many :user_infos, inverse_of: :user
   has_many :authorizations, inverse_of: :user
+
+  accepts_nested_attributes_for :user_infos
 
 
   # Takes an omniauth.auth hash (with provider, uid set)

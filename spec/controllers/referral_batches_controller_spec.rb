@@ -11,7 +11,7 @@ describe ReferralBatchesController do
       ReferralBatch.any_instance.stub(:visit_sender_page).and_return false
     end
 
-    it "responds with referral batch json" do
+    it "responds with @referral_batch json" do
       get :outreach_show, @params
       raw_json = response.body
       json = JSON.parse raw_json

@@ -1,13 +1,16 @@
 class Referral < ActiveRecord::Base
-  attr_accessible :content
+  attr_accessible :content, :recipient, :recipient_attributes
+
   belongs_to :sender, class_name: "User", inverse_of: :sent_referrals
   belongs_to :recipient, class_name: "User", inverse_of: :received_referrals
   belongs_to :product, inverse_of: :referrals
   has_and_belongs_to_many :customizations
 
-  belongs_to :referral_batch, inverse_of: :sent_referrals
+  belongs_to :referral_batch, inverse_of: :referrals
   has_one :campaign, through: :referral_batch # TODO(syu): does this get cached?
-  has_many :incentives
+  has_many :incentives, class_name: "IncentiveInstance"
+
+  accepts_nested_attributes_for :recipient
 
   def self.mail_gun_test
 
