@@ -35,7 +35,7 @@ guard 'rspec', :version => 2, :cli=>"--drb" do
   watch(%r{^spec/acceptance/steps/(.+)_steps\.rb$})   { |m| Dir[File.join("**/#{m[1]}.feature")][0] || 'spec/acceptance' }
 end
 
-guard :jasmine do
+guard :jasmine, server: :jasmine_gem, port: 8888 do
   watch(%r{spec/javascripts/spec\.(js\.coffee|js|coffee)$}) { 'spec/javascripts' }
   watch(%r{spec/javascripts/.+_spec\.(js\.coffee|js|coffee)$})
   watch(%r{spec/javascripts/fixtures/.+$})
