@@ -7,20 +7,15 @@ describe ReferralsController do
   end
   let(:params) { {referral: @referral_params, format: :json} }
   describe "#create_with_recipient" do
-    let(:params) {
-      x = super()
-      x.merge! referral_batch_id: @referral_batch.id
-    }
+
     before :each do
       @referral_params = attributes_for(:blank_referral).merge(
         recipient_attributes: attributes_for(:recipient).merge( user_infos_attributes: [attributes_for(:user_info)] ))
       @sender = create :sender
-      @referral_params.merge!({
-        sender_id: @sender.id,
-      })
-      # params = { referral: @referral_params, format: :json }
-      params.merge!  referral_batch_id: @referral_batch.id
+      @referral_params.merge!  sender_id: @sender.id,
     end
+    let(:params) { super().merge referral_batch_id: @referral_batch.id }
+
     context "when referral batch doesnt exist" do
       it "raises an error" do
         params.merge! referral_batch_id: 'nonexistent'
@@ -28,7 +23,7 @@ describe ReferralsController do
       end
     end
 
-    it "raises an error if recipient.content was passed as a param" do 
+    it "raises an error if recipient.content was passed as a param" do
       @params = params
       @params[:referral].merge! content: "You should totally buy this!"
       expect {get :create_with_recipient, @params}.to raise_error /create_with_recipient.*not.*request.*referral.*content/
@@ -38,12 +33,7 @@ describe ReferralsController do
       get :create_with_recipient, params
       created_referral = Referral.last
       created_referral.content.should be_nil
-      # created_referral.
-
-      # expect {get :create_with_recipient, @params}.to change(
     end
-    pending "sets current_user.referral to @referral"
-    pending "responds with errors if invalid"
     it "assigns @referral with the correct properties" do
       get :create_with_recipient, params
       assigns(:referral).referral_batch.should eq @referral_batch
@@ -60,29 +50,30 @@ describe ReferralsController do
       json.should have_key "referral"
       json["referral"].should have_key "id"
     end
+    pending "sets current_user.referral to @referral"
+    pending "responds with errors if invalid"
     pending "looks up the recipient via user info if it already exists"
   end
   describe "#update" do
-    let(:params) { super().merge id: @referral.id }
     before :each do
       @referral = create :blank_referral
       @referral_params = attributes_for :referral, content: "buy this!"
       @referral_params.merge! customization_ids: @customizations.map(&:id)
     end
+    let(:params) { super().merge id: @referral.id }
 
-    it "updates referral's customizations and content" do 
+    it "updates referral's customizations and content" do
       get :my_update, params
       @referral.reload
       @referral.content.should eq @referral_params[:content]
       @referral.customizations.should have(3).customizations
       @referral.customizations.should eq @customizations
     end
-
-    pending "requested with referral id and customization ids"
-    pending "calls @referral.send if params send"
     describe "errors" do
       it "responds with errors if content or customizations are invalid"
     end
+    pending "requested with referral id and customization ids"
+    pending "calls @referral.send if params send"
   end
   pending "#update_recipient_email" do
     it "asserts that @referral.recipient exists"
