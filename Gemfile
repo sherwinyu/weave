@@ -22,7 +22,7 @@ gem 'bootstrap-sass', '~> 2.3.1.0'
 gem 'simple_form', '2.1.0'
 
 group :development, :test do
-  gem 'rspec-rails', '2.10.1'
+  gem 'rspec-rails', '2.13.0'
   gem 'pry', '0.9.11'
   gem 'pry-debugger', '0.2.2'
   gem 'factory_girl_rails', '4.2.1'

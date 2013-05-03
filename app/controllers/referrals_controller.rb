@@ -9,6 +9,24 @@ class ReferralsController < ApplicationController
     render json: @referral
   end
 
+  def my_update
+    @referral = Referral.find(params[:id])
+    if @referral.update_attributes(params[:referral])
+      render json: @referral
+    else
+      raise "error"
+    end
+=begin
+    respond_to do |format|
+      if @referral.update_attributes(params[:referral])
+        format.json { head :no_content }
+      else
+        format.json { render json: @referral.errors, status: :unprocessable_entity }
+      end
+    end
+=end
+  end
+
   # GET /referrals
   # GET /referrals.json
   def index
@@ -66,7 +84,7 @@ class ReferralsController < ApplicationController
 
   # PUT /referrals/1
   # PUT /referrals/1.json
-  def update
+  def updatex
     @referral = Referral.find(params[:id])
 
     respond_to do |format|
