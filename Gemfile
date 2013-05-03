@@ -28,6 +28,7 @@ group :development, :test do
 
   gem 'rb-inotify', require: false
 
+  gem 'jasmine-headless-webkit'
   gem 'factory_girl_rails', '4.2.1'
   gem 'guard-spork'
 end
@@ -35,6 +36,7 @@ end
 group :test do
   gem 'guard-rspec', '1.2.1'
   gem 'spork-rails'
+  gem 'jasmine'
 end
 
 
