@@ -8,7 +8,7 @@ Weave::Application.routes.draw do
   resources :incentive_instances
 
   resources :referral_batches do
-    resources :referrers
+    resources :referrals
   end
 
   # resources :referrers
