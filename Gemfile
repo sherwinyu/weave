@@ -28,14 +28,17 @@ group :development, :test do
 
   gem 'rb-inotify', require: false
 
-  gem 'jasmine-headless-webkit'
+  # gem 'jasmine-headless-webkit', '0.8.4'
+  gem 'guard-jasmine-headless-webkit'
   gem 'factory_girl_rails', '4.2.1'
-  gem 'guard-spork'
+  gem 'guard-spork', '1.5.0'
+  gem 'jasmine-rails', '0.4.2'
+  gem 'guard-jasmine', '1.15.1'
 end
 
 group :test do
   gem 'guard-rspec', '1.2.1'
-  gem 'spork-rails'
+  gem 'spork-rails', '3.2.1'
   gem 'jasmine'
 end
 

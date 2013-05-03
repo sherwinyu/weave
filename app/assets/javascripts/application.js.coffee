@@ -14,3 +14,4 @@
 #= require jquery_ujs
 #= require jquery.ui.autocomplete
 #= require_tree .
+console.log ' wala wala !! '

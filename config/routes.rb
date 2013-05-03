@@ -21,4 +21,5 @@ Weave::Application.routes.draw do
   match 'THISSHOULDNTEVERHAPPEN/BUTITNEEDSTOBEHERE', to: redirect('/WALAWALWAWALAK')
   root to: 'referrals#new'
 
+  mount JasmineRails::Engine => "/specs" if defined?(JasmineRails)
 end
