@@ -2,6 +2,34 @@
 require "spec_helper"
 
 describe ReferralBatchesController do
+  describe "#fresh_create" do
+    let(:params) { {campaign_id: @campaign.id, format: :json} }
+    before :each do
+      @campaign = create :campaign
+      @time = Time.now
+      Time.stub(:now).and_return @time
+    end
+
+    it "creates a @referral_batch with the campaign id" do
+      expect { post :fresh_create, params }.to change{ReferralBatch.count}.by 1
+      referral_batch = assigns(:referral_batch)
+      referral_batch.should be_persisted
+      referral_batch.campaign.should eq @campaign
+    end
+    it "creates a @referral_batch with a new unmaterialized user" do
+      expect { post :fresh_create, params }.to change{User.count}.by 1
+      created_user = assigns(:referral_batch).sender
+      created_user.should be_persisted
+      created_user.should_not be_materialized
+      created_user.should_not be_email_provided
+      created_user.should_not be_omniauthed
+      created_user.visited_at.should eq @time
+    end
+    it "responds with json" do
+      post :fresh_create, params
+    end
+  end
+
   describe "#outreach_show" do
     before :each do
       @referral_batch = create :referral_batch, url_code: "zcbmnvx01"

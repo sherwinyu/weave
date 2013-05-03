@@ -23,6 +23,14 @@ class ReferralBatchesController < ApplicationController
     end
   end
 
+  def fresh_create
+    @campaign = Campaign.find params[:campaign_id]
+    @referral_batch = @campaign.referral_batches.create
+    @referral_batch.create_sender!
+    @referral_batch.sender.visit!
+    render json: nil
+  end
+
   def create
     @referral_batch = ReferralBatch.new(params[:referral_batch])
     if @referral_batch.save
