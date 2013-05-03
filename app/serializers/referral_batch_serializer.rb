@@ -6,7 +6,7 @@ class ReferralBatchSerializer < ActiveModel::Serializer
   has_one :campaign #, embed: :id, include: true
   has_one :sender, embed: :ids
   def include_sender?
-    false
+    object.sender
   end
 
 

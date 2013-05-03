@@ -28,7 +28,7 @@ class ReferralBatchesController < ApplicationController
     @referral_batch = @campaign.referral_batches.create
     @referral_batch.create_sender!
     @referral_batch.sender.visit!
-    render json: nil
+    render json: @referral_batch
   end
 
   def create

@@ -27,6 +27,12 @@ describe ReferralBatchesController do
     end
     it "responds with json" do
       post :fresh_create, params
+      raw_json = response.body
+      json = JSON.parse raw_json
+
+      raw_json.should eq controller.json_for(assigns :referral_batch)
+      json.should have_key 'referral_batch'
+      json['referral_batch'].should  have_key 'sender_id'
     end
   end
 
@@ -44,7 +50,7 @@ describe ReferralBatchesController do
       raw_json = response.body
       json = JSON.parse raw_json
 
-      raw_json.should == controller.json_for(@referral_batch)
+      raw_json.should eq controller.json_for(@referral_batch)
       json.should have_key "referral_batch"
       #TODO(syu): add additional tests for json output
     end
