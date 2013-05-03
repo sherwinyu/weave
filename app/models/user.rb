@@ -2,7 +2,8 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable,
+         # :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
   # Setup accessible (or protected) attributes for your model
@@ -14,6 +15,13 @@ class User < ActiveRecord::Base
   has_many :authorizations, inverse_of: :user
 
   accepts_nested_attributes_for :user_infos
+
+  def email_required?
+    false #TODO(syu): fix
+  end
+  def password_required?
+    false #TODO(syu): fix
+  end
 
 
   # Takes an omniauth.auth hash (with provider, uid set)
@@ -34,6 +42,13 @@ class User < ActiveRecord::Base
       auth.user = user
       user
     end
+  end
+
+  def visit!
+    self.visited_at = Time.now
+  end
+  def visited?
+    !!visited_at
   end
 
 end

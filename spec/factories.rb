@@ -7,7 +7,7 @@ FactoryGirl.define do
     user.sequence(:email) { |n| "email#{n}@example.org" }
     user.password "somepassword"
     user.password_confirmation "somepassword"
-    
+
     trait(:materialized) { materialized true }
     trait(:not_materialized) { materialized false }
 
@@ -59,7 +59,9 @@ FactoryGirl.define do
     sender_page_content ""
     recipient_page_content ""
     trait :with_customizations do
-      association :product, :with_customizations 
+      association :product, :with_customizations
+    end
+    trait :with_incentives do
     end
 
   end

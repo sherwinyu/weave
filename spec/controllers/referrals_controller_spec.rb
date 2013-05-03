@@ -12,7 +12,7 @@ describe ReferralsController do
       @referral_params = attributes_for(:blank_referral).merge(
         recipient_attributes: attributes_for(:recipient).merge( user_infos_attributes: [attributes_for(:user_info)] ))
       @sender = create :sender
-      @referral_params.merge!  sender_id: @sender.id,
+      @referral_params.merge!  sender_id: @sender.id
     end
     let(:params) { super().merge referral_batch_id: @referral_batch.id }
 

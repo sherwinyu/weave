@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130501022406) do
+ActiveRecord::Schema.define(:version => 20130503045603) do
 
   create_table "authorizations", :force => true do |t|
     t.string   "uid"
@@ -155,6 +155,9 @@ ActiveRecord::Schema.define(:version => 20130501022406) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.boolean  "materialized",           :default => false
+    t.boolean  "email_provided"
+    t.boolean  "omniauthed"
+    t.datetime "visited_at"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
