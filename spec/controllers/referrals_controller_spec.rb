@@ -2,18 +2,26 @@ require 'spec_helper'
 
 describe ReferralsController do
   before :each do
+    @customizations = create_list :customization, 3
     @referral_batch = create(:referral_batch)
       @referral_params = attributes_for(:blank_referral).merge(
         recipient_attributes: attributes_for(:recipient).merge( user_infos_attributes: [attributes_for(:user_info)] ))
+    @params = { referral: @referral_params, format: :json }
   end
   describe "#create_with_recipient" do
     before :each do
       @sender = create :sender
       @referral_params.merge!({
         sender_id: @sender.id,
-        referral_batch_id: @referral_batch.id
       })
       @params = { referral: @referral_params, format: :json }
+      @params.merge!  referral_batch_id: @referral_batch.id
+    end
+    context "when referral batch doesnt exist" do
+      it "raises an error" do
+        @params.merge! referral_batch_id: 'nonexistent'
+        expect {get :create_with_recipient, @params}.to raise_error
+      end
     end
 
     it "raises an error if recipient.content was passed as a param" do 
