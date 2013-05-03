@@ -15,6 +15,7 @@ class Referral < ActiveRecord::Base
   def self.mail_gun_test
 
   end
+
   def send_complex_message
     data = Multimap.new
     data[:from] = "Excited User <me@samples.mailgun.org>"
@@ -35,7 +36,39 @@ class Referral < ActiveRecord::Base
     RestClient.post url, data
     # https://api.mailgun.net/v2
   end
+
   def attach_incentives
     raise "wala"
   end
+
+  def deliver
+    if deliverable
+      mailgun_send!
+      self.delivered_at = Time.now
+      true
+    else
+      false
+    end
+  end
+
+  def delivered?
+    !!delivered_at
+  end
+
+ private
+  def mailgun_send!
+  end
+
+  def deliverable
+    valid = sender && sender.email && sender.email_provided && recipient.email && content && !delivered?
+    errors[:deliverable] << "sender not emailable" unless sender && sender.emailable?
+    errors[:deliverable] << "sender email unconfirmed" unless sender && sender.email_provided?
+    # errors[:deliverable] << "missing sender email" unless sender.try :email
+    # errors[:deliverable] << "sender email not confirmed" unless sender.try :email_provided
+    errors[:deliverable] << "recipient not emailable" unless recipient && recipient.emailable?
+    # errors[:deliverable] << "missing recipient email" unless recipient.try :email
+    errors[:deliverable] << "already delivered" if delivered?
+    valid
+  end
+
 end

@@ -31,6 +31,18 @@ class ReferralBatchesController < ApplicationController
     render json: @referral_batch
   end
 
+  def update_sender_email
+    @referral_batch = ReferralBatch.find(params[:id])
+    @sender = @referral_batch.sender
+    @sender.email = params[:sender_email]
+    if @referral_batch.save
+      @sender.update_attribute :email_provided, true
+      render json: @referral_batch
+    else
+      render json: "error"
+    end
+  end
+
   def create
     @referral_batch = ReferralBatch.new(params[:referral_batch])
     if @referral_batch.save

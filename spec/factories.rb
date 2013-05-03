@@ -13,12 +13,23 @@ FactoryGirl.define do
 
     factory :sender do |sender|
       sender.name "sherwinthe sender"
+      sender.email { "sender_email#{generate :number}@example.org" }
+      sender.email_provided true
     end
 
     factory :recipient do |sender|
       sender.name "sherwin the recipient"
     end
 
+    trait(:visited) { visited_at { Time.now }}
+    trait(:without_email) { email nil }
+    trait(:email_provided) { email_provided true }
+    trait(:with_omniauth) do
+      after :create do |user|
+        create_list :authorizations, 1, user: user
+      end
+      omniauthed true
+    end
     trait(:with_user_info) do
       after :create  do |user|
         create_list :user_info, 1, user: user
@@ -39,6 +50,7 @@ FactoryGirl.define do
   factory :referral_batch do |referral_batch|
     association :sender, factory: :sender
     association :campaign, :with_customizations
+    trait(:no_sender){ sender nil }
   end
 
   factory :referral do |referral|
@@ -46,6 +58,7 @@ FactoryGirl.define do
     sender
     recipient
     referral_batch
+    trait(:not_delivered) {delivered_at nil}
     trait(:no_content) {content nil}
     trait(:no_sender) {sender nil}
     trait(:no_recipient) {recipient nil}

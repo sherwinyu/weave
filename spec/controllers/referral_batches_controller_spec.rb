@@ -68,7 +68,56 @@ describe ReferralBatchesController do
       @params.merge! url_code: "nonexistent_code"
       expect {get :outreach_show, @params}.to raise_error /referral batch.*url code.*to exist/
     end
-    pending "it sets the current_user's referral_batch"
+    pending "sets the current_user's referral_batch"
+  end
+
+  describe "#update_sender_email" do
+    before :each do
+      @sender_email = "valid_email@example.com"
+      @sender = create :sender, :without_email
+      @referral_batch = create :referral_batch, sender: @sender
+    end
+
+    let(:params){ {id: @referral_batch.id, sender_email: @sender_email }}
+
+    context "when sender has no email" do
+      it "sets email_provided to true" do
+        get :update_sender_email, params
+        @referral_batch.reload.sender.email_provided.should be true
+      end
+      it "sets the email" do
+        get :update_sender_email, params
+        @referral_batch.reload.sender.email.should eq params[:sender_email]
+      end
+    end
+    context "sender already has email" do
+      before :each do
+        @sender = create :sender
+        @referral_batch = create :referral_batch, sender: @sender
+      end
+      it "sets email_provided to true" do
+        get :update_sender_email, params
+        @referral_batch.reload.sender.email_provided.should be true
+      end
+      it "sets the email" do
+        get :update_sender_email, params
+        @referral_batch.reload.sender.email.should eq params[:sender_email]
+      end
+    end
+    it "responds with @referral_batch json" do
+      get :update_sender_email, params
+      response.headers['Content-Type'].should match /json/
+    end
+    pending "fails if email is invalid" do
+    end
+    it "fails if no id is given" do
+      expect{get :update_sender_email, params.merge(id: 'nonexistent')}.to raise_error
+    end
+    it "fails if referral_batch has no sender" do
+      @referral_batch = create :referral_batch, :no_sender
+      expect{get :update_sender_email, params}.to raise_error
+    end
+
   end
 end
 =begin

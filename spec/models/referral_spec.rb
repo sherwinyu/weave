@@ -1,13 +1,50 @@
 require 'spec_helper'
 
 describe Referral do
-  pending "#send" do
-    it "sets sent_at to now"
-    it "sets sent to true"
-    context "via email" do
-      it "raises an error if no email is found"
+  let(:referral) { create :referral, :not_delivered }
+  before :each do
+    @time = Time.now
+    Time.stub(:now).and_return @time
+  end
+  describe "#deliver" do
+    context "all good" do
+      before :each do
+        @referral = referral
+        @ret = @referral.deliver
+      end
+      it "sets sent_at to now" do
+        @referral.delivered_at.should eq @time
+      end
+      it "sets delivered to true" do
+        @referral.should be_delivered
+      end
+      it "returns true" do
+        @ret.should be true
+      end
+      it "can't be redelivered" do
+        @referral.deliver.should be false
+        @referral.errors[:deliverable].to_s.should match /already delivered/i
+      end
     end
-    context "via facebook" do
+    context "invalid" do
+      it "adds an error if missing sender" do
+        referral.update_attribute :sender, nil
+        referral.deliver.should be false
+        referral.errors[:deliverable].to_s.should match /sender/i
+      end
+      it "adds an error if no sender email" do
+        referral.sender.update_attribute :email, nil
+        referral.deliver.should be false
+        referral.errors[:deliverable].to_s.should match /sender/i
+      end
+
+      it "adds an error if sender email not confirmed" do
+        referral.sender.update_attribute :email_provided, false
+        referral.deliver.should be false
+        referral.errors[:deliverable].to_s.should match /sender.*unconfirmed/i
+      end
+
+      it "raises an error if no email is found"
     end
   end
   pending "validations" do
