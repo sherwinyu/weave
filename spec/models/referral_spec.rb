@@ -27,6 +27,7 @@ describe Referral do
       end
     end
     context "invalid" do
+      # TODO(syu): stub these
       it "adds an error if missing sender" do
         referral.update_attribute :sender, nil
         referral.deliver.should be false
@@ -42,6 +43,23 @@ describe Referral do
         referral.sender.update_attribute :email_provided, false
         referral.deliver.should be false
         referral.errors[:deliverable].to_s.should match /sender.*unconfirmed/i
+      end
+
+      it "adds an error if missing recipient" do
+        referral.update_attribute :recipient, nil
+        referral.deliver.should be false
+        referral.errors[:deliverable].to_s.should match /recipient.*not.*emailable/i
+      end
+      it "adds an error if no recipient email" do
+        referral.recipient.update_attribute :email, nil
+        referral.deliver.should be false
+        referral.errors[:deliverable].to_s.should match /recipient.*not.*emailable/i
+      end
+
+      it "adds an error if no recipient email" do
+        referral.recipient.update_attribute :email, nil
+        referral.deliver.should be false
+        referral.errors[:deliverable].to_s.should match /recipient.*not.*emailable/i
       end
 
       it "raises an error if no email is found"

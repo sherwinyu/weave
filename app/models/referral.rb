@@ -60,13 +60,10 @@ class Referral < ActiveRecord::Base
   end
 
   def deliverable
-    valid = sender && sender.email && sender.email_provided && recipient.email && content && !delivered?
+    valid = sender && sender.emailable? && sender.email_provided? && recipient && recipient.emailable? && !delivered?
     errors[:deliverable] << "sender not emailable" unless sender && sender.emailable?
     errors[:deliverable] << "sender email unconfirmed" unless sender && sender.email_provided?
-    # errors[:deliverable] << "missing sender email" unless sender.try :email
-    # errors[:deliverable] << "sender email not confirmed" unless sender.try :email_provided
     errors[:deliverable] << "recipient not emailable" unless recipient && recipient.emailable?
-    # errors[:deliverable] << "missing recipient email" unless recipient.try :email
     errors[:deliverable] << "already delivered" if delivered?
     valid
   end
