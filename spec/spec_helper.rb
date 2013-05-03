@@ -18,6 +18,10 @@ Spork.prefork do
   # in spec/support/ and its subdirectories.
   Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
+  # from https://gist.github.com/rsanheim/1054078
+  Spork.trap_method(Rails::Application, :reload_routes!)
+  Spork.trap_method(Rails::Application::RoutesReloader, :reload!)
+
   RSpec.configure do |config|
     # == Mock Framework
     #
@@ -29,7 +33,7 @@ Spork.prefork do
     config.mock_with :rspec
 
     # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-    config.fixture_path = "#{::Rails.root}/spec/fixtures"
+    # config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
     # If you're not using ActiveRecord, or you'd prefer not to run each of your
     # examples within a transaction, remove the following line or assign false
@@ -50,6 +54,10 @@ end
 Spork.each_run do
   # This code will be run each time you run your specs.
   FactoryGirl.reload
+
+  # https://gist.github.com/mrinterweb/850225
+  # Devise caches user class so we need to reload it
+  load File.expand_path(File.dirname(__FILE__) + '/../app/models/user.rb')
 
 end
 

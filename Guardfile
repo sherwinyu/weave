@@ -37,6 +37,6 @@ end
 
 notification :tmux,
   display_message: true,
-  timeout: 1,
+  timeout: 2,
   line_separator: ' > ',
   color_location:  'status-left-bg'
