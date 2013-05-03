@@ -25,11 +25,16 @@ group :development, :test do
   gem 'rspec-rails', '2.13.0'
   gem 'pry', '0.9.11'
   gem 'pry-debugger', '0.2.2'
+
+  gem 'rb-inotify', require: false
+
   gem 'factory_girl_rails', '4.2.1'
+  gem 'guard-spork'
 end
 
 group :test do
   gem 'guard-rspec', '1.2.1'
+  gem 'spork-rails'
 end
 
 
@@ -37,7 +42,7 @@ gem 'devise', '2.2.3'
 gem 'omniauth-facebook', '1.4.0'
 gem 'koala', '1.6.0'
 gem 'rest-client', '1.6.7'
-gem 'multimap' 
+gem 'multimap'
 gem "active_model_serializers", "~> 0.7.0"
 
 
