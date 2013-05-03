@@ -18,4 +18,14 @@ class ReferralsController < ApplicationController
     end
   end
 
+  def deliver
+    @referral = Referral.find(params[:id])
+    if @referral.deliver
+      render json: @referral
+    else
+      raise "delivery failed"
+    end
+
+  end
+
 end

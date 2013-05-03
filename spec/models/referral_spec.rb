@@ -61,8 +61,6 @@ describe Referral do
         referral.deliver.should be false
         referral.errors[:deliverable].to_s.should match /recipient.*not.*emailable/i
       end
-
-      it "raises an error if no email is found"
     end
   end
   pending "validations" do
@@ -71,5 +69,4 @@ describe Referral do
     it "validates customizations"
   end
   pending "#attach_incentive_instances"
-
 end
