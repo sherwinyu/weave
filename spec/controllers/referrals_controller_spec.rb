@@ -90,12 +90,12 @@ describe ReferralsController do
     end
     let(:params){{  id: @referral.id, format: :json } }
 
-    it "returns an error if no @referral is found" do
-      expect {post :deliver, params.merge(id: "nonexistent")}.to raise_error
-    end
     it "looks up the @referral by id" do
       post :deliver, params
       assigns(:referral).should eq @referral
+    end
+    it "returns an error if no @referral is found" do
+      expect {post :deliver, params.merge(id: "nonexistent")}.to raise_error
     end
     it "makes a call to@referral.deliver" do
       Referral.any_instance.should_receive :deliver
@@ -115,8 +115,33 @@ describe ReferralsController do
     end
 
   end
+  describe "#add_recipient_email" do
+    before :each do
+      @recipient_email = "new_email@examples.org"
+      @referral = create :referral
+      @referral_params = {recipient_attributes: {id: @referral.recipient.id, email: @recipient_email}}
+    end
+    let(:params) { {id: @referral.id, referral: @referral_params, format: :json} }
+    it "looks up @referral by id" do
+      get :add_recipient_email, params
+      assigns(:referral).should eq @referral
+    end
+    it "raises error if no referral is found" do
+      expect{get :add_recipient_email, params.merge(id: "nonexistent_id")}.to raise_error ActiveRecord::RecordNotFound
+    end
+    it "raises error if referral is missing recipient" do
+      @referral.update_attribute :recipient, nil
+      expect{get :add_recipient_email, params}.to raise_error /missing.*recipient/
+    end
+    it "adds the email if it's valid" do
+      get :add_recipient_email, params
+      @referral.reload.recipient.email.should eq @recipient_email
+    end
+    it "should not create a new recipient" do
+      expect{get :add_recipient_email, params}.to_not change{User.count}
+    end
+  end
   pending "#set_active_referral_helper"
   pending "#set_active_referral_batch_helper"
-
 
 end

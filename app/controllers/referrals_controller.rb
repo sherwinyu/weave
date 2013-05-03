@@ -25,7 +25,14 @@ class ReferralsController < ApplicationController
     else
       raise "delivery failed"
     end
-
   end
-
+  def add_recipient_email
+    @referral = Referral.find(params[:id])
+    raise "referral is missing recipient" unless @referral.recipient
+    if @referral.update_attributes params[:referral]
+      render json: @referral
+    else
+      raise "invalid"
+    end
+  end
 end
