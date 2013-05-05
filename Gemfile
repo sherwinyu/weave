@@ -26,6 +26,8 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'bootstrap-sass', '~> 2.3.1.0'
 gem 'simple_form', '2.1.0'
+gem 'ember-rails'
+gem 'ember-source', '1.0.0.rc3.3'
 
 group :development, :test do
   gem 'rspec-rails', '2.13.0'
