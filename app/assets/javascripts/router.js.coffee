@@ -1,5 +1,4 @@
 Weave.Router.map (match)->
-  @route "index", path: "/"
   @resource "stories", path: "/stories", ->
      @route "new"
      # @route "index"
@@ -19,17 +18,18 @@ Weave.IndexRoute = Ember.Route.extend
 
 Weave.StoriesRoute = Ember.Route.extend
   enter: ->
-    console.log 'walawala rrb route'
+    console.log 'Stories'
+  model: (params)->
+    console.log "stories id #{params.story_id}"
 Weave.StoriesIndexRoute = Ember.Route.extend
   enter: ->
-    console.log 'walawala rbindex route'
-
+    console.log 'StoriesIndex'
 
 Weave.StoryRoute = Ember.Route.extend
   enter: ->
-    console.log 'walawala rbindex route'
+    console.log 'Story'
   model: (params)->
-    params.story_id
+    console.log "story id #{params.story_id}"
     params
 
 Weave.ReferralRoute = Ember.Route.extend

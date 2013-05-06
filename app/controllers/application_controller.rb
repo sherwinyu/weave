@@ -26,5 +26,11 @@ class ApplicationController < ActionController::Base
   def other_token
     fb_oauth.get_user_info_from_cookies cookies
   end
+  before_filter :inject_ember_params
+
+  def inject_ember_params
+    @ember_params = request.path
+  end
+
 
 end

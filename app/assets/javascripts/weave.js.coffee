@@ -7,3 +7,8 @@
 #= require_tree ./routes
 #= require ./router
 #= require_self
+
+
+# Initialize Ember routing
+if window.ember_params? && !window.location.hash
+  window.location.hash = ember_params
