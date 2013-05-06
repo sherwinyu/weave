@@ -1,3 +1,16 @@
+Weave.u =
+  viewFromId: (id) -> Ember.get("Ember.View.views.#{id}")
+  viewFromElement: (ele) -> Sysys.u.viewFromId($(ele).first().attr('id'))
+  viewFromNumber: (num) -> Sysys.u.viewFromId("ember#{num}")
+  currentPath: -> Weave.__container__.lookup('controller:application').currentPath
+Weave.vfi = Weave.u.viewFromId
+Weave.vfe = Weave.u.viewFromElement
+Weave.vf = Weave.u.viewFromNumber
+
+window.vf = Weave.vf
+window.cP = Weave.u.currentPath
+
+
 window.utils =
   ajax: (opts) ->
     defaults =
@@ -18,3 +31,4 @@ window.utils =
       type: 'post'
     $.extend defaults, opts
     $.ajax defaults
+
