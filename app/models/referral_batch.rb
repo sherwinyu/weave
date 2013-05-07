@@ -7,8 +7,10 @@ class ReferralBatch < ActiveRecord::Base
   has_many :sender_incentives, class_name: "IncentiveInstance", inverse_of: :referral_batch
 
   def visit_sender_page
-    raise "wala"
+    self.sender.visit!
+    self.sender_page_visited_at = Time.now
   end
+
   def build_referral
     # TODO(syu): look at association extensions //
     # http://stackoverflow.com/questions/2890761/rails-overriding-activerecord-association-method

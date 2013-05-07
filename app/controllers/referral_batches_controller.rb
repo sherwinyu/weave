@@ -17,10 +17,8 @@ class ReferralBatchesController < ApplicationController
     @referral_batch.visit_sender_page
 
     @sender = @referral_batch.sender
-    @sender.materialize! #TODO(syu): do we want this?? What does materialize mean?!
-    respond_to do |format|
-      format.json { render json: @referral_batch }
-    end
+    # @sender.materialize! #TODO(syu): do we want this?? What does materialize mean?!
+    render json: @referral_batch
   end
 
   def fresh_create

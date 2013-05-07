@@ -8,7 +8,7 @@ describe User do
     end
 
 
-    context "existing authorization" do 
+    context "existing authorization" do
       before :each do
         @user = create :user
         @auth = create :authorization, user: @user
@@ -37,10 +37,21 @@ describe User do
       it "returns newly built user that has a new authorization with omniauth details" do
         found_user = User.find_or_initialize_from_omniauth @omniauth_hash
         found_user.should be_new_record
-        found_auth = found_user.authorizations.detect {|a| a.provider == @new_auth.provider && a.uid == @new_auth.uid } 
+        found_auth = found_user.authorizations.detect {|a| a.provider == @new_auth.provider && a.uid == @new_auth.uid }
         found_auth.should be_new_record
         found_auth.user.should be found_user
       end
+    end
+  end
+  describe "visit!" do
+    before (:each) do
+      @user = build_stubbed :sender
+      @time = Time.now
+      Time.stub(:now).and_return @time
+    end
+    it "sets self.visisted_at" do
+      @user.visit!
+      @user.visited_at.should eq @time
     end
   end
 

@@ -47,6 +47,7 @@ class User < ActiveRecord::Base
   def visit!
     self.visited_at = Time.now
   end
+
   def visited?
     !!visited_at
   end
