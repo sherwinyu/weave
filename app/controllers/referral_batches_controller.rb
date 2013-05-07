@@ -25,7 +25,7 @@ class ReferralBatchesController < ApplicationController
     @campaign = Campaign.find params[:campaign_id]
     @referral_batch = @campaign.referral_batches.create
     @referral_batch.create_sender!
-    @referral_batch.sender.visit!
+    @referral_batch.sender.visit! # TODO(syu): should be dependant on whether we're in-store ?
     render json: @referral_batch
   end
 
