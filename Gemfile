@@ -17,10 +17,11 @@ group :assets do
 
   gem 'sass-rails',   '3.2.4'
   gem 'coffee-rails', '3.2.2'
-  gem 'coffee-script-source', '1.5.0'
+  gem 'coffee-script-source', '1.6.1'
   gem 'uglifier', '1.2.3'
   # gem 'bootstrap-sass', '~> 2.0.3'
 end
+gem 'coffee-rails-source-maps'
 
 gem 'jquery-rails'
 gem 'jquery-ui-rails'

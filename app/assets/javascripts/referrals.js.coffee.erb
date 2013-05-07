@@ -47,59 +47,5 @@ window.referrals =
             )
           response(filtered)
 
-        ###
-        #(request, add) ->
-        $this = $(@)
-        # accessToken = response.authResponse.accessToken
-        tokenUrl = "https://graph.facebook.com/me/friends?access_token=" + facebookToken + "&callback=?"
-
-        # Call out to the Graph API for the friends list
-        tokenUrl =
-        $.ajax
-          url: tokenUrl
-          dataType: "jsonp"
-          success: (results) ->
-            console.log results
-            # Filter the results and return a label/value object array
-            formatted = []
-            i = 0
-            while i < results.data.length
-              if results.data[i].name.toLowerCase().indexOf($("#name-or-email").val().toLowerCase()) >= 0
-                formatted.push
-                  label: results.data[i].name
-                  value: results.data[i].id
-              i++
-            add formatted
-          error: (results) ->
-            console.log results
-            ####
-
-
-
 jQuery ->
   referrals.initBindings()
-
-
-
-
-###
-$ ->
-  # Depends on: jQuery, jQuery UI core & widgets (for the autocomplete method)
-  # Assumes you're already including the FB JS SDK asynchronously...
-  window.fbAsyncInit = ->
-    FB.init
-      appId: "xxxxxxxxxxxxxxxxxx" # App ID
-      status: true # check login status
-      cookie: true # enable cookies to allow the server to access the session
-      oauth: true
-      xfbml: true
-
-    FB.getLoginStatus (response) ->
-      if response.authResponse # if the user is authorized...
-        accessToken = response.authResponse.accessToken
-        tokenUrl = "https://graph.facebook.com/me/friends?access_token=" + accessToken + "&callback=?"
-
-        # Place <input id="name" /> and <input id="fbuid" /> into HTML
-
-
-      ###

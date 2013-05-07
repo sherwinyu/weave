@@ -18,3 +18,5 @@
 /config/application.yml
 
 /spec/tmp
+
+/public/assets/source_maps

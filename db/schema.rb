@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130503073210) do
+ActiveRecord::Schema.define(:version => 20130504012938) do
 
   create_table "authorizations", :force => true do |t|
     t.string   "uid"
@@ -161,5 +161,10 @@ ActiveRecord::Schema.define(:version => 20130503073210) do
   end
 
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+
+  create_table "walas", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
 end

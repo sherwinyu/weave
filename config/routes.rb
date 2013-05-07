@@ -10,6 +10,7 @@ Weave::Application.routes.draw do
   resources :referral_batches do
     resources :referrals
   end
+  resources :referrals, only: [:update, :create]
 
   # resources :referrers
   # match 'auth/:provider/callback', to: 'sessions#create'
