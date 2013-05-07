@@ -46,3 +46,7 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
 Weave.ReferralEditBodyView = Ember.View.extend
   classNames: ['edit-body']
   templateName: "referral_edit_body"
+
+Weave.ReferralCustomizationsSelectView = Ember.View.extend
+  classNames: ['referral-customizations']
+  templateName: "referral_customizations_select"
