@@ -1,13 +1,15 @@
 Weave.ReferralView = Ember.View.extend
   didInsertElement: ->
+    @set('context.myView', @)
 
 
 Weave.ReferralSelectRecipientView = Ember.View.extend
+  classNames: ['select-recipient']
+  templateName: "referral_select_recipient"
   friends: null
   didInsertElement: ->
     @bindAutocompletion $('input')
   init: ->
-    debugger
     @_super()
 
   nameFilter: (term, name) ->
