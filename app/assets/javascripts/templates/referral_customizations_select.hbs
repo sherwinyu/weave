@@ -1,4 +1,7 @@
 <h3> Select dem customizations </h3>
-{{#each customization in customizations}}
-  {{customization.id}}
+{{#each customization in view.customizations}}
+  <li class="customization">
+    {{view Ember.Checkbox checkedBinding="customization.selected"}}
+    {{customization.description}}
+  </li>
 {{/each}}

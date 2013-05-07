@@ -20,7 +20,7 @@ describe "ReferralEditBodyView", ->
       expect(@view.$()).toContain '.referral-customizations'
 
   it "prepopulates referral.content", ->
-    expect(@view.$('input')).toHaveValue @controller.content
+    expect(@view.$('input')).toHaveValue @context.content
 
   it "binds referral.content", ->
     @view.$('input').val('new referral content!')
@@ -28,20 +28,26 @@ describe "ReferralEditBodyView", ->
   it "binds referral.customizations", ->
     customizations_select_view = @view.get('childViews')
       .findProperty('constructor', Weave.ReferralCustomizationsSelectView)
-    expect(customizations_select_view.get 'customizations').toBe @controller.customizations
+    expect(customizations_select_view.get 'customizations').toBe @context.customizations
 
-desribe "ReferralCustomizationsSelectView", ->
+describe "ReferralCustomizationsSelectView", ->
   beforeEach ->
-    @context = [
-      {id: 1, description: "wala1"},
-      {id: 2, description: "wala2"},
-      {id: 3, description: "wala3"},
+    @customizations = [
+      Ember.Object.create( id: 1, description: "wala1"),
+      Ember.Object.create(id: 2, description: "wala2"),
+      Ember.Object.create(id: 3, description: "wala3"),
     ]
     @view = Weave.ReferralCustomizationsSelectView.create
-      controler: @context
+      controller: @customizations
+      customizations: @customizations
+    Ember.run => @view.append()
 
   it "displays customizations based on context.customizations", ->
+    expect(@view.$('.customization').length).toEqual 3
+    expect(@view.$('.customization')[0]).toHaveText 'wala1'
+    expect(@view.$('.customization')[1]).toHaveText 'wala2'
+    expect(@view.$('.customization')[2]).toHaveText 'wala3'
   it "responds to click events", ->
-  it "binds customizations", ->
-
-
+    expect(@customizations.get('0.selected')).toBeFalsy()
+    @view.$("input[type='checkbox']").click()
+    expect(@customizations.get('0.selected')).toBeTruthy()
