@@ -1,4 +1,5 @@
 Weave.ReferralView = Ember.View.extend
+  classNames: ['referral']
   didInsertElement: ->
     @set('context.myView', @)
 
@@ -41,3 +42,7 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
                 e.value["info"] = results
               )
             response(filtered)
+
+Weave.ReferralEditBodyView = Ember.View.extend
+  classNames: ['edit-body']
+  templateName: "referral_edit_body"
