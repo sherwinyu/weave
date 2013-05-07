@@ -1,11 +1,11 @@
 describe "ReferralEditBodyView", ->
   beforeEach ->
-    @controller = Ember.Object.create
+    @context = Ember.Object.create
       content: "referral content"
       recipient: null
       customizations: []
-    window.view = @view = Weave.ReferralEditBodyView.create
-      controller: @controller
+    @view = Weave.ReferralEditBodyView.create
+      controller: @context
     Ember.run =>
       @view.append()
 
@@ -30,5 +30,18 @@ describe "ReferralEditBodyView", ->
       .findProperty('constructor', Weave.ReferralCustomizationsSelectView)
     expect(customizations_select_view.get 'customizations').toBe @controller.customizations
 
+desribe "ReferralCustomizationsSelectView", ->
+  beforeEach ->
+    @context = [
+      {id: 1, description: "wala1"},
+      {id: 2, description: "wala2"},
+      {id: 3, description: "wala3"},
+    ]
+    @view = Weave.ReferralCustomizationsSelectView.create
+      controler: @context
+
+  it "displays customizations based on context.customizations", ->
+  it "responds to click events", ->
+  it "binds customizations", ->
 
 
