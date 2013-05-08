@@ -7,22 +7,13 @@ Weave.ReferralView = Ember.View.extend
 Weave.ReferralSelectRecipientView = Ember.View.extend
   classNames: ['select-recipient']
   templateName: "referral_select_recipient"
-  friends: null
+  friendFilter: Weave.FriendFilter.create()
   didInsertElement: ->
     @bindAutocompletion @$('input')
+
   init: ->
     @_super()
 
-  nameFilter: (term, name) ->
-    terms = term.trim().split(/\s+/)
-    regexs = (new RegExp "\\b#{term}", "i" for term in terms)
-    regexs.every (regex) -> regex.test name
-
-  nameAutoComplete: ->
-    @friends ||= facebook.query("/me/friends").then( (results) ->
-      results.data.map (item) ->
-        {label: item.name, value: item, zug: "555"}
-    )
 
   bindAutocompletion: ($el) ->
       $el.autocomplete
@@ -36,13 +27,19 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
           false
         minLength: 2
         source: (request, response) =>
+          @get('friendFilter').filterAndRankAgainst(request.term).then (friends) ->
+            response(friends)
+
+
+          ###
           @nameAutoComplete().then (results) =>
             filtered = results.filter (e) => @nameFilter(request.term, e.label)
             filtered.map (e) ->
               facebook.query("#{e.value.id}?fields=location,education,political").done( (results) ->
                 e.value["info"] = results
               )
-            response(filtered)
+          response(filtered)
+              ###
 
 Weave.ReferralEditBodyView = Ember.View.extend
   classNames: ['edit-body']
