@@ -21,9 +21,8 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
   nameAutoComplete: ->
     @friends ||= facebook.query("/me/friends").then( (results) ->
       results.data.map (item) ->
-        {label: item.name, value: item}
+        {label: item.name, value: item, zug: "555"}
     )
-
 
   bindAutocompletion: ($el) ->
       $el.autocomplete
@@ -32,6 +31,7 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
           $("#name-or-email").val ui.item.label
           $("#fb-uid").val ui.item.value.id
           $("#fb-uinfo").val JSON.stringify(ui.item.value.info)
+          console.log ui.item.zug
           # Prevent the value from being inserted in "#name"
           false
         minLength: 2
@@ -51,3 +51,20 @@ Weave.ReferralEditBodyView = Ember.View.extend
 Weave.ReferralCustomizationsSelectView = Ember.View.extend
   classNames: ['referral-customizations']
   templateName: "referral_customizations_select"
+
+Weave.FriendFilter = Ember.Object.extend
+  friendResultToFriendStruct: (friendResult, provider) ->
+    if provider == "FACEBOOK"
+      {
+        label: friendResult.name
+        meta:
+          name: friendResult.name
+          uid: friendResult.id
+          provider: "FACEBOOK"
+          info: friendResult
+      }
+
+  friendSource: ->
+    @_friends ||= facebook.query("/me/friends").then (friendResults) =>
+      friendResults.data.map (friendResult) =>
+        @friendResultToFriendStruct(friendResult, "FACEBOOK")
