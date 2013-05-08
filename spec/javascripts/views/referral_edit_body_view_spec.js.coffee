@@ -59,7 +59,7 @@ describe "ReferralCustomizationsSelectView", ->
     @view.$("input[type='checkbox']").click()
     expect(@customizations.get('0.selected')).toBeTruthy()
 
-@recipient =
+recipient =
   name: "sherwin yu"
   email: "abc@beg.com"
   meta:
