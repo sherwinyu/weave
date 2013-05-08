@@ -75,6 +75,15 @@ describe "FriendFilter", ->
         expect(friends[1].meta.name).toBe "Yan Zhang"
         expect(friends[2].meta.name).toBe "Jeff Chen"
 
+    describe "filterAndRankAgainst", ->
+      it "returns a promise of friends #function_integration", ->
+        results = @friendFilter.filterAndRankAgainst("je zh")
+        results.then (friends) ->
+          expect(friends.length).toBe 3
+          expect(friends[0].meta.name).toBe "Jeff Zhang"
+          expect(friends[1].meta.name).toBe "Yan Zhang"
+          expect(friends[2].meta.name).toBe "Jeff Chen"
+
   describe "score", ->
     beforeEach ->
       @friendStruct = # @friendFilter.friendResultToFriendStruct(@fbFriendResult1, "FACEBOOK")

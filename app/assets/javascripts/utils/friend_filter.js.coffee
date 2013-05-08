@@ -25,7 +25,8 @@ Weave.FriendFilter = Ember.Object.extend
       friends = friends.filter (friend) -> friend.meta.score > 0
       friends
 
-
+  filterAndRankAgainst: (term)->
+    @filterAndRank( @friendSource(), @scoreAgainstTerm(term))
 
   #scoringFunction ::
   # term -- string -- the search term
