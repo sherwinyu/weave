@@ -49,6 +49,7 @@ end
 group :test do
   gem 'guard-rspec', '1.2.1'
   gem 'spork-rails', '3.2.1'
+  gem 'thin'
 end
 
 

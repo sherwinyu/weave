@@ -24,6 +24,7 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
         {label: item.name, value: item}
     )
 
+
   bindAutocompletion: ($el) ->
       $el.autocomplete
         select: (event, ui) ->
