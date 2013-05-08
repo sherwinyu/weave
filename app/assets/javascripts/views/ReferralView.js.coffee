@@ -69,12 +69,13 @@ Weave.FriendFilter = Ember.Object.extend
       friendResults.data.map (friendResult) =>
         @friendResultToFriendStruct(friendResult, "FACEBOOK")
 
+  # TODO(syu): Refactor this bad boy
   filterAndRank: (pfriends, score) ->
     pfriends.then (friends) =>
       friends.forEach (friend) =>
         friend.meta.score = score.call(@, friend)
       friends.sort (a, b) ->
-        a.meta.score - b.meta.score
+         b.meta.score - a.meta.score
       friends = friends.filter (friend) -> friend.meta.score > 0
       friends
 

@@ -83,18 +83,29 @@ describe "FriendFilter", ->
           @fbFriendResult3,
           @fbFriendResult4 ].map (fb) => @friendFilter.friendResultToFriendStruct(fb, "FACEBOOK")
   describe "filterAndRank", ->
-    beforeEach ->
-      # j# j@scoreAgainstTerm = @friendFilter.scoreAgainstTerm()
-      #debugger
-      #@filteredAndRanked = @friendFilter.filterAndRank(@friendSource, @scoreAgainstTerm)
 
     it "excludes results that score 0", ->
       term = "walasdl"
       @filteredAndRanked = @friendFilter.filterAndRank(@friendSource, @friendFilter.scoreAgainstTerm term)
       @filteredAndRanked.then (friends) ->
         expect(friends.length).toBe 0
-      true
 
+    it "includes results that score above 0", ->
+      term = "zh"
+      @filteredAndRanked = @friendFilter.filterAndRank(@friendSource, @friendFilter.scoreAgainstTerm term)
+      @filteredAndRanked.then (friends) ->
+        expect(friends.length).toBe 2
+        expect(friends[0].meta.name).toBe "Yan Zhang"
+        expect(friends[1].meta.name).toBe "Jeff Zhang"
+
+    it "sorts by score", ->
+      term = "je zh"
+      @filteredAndRanked = @friendFilter.filterAndRank(@friendSource, @friendFilter.scoreAgainstTerm term)
+      @filteredAndRanked.then (friends) ->
+        expect(friends.length).toBe 3
+        expect(friends[0].meta.name).toBe "Jeff Zhang"
+        expect(friends[1].meta.name).toBe "Yan Zhang"
+        expect(friends[2].meta.name).toBe "Jeff Chen"
 
   describe "score", ->
     beforeEach ->
