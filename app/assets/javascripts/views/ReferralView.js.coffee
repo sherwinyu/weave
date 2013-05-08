@@ -74,9 +74,11 @@ Weave.FriendFilter = Ember.Object.extend
   # term -- string -- the search term
   # friendStruct -- a friendStruct
   # returns -- integer -- rank
-  scoringFunction: (term, friendStruct) ->
+  score: (term, friendStruct) ->
     terms = term.trim().split(/\s+/)
     regexs = (new RegExp "\\b#{term}", "i" for term in terms)
     filtered = regexs.filter (regex)-> regex.test friendStruct.meta.name
     filtered.length
 
+  scoringFunction: (term) ->
+    (friendStruct) -> @score(term, friendStruct)

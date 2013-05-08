@@ -85,12 +85,12 @@ describe "FriendFilter", ->
   describe "filterAndRank", ->
     beforeEach ->
       @friendSource = @friendFilter.friendSource()
-      @filteredAndRanked = @friendFilter.filterAndRank()
+      @filteredAndRanked = @friendFilter.filterAndRank(@friendSource, )
+
     it "excludes results that score 0", ->
+      @
 
-
-
-  describe "scoringFunction", ->
+  describe "score", ->
     beforeEach ->
       @friendStruct = # @friendFilter.friendResultToFriendStruct(@fbFriendResult1, "FACEBOOK")
         label: "Yan Zhang"
@@ -100,9 +100,15 @@ describe "FriendFilter", ->
           provider: "FACEBOOK"
           info: null
     it "returns 0 for non matches", ->
-      expect(@friendFilter.scoringFunction "wala", @friendStruct).toBe 0
-      expect(@friendFilter.scoringFunction "yank", @friendStruct).toBe 0
+      expect(@friendFilter.score "wala", @friendStruct).toBe 0
+      expect(@friendFilter.score "yank", @friendStruct).toBe 0
     it "returns 1 for single match", ->
-      expect(@friendFilter.scoringFunction "ya", @friendStruct).toBe 1
+      expect(@friendFilter.score "ya", @friendStruct).toBe 1
     it "returns 2 for double match", ->
-      expect(@friendFilter.scoringFunction "ya zh", @friendStruct).toBe 2
+      expect(@friendFilter.score "ya zh", @friendStruct).toBe 2
+
+    describe "scoringFunction", ->
+      it "returns a scoring function curried to a search term", ->
+        scoringFunction = @friendFilter.scoringFunction("ya zh")
+        expect(typeof scoringFunction).toBe "function"
+        expect(scoringFunction.call(@friendFilter, @friendStruct)).toBe 2
