@@ -44,12 +44,16 @@ group :development, :test do
   gem 'jasmine-rails', '0.4.2'
   gem 'guard-jasmine', '1.15.1'
   gem "jasminerice", '0.0.10'
+  gem 'jasmine-sinon-rails'
+  gem 'sinon-rails'
 end
 
 group :test do
   gem 'guard-rspec', '1.2.1'
   gem 'spork-rails', '3.2.1'
   gem 'thin'
+  # gem 'jasmine-sinon-rails'
+  # gem 'sinon-rails'
 end
 
 

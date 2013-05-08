@@ -1,4 +1,5 @@
-#=require application
-#=require_tree ./
-console.log 'wala'
+#= require application
+# require ../../vendor/sinon
+# require ../../vendor/jasmine-sinon
+#= require_tree ./
 Ember.testing = true
