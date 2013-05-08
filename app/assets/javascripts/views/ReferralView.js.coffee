@@ -68,7 +68,17 @@ Weave.FriendFilter = Ember.Object.extend
     @_friends ||= facebook.query("/me/friends").then (friendResults) =>
       friendResults.data.map (friendResult) =>
         @friendResultToFriendStruct(friendResult, "FACEBOOK")
-  filteAndRank: ->
+
+  filterAndRank: (pfriends, score) ->
+    pfriends.then (friends) =>
+      friends.forEach (friend) =>
+        friend.meta.score = score.call(@, friend)
+      friends.sort (a, b) ->
+        a.meta.score - b.meta.score
+      friends = friends.filter (friend) -> friend.meta.score > 0
+      friends
+
+
 
   #scoringFunction ::
   # term -- string -- the search term
@@ -80,5 +90,5 @@ Weave.FriendFilter = Ember.Object.extend
     filtered = regexs.filter (regex)-> regex.test friendStruct.meta.name
     filtered.length
 
-  scoringFunction: (term) ->
+  scoreAgainstTerm: (term) ->
     (friendStruct) -> @score(term, friendStruct)

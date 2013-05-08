@@ -46,6 +46,18 @@ describe "FriendFilter", ->
       id: "666"
       name: "Jeff Zhang"
 
+  beforeEach ->
+    dfd = new $.Deferred()
+    dfd.resolve
+      data: [ @fbFriendResult1, @fbFriendResult2, @fbFriendResult3, @fbFriendResult4 ]
+      paging:
+        next: "http://someurl.com/somemethod/someparams?123"
+    @facebookQuery = sinon.stub(facebook, "query")
+    @facebookQuery.withArgs("/me/friends").returns dfd.promise()
+    @friendSource = @friendFilter.friendSource()
+
+  afterEach ->
+    @facebookQuery.restore()
 
   describe "friendResultToFriendStruct", ->
     it "works", ->
@@ -59,18 +71,6 @@ describe "FriendFilter", ->
           info: @fbFriendResult1
 
   describe "friendSource", ->
-    beforeEach ->
-      dfd = new $.Deferred()
-      dfd.resolve
-        data: [ @fbFriendResult1, @fbFriendResult2, @fbFriendResult3, @fbFriendResult4 ]
-        paging:
-          next: "http://someurl.com/somemethod/someparams?123"
-      @facebookQuery = sinon.stub(facebook, "query")
-      @facebookQuery.withArgs("/me/friends").returns dfd.promise()
-      @friendSource = @friendFilter.friendSource()
-
-    afterEach ->
-      @facebookQuery.restore()
 
     it "calls facebook.query", ->
       expect(@facebookQuery).toHaveBeenCalledOnce()
@@ -84,11 +84,17 @@ describe "FriendFilter", ->
           @fbFriendResult4 ].map (fb) => @friendFilter.friendResultToFriendStruct(fb, "FACEBOOK")
   describe "filterAndRank", ->
     beforeEach ->
-      @friendSource = @friendFilter.friendSource()
-      @filteredAndRanked = @friendFilter.filterAndRank(@friendSource, )
+      # j# j@scoreAgainstTerm = @friendFilter.scoreAgainstTerm()
+      #debugger
+      #@filteredAndRanked = @friendFilter.filterAndRank(@friendSource, @scoreAgainstTerm)
 
     it "excludes results that score 0", ->
-      @
+      term = "walasdl"
+      @filteredAndRanked = @friendFilter.filterAndRank(@friendSource, @friendFilter.scoreAgainstTerm term)
+      @filteredAndRanked.then (friends) ->
+        expect(friends.length).toBe 0
+      true
+
 
   describe "score", ->
     beforeEach ->
@@ -107,8 +113,8 @@ describe "FriendFilter", ->
     it "returns 2 for double match", ->
       expect(@friendFilter.score "ya zh", @friendStruct).toBe 2
 
-    describe "scoringFunction", ->
+    describe "scoreAgainstTerm", ->
       it "returns a scoring function curried to a search term", ->
-        scoringFunction = @friendFilter.scoringFunction("ya zh")
-        expect(typeof scoringFunction).toBe "function"
-        expect(scoringFunction.call(@friendFilter, @friendStruct)).toBe 2
+        scoreAgainstTerm = @friendFilter.scoreAgainstTerm("ya zh")
+        expect(typeof scoreAgainstTerm).toBe "function"
+        expect(scoreAgainstTerm.call(@friendFilter, @friendStruct)).toBe 2
