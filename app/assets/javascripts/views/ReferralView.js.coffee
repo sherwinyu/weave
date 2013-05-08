@@ -9,7 +9,7 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
   templateName: "referral_select_recipient"
   friends: null
   didInsertElement: ->
-    @bindAutocompletion $('input')
+    @bindAutocompletion @$('input')
   init: ->
     @_super()
 

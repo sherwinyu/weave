@@ -10,8 +10,9 @@ describe "ReferralEditBodyView", ->
       @view.append()
 
   afterEach ->
-    Ember.run => @view.remove()
-    @view.destroy()
+    Ember.run =>
+      @view.remove()
+      @view.destroy()
 
   describe "structure", ->
     it "contains a referral-content input", ->
@@ -22,9 +23,15 @@ describe "ReferralEditBodyView", ->
   it "prepopulates referral.content", ->
     expect(@view.$('input')).toHaveValue @context.content
 
-  it "binds referral.content", ->
-    @view.$('input').val('new referral content!')
-    expect(@view.$('input')).toHaveValue 'new referral content!'
+  it "binds input.value -> referral.content", ->
+    Ember.run =>
+      @view.$('input').val('new referral content')
+      @view.$('input').blur()
+    expect(@context.get 'content').toBe 'new referral content'
+  it "binds referral.content -> input.value", ->
+    Ember.run =>
+      @context.set('content', 'new content')
+    expect(@view.$('input')).toHaveValue 'new content'
   it "binds referral.customizations", ->
     customizations_select_view = @view.get('childViews')
       .findProperty('constructor', Weave.ReferralCustomizationsSelectView)
@@ -51,3 +58,38 @@ describe "ReferralCustomizationsSelectView", ->
     expect(@customizations.get('0.selected')).toBeFalsy()
     @view.$("input[type='checkbox']").click()
     expect(@customizations.get('0.selected')).toBeTruthy()
+
+@recipient =
+  name: "sherwin yu"
+  email: "abc@beg.com"
+  meta:
+    provider: ["FACEBOOK", "GMAIL", "EMAIL"]
+    suggested: true
+    other_info: "json"
+
+describe "ReferralSelectRecipientView", ->
+  beforeEach ->
+    @context = Ember.Object.create
+      name: ""
+      email: ""
+      meta: Ember.Object.create
+        provider: ""
+        suggested: false
+        other_info: null
+    @view = Weave.ReferralSelectRecipientView.create
+      recipient: @context
+    Ember.run => @view.append()
+
+  describe "structure", ->
+    it "contains an input for name or email", ->
+      expect(@view.$()).toContain 'input.recipient-name-or-email'
+  it 'binds input#value to recipient.email', ->
+    Ember.run =>
+      @view.$('input.recipient-name-or-email').val "new@email.org"
+      @view.$('input.recipient-name-or-email').blur()
+    expect(@context.get 'email').toBe "new@email.org"
+
+  it 'binds recipient.email to input#value', ->
+    Ember.run =>
+      @context.set 'email', 'new@email.org'
+    expect(@view.$('input.recipient-name-or-email')).toHaveValue "new@email.org"
