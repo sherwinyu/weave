@@ -32,11 +32,15 @@ describe "FriendFilter", ->
       friendStruct = @friendFilter.friendResultToFriendStruct @fbFriendResult1, "FACEBOOK"
       expect(friendStruct).toEqual
         label: @fbFriendResult1.name
-        meta:
+        user:
           name: @fbFriendResult1.name
-          provider: "FACEBOOK"
-          uid: @fbFriendResult1.id
-          info: @fbFriendResult1
+          email: @fbFriendResult1.email
+          info:
+            name: @fbFriendResult1.name
+            provider: "FACEBOOK"
+            uid: @fbFriendResult1.id
+            email: @fbFriendResult1.email
+            other_info: @fbFriendResult1
 
   describe "friendSource", ->
 
@@ -63,32 +67,32 @@ describe "FriendFilter", ->
       @filteredAndRanked = @friendFilter.filterAndRank(@friendSource, @friendFilter.scoreAgainstTerm term)
       @filteredAndRanked.then (friends) ->
         expect(friends.length).toBe 2
-        expect(friends[0].meta.name).toBe "Yan Zhang"
-        expect(friends[1].meta.name).toBe "Jeff Zhang"
+        expect(friends[0].user.name).toBe "Yan Zhang"
+        expect(friends[1].user.name).toBe "Jeff Zhang"
 
     it "sorts by score", ->
       term = "je zh"
       @filteredAndRanked = @friendFilter.filterAndRank(@friendSource, @friendFilter.scoreAgainstTerm term)
       @filteredAndRanked.then (friends) ->
         expect(friends.length).toBe 3
-        expect(friends[0].meta.name).toBe "Jeff Zhang"
-        expect(friends[1].meta.name).toBe "Yan Zhang"
-        expect(friends[2].meta.name).toBe "Jeff Chen"
+        expect(friends[0].user.name).toBe "Jeff Zhang"
+        expect(friends[1].user.name).toBe "Yan Zhang"
+        expect(friends[2].user.name).toBe "Jeff Chen"
 
     describe "filterAndRankAgainst", ->
       it "returns a promise of friends #function_integration", ->
         results = @friendFilter.filterAndRankAgainst("je zh")
         results.then (friends) ->
           expect(friends.length).toBe 3
-          expect(friends[0].meta.name).toBe "Jeff Zhang"
-          expect(friends[1].meta.name).toBe "Yan Zhang"
-          expect(friends[2].meta.name).toBe "Jeff Chen"
+          expect(friends[0].user.name).toBe "Jeff Zhang"
+          expect(friends[1].user.name).toBe "Yan Zhang"
+          expect(friends[2].user.name).toBe "Jeff Chen"
 
   describe "score", ->
     beforeEach ->
       @friendStruct = # @friendFilter.friendResultToFriendStruct(@fbFriendResult1, "FACEBOOK")
         label: "Yan Zhang"
-        meta:
+        user:
           name: "Yan Zhang"
           uid: "4549"
           provider: "FACEBOOK"

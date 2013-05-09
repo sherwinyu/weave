@@ -3,7 +3,7 @@ describe "ReferralController", ->
     @recipient =
       name: "sherwin yu"
       email: "abc@beg.com"
-      meta:
+      info:
         provider: "FACEBOOK"
         name: "sherwin yu"
         uid: "sherwinxyu"

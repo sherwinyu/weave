@@ -1,18 +1,18 @@
 class ReferralsController < ApplicationController
   def create_with_recipient
     binding.pry
-    raise "create_with_recipient should be not be requested with referral content" if params[:referral][:content]
+    # raise "create_with_recipient should be not be requested with referral content" if params[:referral][:content]
     @referral_batch = ReferralBatch.find params.delete :referral_batch_id
     # normal users should only be able to send recipients if they own the referal batch
     @sender = User.find_by_id params[:referral].delete :sender_id
-    @referral = @referral_batch.referrals.create params[:referral]
+    @referral = @referral_batch.referrals.create referral_params
     @referral.sender = @sender
     render json: @referral
   end
 
-  def my_update
+  def update_body
     @referral = Referral.find(params[:id])
-    if @referral.update_attributes(params[:referral])
+    if @referral.update_attributes referral_params
       render json: @referral
     else
       render json: @referral.errors, status: :unprocessable_entity
@@ -30,7 +30,7 @@ class ReferralsController < ApplicationController
   def add_recipient_email
     @referral = Referral.find(params[:id])
     raise "referral is missing recipient" unless @referral.recipient
-    if @referral.update_attributes params[:referral]
+    if @referral.update_attributes referral_params
       render json: @referral
     else
       raise "invalid"
@@ -50,6 +50,11 @@ class ReferralsController < ApplicationController
   end
   private
   def referral_params
-    params.require(:referral).permit :content, {recipient: [:name, : ]}
+    params.require(:referral).permit :content, {customization_ids: []},
+      { recipient_attributes: [:name,
+                             :id,
+                             :email,
+                             {user_infos_attributes: [:name, :email, :provider, :uid]}]
+      }
   end
 end

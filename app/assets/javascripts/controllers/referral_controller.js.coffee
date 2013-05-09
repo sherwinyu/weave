@@ -21,7 +21,7 @@ Weave.ReferralController = Ember.ObjectController.extend
     referral = $.extend(true, {}, @get('content'))
     referral_batch_id = referral.referral_batch_id
     recipient = referral.recipient
-    recipient.user_infos_attributes = [referral.recipient.meta]
+    recipient.user_infos_attributes = [referral.recipient.info]
     delete referral.referral_batch_id
     delete referral.recipient.meta
     {

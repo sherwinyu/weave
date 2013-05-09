@@ -3,11 +3,15 @@ Weave.FriendFilter = Ember.Object.extend
     if provider == "FACEBOOK"
       {
         label: friendResult.name
-        meta:
+        user:
           name: friendResult.name
-          uid: friendResult.id
-          provider: "FACEBOOK"
-          info: friendResult
+          email: friendResult.email
+          info:
+            uid: friendResult.id
+            name: friendResult.name
+            email: friendResult.email
+            provider: "FACEBOOK"
+            other_info: friendResult
       }
 
   friendSource: ->
@@ -19,10 +23,10 @@ Weave.FriendFilter = Ember.Object.extend
   filterAndRank: (pfriends, score) ->
     pfriends.then (friends) =>
       friends.forEach (friend) =>
-        friend.meta.score = score.call(@, friend)
+        friend.score = score.call(@, friend)
       friends.sort (a, b) ->
-         b.meta.score - a.meta.score
-      friends = friends.filter (friend) -> friend.meta.score > 0
+         b.score - a.score
+      friends = friends.filter (friend) -> friend.score > 0
       friends
 
   filterAndRankAgainst: (term)->
@@ -35,7 +39,7 @@ Weave.FriendFilter = Ember.Object.extend
   score: (term, friendStruct) ->
     terms = term.trim().split(/\s+/)
     regexs = (new RegExp "\\b#{term}", "i" for term in terms)
-    filtered = regexs.filter (regex)-> regex.test friendStruct.meta.name
+    filtered = regexs.filter (regex)-> regex.test friendStruct.user.name
     filtered.length
 
   scoreAgainstTerm: (term) ->
