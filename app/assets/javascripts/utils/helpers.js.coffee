@@ -12,7 +12,9 @@ window.cP = Weave.u.currentPath
 
 
 window.utils =
+  # expects: URL, data
   ajax: (opts) ->
+    opts.data = JSON.stringify opts.data
     defaults =
       contentType: "application/json"
       dataType: "json"
@@ -22,13 +24,18 @@ window.utils =
 
   put: (opts) ->
     $.extend true, opts, data: {"_method": 'put'}
-    opts.data = JSON.stringify opts.data
+    # opts.data = JSON.stringify opts.data
     defaults =
       headers:
         "X-Http-Method-Override": "put"
-      contentType: "application/json"
-      dataType: "json"
       type: 'post'
     $.extend defaults, opts
-    $.ajax defaults
+    @ajax defaults
+
+  post: (opts) ->
+    # opts.data = JSON.stringify opts.data
+    defaults =
+      type: 'POST'
+    $.extend defaults, opts
+    @ajax defaults
 
