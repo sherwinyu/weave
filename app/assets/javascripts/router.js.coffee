@@ -30,8 +30,9 @@ Weave.ReferralRoute = Ember.Route.extend
     params
   events:
     selectRecipient: ->
-
       @transitionTo 'referral.select_recipient' #, {referral: {}
+    editBody: ->
+      @transitionTo 'referral.edit_body'
 
 Weave.ReferralIndex = Ember.Route.extend
   model: (params)->
