@@ -1,8 +1,11 @@
 Weave.ReferralController = Ember.ObjectController.extend
+  myView: null
   createWithRecipient: ->
+    referral_batch_id = 1 # @get('content').referral_batch_id
+    debugger
     utils.post
       data: @formatNew @get('content')
-      url:  "wala"
+      url:  "referrals"#referral_batches/#{referral_batch_id}/referrals"
     @send 'editBody'
 
   formatUpdate:  ->
@@ -20,6 +23,7 @@ Weave.ReferralController = Ember.ObjectController.extend
     recipient = referral.recipient
     recipient.user_infos_attributes = [referral.recipient.meta]
     delete referral.referral_batch_id
+    delete referral.recipient.meta
     {
       referral:
         content: null

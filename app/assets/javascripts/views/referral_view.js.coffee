@@ -17,7 +17,8 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
   bindAutocompletion: ($el) ->
     $el.autocomplete
       select: (event, ui) =>
-        @get('context').set('recipient', ui.item.meta)
+        debugger
+        @get('context').set('recipient', ui.item.user)
         # Fill in the input fields
         @$("#name-or-email").val ui.item.label
         false

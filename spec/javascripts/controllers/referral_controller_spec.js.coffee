@@ -21,17 +21,18 @@ describe "ReferralController", ->
   describe "createWithRecipient", ->
     beforeEach ->
       @post = sinon.stub(utils, "post")
-      @referralController.createWithRecipient()
     afterEach ->
       @post.restore()
     it "posts to the correct url with correct data ", ->
+      @referralController.createWithRecipient()
       expect(@post).toHaveBeenCalledOnce()
       expect(@post).toHaveBeenCalledWith
         data: @referralController.formatNew @referral
-        url: "wala"
+        url: "referrals"
     describe "on success", ->
       it "sends event transitionTo editBody", ->
         @send = sinon.stub(@referralController, "send")
+        @referralController.createWithRecipient()
         expect(@send).toHaveBeenCalled()
 
   describe "formatNew", ->
