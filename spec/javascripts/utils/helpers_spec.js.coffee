@@ -8,7 +8,7 @@ describe "utils", ->
       money: 55.0
 
   describe "ajax", ->
-    beforeEach -> @ajax = sinon.spy(jQuery, "ajax")
+    beforeEach -> @ajax = sinon.stub(jQuery, "ajax")
     afterEach -> @ajax.restore()
     describe "defaults", ->
       it "works", ->
@@ -24,7 +24,7 @@ describe "utils", ->
           url: "walawala/zoots"
 
   describe "post", ->
-    beforeEach -> @ajax = sinon.spy(jQuery, "ajax")
+    beforeEach -> @ajax = sinon.stub(jQuery, "ajax")
     afterEach -> @ajax.restore()
 
     describe "defaults", ->

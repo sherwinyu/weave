@@ -1,5 +1,6 @@
 class Referral < ActiveRecord::Base
-  attr_accessible :content, :recipient, :recipient_attributes, :customizations, :customization_ids
+  # attr_accessible :content, :recipient, :recipient_attributes, :customizations, :customization_ids
+  include ActiveModel::ForbiddenAttributesProtection
 
   belongs_to :sender, class_name: "User", inverse_of: :sent_referrals
   belongs_to :recipient, class_name: "User", inverse_of: :received_referrals

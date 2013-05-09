@@ -57,6 +57,7 @@ group :test do
 end
 
 
+gem 'strong_parameters'
 gem 'devise', '2.2.3'
 gem 'omniauth-facebook', '1.4.0'
 gem 'koala', '1.6.0'

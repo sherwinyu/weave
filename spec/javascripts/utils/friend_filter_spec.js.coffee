@@ -35,11 +35,11 @@ describe "FriendFilter", ->
         user:
           name: @fbFriendResult1.name
           email: @fbFriendResult1.email
-          meta:
-            uid: @fbFriendResult1.id
+          info:
             name: @fbFriendResult1.name
-            email: @fbFriendResult1.email
             provider: "FACEBOOK"
+            uid: @fbFriendResult1.id
+            email: @fbFriendResult1.email
             other_info: @fbFriendResult1
 
   describe "friendSource", ->

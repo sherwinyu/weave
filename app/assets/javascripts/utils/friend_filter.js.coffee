@@ -6,7 +6,7 @@ Weave.FriendFilter = Ember.Object.extend
         user:
           name: friendResult.name
           email: friendResult.email
-          meta:
+          info:
             uid: friendResult.id
             name: friendResult.name
             email: friendResult.email
@@ -23,10 +23,10 @@ Weave.FriendFilter = Ember.Object.extend
   filterAndRank: (pfriends, score) ->
     pfriends.then (friends) =>
       friends.forEach (friend) =>
-        friend.user.score = score.call(@, friend)
+        friend.score = score.call(@, friend)
       friends.sort (a, b) ->
-         b.user.score - a.user.score
-      friends = friends.filter (friend) -> friend.user.score > 0
+         b.score - a.score
+      friends = friends.filter (friend) -> friend.score > 0
       friends
 
   filterAndRankAgainst: (term)->
