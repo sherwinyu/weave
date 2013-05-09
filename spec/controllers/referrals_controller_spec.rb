@@ -63,7 +63,7 @@ describe ReferralsController do
     let(:params) { super().merge id: @referral.id }
 
     it "updates referral's customizations and content" do
-      get :my_update, params
+      put :update_body, params
       @referral.reload
       @referral.content.should eq @referral_params[:content]
       @referral.customizations.should have(3).customizations

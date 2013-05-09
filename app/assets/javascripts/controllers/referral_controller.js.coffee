@@ -2,10 +2,11 @@ Weave.ReferralController = Ember.ObjectController.extend
   myView: null
   createWithRecipient: ->
     referral_batch_id = 1 # @get('content').referral_batch_id
-    debugger
+    params = @formatNew @get('content')
+    # params.referral_batch_id = 1
     utils.post
-      data: @formatNew @get('content')
-      url:  "referrals"#referral_batches/#{referral_batch_id}/referrals"
+      data: params
+      url:  "/referrals"#referral_batches/#{referral_batch_id}/referrals"
     @send 'editBody'
 
   formatUpdate:  ->
@@ -29,5 +30,5 @@ Weave.ReferralController = Ember.ObjectController.extend
         content: null
         recipient_attributes: recipient
         #sender_id:
-      referral_batch_id: referral_batch_id
+      referral_batch_id: 1
     }

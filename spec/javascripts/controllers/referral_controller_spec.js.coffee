@@ -13,7 +13,7 @@ describe "ReferralController", ->
       content: "referral content"
       recipient: @recipient
       customizations: []
-      referral_batch_id: 55
+      referral_batch_id: 1
 
 
 
@@ -28,7 +28,7 @@ describe "ReferralController", ->
       expect(@post).toHaveBeenCalledOnce()
       expect(@post).toHaveBeenCalledWith
         data: @referralController.formatNew @referral
-        url: "referrals"
+        url: "/referrals"
     describe "on success", ->
       it "sends event transitionTo editBody", ->
         @send = sinon.stub(@referralController, "send")
@@ -38,7 +38,7 @@ describe "ReferralController", ->
   describe "formatNew", ->
     it "works", ->
       formatted = @referralController.formatNew @content
-      expect(formatted.referral_batch_id).toEqual 55
+      expect(formatted.referral_batch_id).toEqual 1
       expect(formatted.referral.recipient_attributes.name).toEqual "sherwin yu"
       expect(formatted.referral.recipient_attributes.email).toEqual "abc@beg.com"
       expect(formatted.referral.recipient_attributes.user_infos_attributes[0].provider).toEqual "FACEBOOK"

@@ -1,6 +1,5 @@
 class ReferralsController < ApplicationController
   def create_with_recipient
-    binding.pry
     # raise "create_with_recipient should be not be requested with referral content" if params[:referral][:content]
     @referral_batch = ReferralBatch.find params.delete :referral_batch_id
     # normal users should only be able to send recipients if they own the referal batch
