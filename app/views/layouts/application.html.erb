@@ -7,7 +7,7 @@
       window.facebookToken = "<%=j current_user.authorizations.last.oauth_token if user_signed_in? %>";
       window.ember_params = "<%=j @ember_params if @ember_params %>"
     <% end %>
-    <% = javascript_include_tag "testing_stubs" if Rails.env.test? %>
+    <%= javascript_include_tag "testing_stubs" if Rails.env.test? %>
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tag %>
     <%= yield(:head) %>
