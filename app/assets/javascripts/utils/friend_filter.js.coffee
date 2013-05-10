@@ -16,6 +16,7 @@ Weave.FriendFilter = Ember.Object.extend
 
   friendSource: ->
     @_friends ||= facebook.query("/me/friends").then (friendResults) =>
+      @_cached_friends = friendResults
       friendResults.data.map (friendResult) =>
         @friendResultToFriendStruct(friendResult, "FACEBOOK")
 

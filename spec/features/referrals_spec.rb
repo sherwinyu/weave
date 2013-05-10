@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe "zugReferrals" do
-  describe "stuff" do
-    pending "works", js: true do
-      click '#sign-in-facebook'
-      complete_facebook_connect_and_wait_for "Weave"
+describe "Referrals" do
+  describe "create new referral with recipient" do
+    it "works", js: true do
       visit  '#/stories/1/referrals/1'
+      binding.pry
+      fill_in ".recipient-name-or-email", with: "y z"
     end
   end
 end
