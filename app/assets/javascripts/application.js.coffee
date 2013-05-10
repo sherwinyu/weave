@@ -1,7 +1,5 @@
 #= require jquery
 #= require jquery_ujs
-#= require sinon
-#= require jasmine-sinon
 #
 # require jquery.ui.autocomplete
 #= require suggester

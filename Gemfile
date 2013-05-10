@@ -38,10 +38,10 @@ group :development, :test do
   gem 'rb-inotify', require: false
 
   # gem 'jasmine-headless-webkit', '0.8.4'
-  gem 'guard-jasmine-headless-webkit'
+  # gem 'guard-jasmine-headless-webkit'
   gem 'factory_girl_rails', '4.2.1'
   gem 'guard-spork', '1.5.0'
-  gem 'jasmine-rails', '0.4.2'
+  # gem 'jasmine-rails', '0.4.2'
   gem 'guard-jasmine', '1.15.1'
   gem "jasminerice", '0.0.10'
   gem 'jasmine-sinon-rails'
@@ -49,13 +49,18 @@ group :development, :test do
 end
 
 group :test do
+  gem 'capybara'
+  gem 'poltergeist'
+  gem 'launchy'
   gem 'guard-rspec', '1.2.1'
   gem 'spork-rails', '3.2.1'
   gem 'thin'
+
   # gem 'jasmine-sinon-rails'
   # gem 'sinon-rails'
 end
 
+gem 'puffing-billy'
 
 gem 'strong_parameters'
 gem 'devise', '2.2.3'

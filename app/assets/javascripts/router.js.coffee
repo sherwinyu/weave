@@ -1,8 +1,6 @@
 Weave.Router.map (match)->
   @resource "stories", path: "/stories", ->
      @route "new"
-     # @route "index"
-    # @resource "referrals"
   @resource "story", path: "stories/:story_id", ->
     @route "show"
     @resource "referral", path: "referrals/:referral_id", ->
@@ -12,7 +10,7 @@ Weave.Router.map (match)->
   @resource "referral", path: "referrals/", ->
     @route "new"
 
-Weave.IndexRoute = Ember.Route.extend
+Weave.IndexRoute = Ember.Route.extend()
 
 Weave.StoriesRoute = Ember.Route.extend
   model: (params)->

@@ -1,5 +1,7 @@
 require 'rubygems'
 require 'spork'
+require 'capybara/rspec'
+require 'capybara/poltergeist'
 #uncomment the following line to use spork with the debugger
 #require 'spork/ext/ruby-debug'
 
@@ -47,7 +49,10 @@ Spork.prefork do
     # Include devise helpers and controller macros (https://github.com/plataformatec/devise/wiki/How-To%3a-Controllers-and-Views-tests-with-Rails-3-%28and-rspec%29)
     config.include Devise::TestHelpers, :type => :controller
     # config.extend ControllerMacros, :type => :controller
+
   end
+  # Use poltergeist
+  Capybara.javascript_driver = :poltergeist
 
 end
 
