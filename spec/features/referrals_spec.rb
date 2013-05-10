@@ -16,4 +16,15 @@ describe "Referrals" do
       uri.fragment.split("/").last.should eq "edit_body"
     end
   end
+  describe "update existing referral with body + customizations" do
+    before(:each) do
+      @referral = create :referral
+    end
+    it "works" do
+      visit "#/stories/#{@referral.referral_batch.id}/referrals/#{@referral.id}/edit_body"
+      fill_in "referral-content", with: "I really think you should buy this product! It's totally awesome"
+      find("#referral-send").click
+      # page.should have_content "Your referral was sent!"
+    end
+  end
 end

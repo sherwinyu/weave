@@ -6,10 +6,14 @@ Weave.u =
 Weave.vfi = Weave.u.viewFromId
 Weave.vfe = Weave.u.viewFromElement
 Weave.vf = Weave.u.viewFromNumber
+Weave.lu = (str) ->
+  Weave.__container__.lookup str
 
 window.vf = Weave.vf
-window.cP = Weave.u.currentPath
-
+window.cp = Weave.u.currentPath
+window.rt = -> Weave.lu "router:main"
+window.ctrl = (name) -> Weave.lu "controller:#{name}"
+window.routes = -> App.Router.router.recognizer.names
 
 window.utils =
   # expects: URL, data
