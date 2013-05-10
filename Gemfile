@@ -34,6 +34,7 @@ group :development, :test do
   gem 'rspec-rails', '2.13.0'
   gem 'pry', '0.9.11'
   gem 'pry-debugger', '0.2.2'
+  gem 'annotate', "2.5.0"
 
   gem 'rb-inotify', require: false
 

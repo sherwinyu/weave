@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: incentives
+#
+#  id          :integer          not null, primary key
+#  amount      :string(255)
+#  name        :string(255)
+#  description :string(255)
+#  condition   :string(255)
+#  free        :boolean
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
 class Incentive < ActiveRecord::Base
   attr_accessible :amount, :name, :description, :condition, :free
   has_many :instances

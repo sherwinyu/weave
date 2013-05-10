@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: campaigns
+#
+#  id                     :integer          not null, primary key
+#  name                   :string(255)
+#  description            :string(255)
+#  outreach_email_content :string(255)
+#  sender_page_content    :string(255)
+#  recipient_page_content :string(255)
+#  live                   :boolean
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  product_id             :integer
+#
+
 class Campaign < ActiveRecord::Base
   attr_accessible :name, :description, :outreach_email_content, :sender_page_content, :recipient_page_content, :live
 

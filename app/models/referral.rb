@@ -1,3 +1,23 @@
+# == Schema Information
+#
+# Table name: referrals
+#
+#  id                  :integer          not null, primary key
+#  content             :string(255)
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  recipient_id        :integer
+#  sender_id           :integer
+#  product_id          :integer
+#  delivered           :boolean          default(FALSE)
+#  delivered_at        :datetime
+#  recipient_opened    :boolean
+#  recipient_opened_at :datetime
+#  converted           :boolean
+#  referral_batch_id   :integer
+#  url_code            :string(255)
+#
+
 class Referral < ActiveRecord::Base
   # attr_accessible :content, :recipient, :recipient_attributes, :customizations, :customization_ids
   include ActiveModel::ForbiddenAttributesProtection
