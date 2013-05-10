@@ -25,6 +25,7 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
         @get('controller').createWithRecipient()
       minLength: 2
       source: (request, response) =>
+        console.log "WALAWALAWALA"
         @get('friendFilter').filterAndRankAgainst(request.term).then (friends) ->
           response(friends)
 

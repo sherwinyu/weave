@@ -9,6 +9,7 @@
     <% end %>
     <%= javascript_include_tag "application" %>
     <%= javascript_include_tag "testing_stubs" if Rails.env.test? %>
+    <%#= javascript_include_tag "testing_stubs" if !Rails.env.test? %>
     <%= csrf_meta_tag %>
     <%= yield(:head) %>
   </head>

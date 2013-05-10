@@ -460,8 +460,8 @@ $.widget( "ui.autocomplete", {
 
 	close: function( event ) {
           console.log('sup bitches');
-		this.cancelSearch = true;
-		this._close( event );
+		// this.cancelSearch = true;
+		// this._close( event );
 	},
 
 	_close: function( event ) {

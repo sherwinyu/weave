@@ -68,6 +68,9 @@ Spork.each_run do
   # Devise caches user class so we need to reload it
   load File.expand_path(File.dirname(__FILE__) + '/../app/models/user.rb')
 
+  # from http://stackoverflow.com/questions/14061325/prepare-called-on-a-closed-database-rails-rspec
+  # ActiveRecord::Base.establish_connection
+  ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection
 end
 
 # --- Instructions ---
