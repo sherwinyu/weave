@@ -24,4 +24,8 @@ class CampaignsController < ApplicationController
       render :action => 'edit'
     end
   end
+  def show
+    @campaign = Campaign.find(params[:id])
+    render json: @campaign
+  end
 end

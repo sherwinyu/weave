@@ -1,4 +1,7 @@
 Weave.Router.map (match)->
+  @resource "campaign", path: "/campaigns/:campaign_id", ->
+    @resource "stories", path: "/stories", ->
+       @route "new"
   @resource "stories", path: "/stories", ->
      @route "new"
   @resource "story", path: "/stories/:story_id", ->
@@ -12,6 +15,7 @@ Weave.Router.map (match)->
     @route "done"
   @resource "referral", path: "/referrals", ->
     @route "new"
+Weave.CampaignRoute = Ember.Route.extend()
 
 Weave.IndexRoute = Ember.Route.extend()
 
