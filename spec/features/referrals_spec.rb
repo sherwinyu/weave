@@ -23,8 +23,9 @@ describe "Referrals" do
     it "works" do
       visit "#/stories/#{@referral.referral_batch.id}/referrals/#{@referral.id}/edit_body"
       fill_in "referral-content", with: "I really think you should buy this product! It's totally awesome"
+      fill_in "referral-recipient-email", with: "sherwin@communificiency.com"
       find("#referral-send").click
-      # page.should have_content "Your referral was sent!"
+      page.should have_content "Your referral was sent!"
     end
   end
 end

@@ -13,6 +13,7 @@ Weave::Application.routes.draw do
   end
   resources :referrals, only: [:update, :create]
   resources :campaigns, only: [:show]
+  resources :products, only: [:show]
 
   # resources :referrers
   # match 'auth/:provider/callback', to: 'sessions#create'
