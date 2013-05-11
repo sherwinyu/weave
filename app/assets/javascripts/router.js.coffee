@@ -67,6 +67,7 @@ Weave.ReferralSelectRecipientRoute = Ember.Route.extend
     Weave.Referral.createRecord(referralBatch: @modelFor('referralBatch'))
   setupController: (controller, model) ->
     @controllerFor('referral').set('content', model)
+    @controllerFor('referral').set 'message', messenger: "wala"
     @controllerFor('referral').set('selectingRecipient', true)
   renderTemplate: ->
     @controllerFor('referral').get('myView')?.$('.select-recipient > input').val 'wala'
