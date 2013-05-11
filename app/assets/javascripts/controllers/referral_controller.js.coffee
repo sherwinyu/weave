@@ -9,7 +9,7 @@ Weave.ReferralController = Ember.ObjectController.extend
     recip.user_infos_attributes = [recip.info]
     delete recip.info
     @get('content').save()
-    @send 'editBody'
+    @send 'editBody', @get('content')
 
   createWithRecipient2: ->
     referral_batch_id = 1 # @get('content').referral_batch_id

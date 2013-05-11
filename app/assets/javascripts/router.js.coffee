@@ -8,7 +8,7 @@ Weave.Router.map (match)->
     @route "show"
     @resource "referral", path: "/referrals", ->
       @route "select_recipient"
-      @route "edit_body"
+      @route "edit_body", path: "/:referral_id/edit_body"
       @resource "referralx", path: "/:referral_id", ->
         @route "edit_body"
     ###
@@ -55,25 +55,20 @@ Weave.ReferralBatchShowRoute = Ember.Route.extend
   wala: 5
 
 Weave.ReferralRoute = Ember.Route.extend
-  model: (params)->
-    console.log "referral id#{params.referral_id}"
-    params
   events:
     selectRecipient: ->
       @transitionTo 'referral.select_recipient' #, {referral: {}
-    editBody: ->
-      @transitionTo 'referral.edit_body'
+    editBody: (referral)->
+      @transitionTo 'referral.edit_body', referral
 
 Weave.ReferralSelectRecipientRoute = Ember.Route.extend
   model: (params)->
     console.log "referral id#{params.referal_id}"
     Weave.Referral.createRecord(referralBatch: @modelFor('referralBatch'))
   setupController: (controller, model) ->
-    debugger
     @controllerFor('referral').set('content', model)
     @controllerFor('referral').set('selectingRecipient', true)
   renderTemplate: ->
-    debugger
     @controllerFor('referral').get('myView')?.$('.select-recipient > input').val 'wala'
 
     # renderTemplate: ->
