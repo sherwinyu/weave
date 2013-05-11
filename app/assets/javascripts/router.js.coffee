@@ -26,7 +26,7 @@ Weave.StoriesIndexRoute = Ember.Route.extend()
 Weave.StoriesNewRoute = Ember.Route.extend
   activate: ->
     console.log 'walawala'
-    "cc = Weave.Campaign.createRecord()
+    cc = Weave.Campaign.createRecord()
 
 Weave.StoryRoute = Ember.Route.extend
   model: (params)->
