@@ -8,22 +8,32 @@ describe "ReferralController", ->
         name: "sherwin yu"
         uid: "sherwinxyu"
         email: "abc@beg.com"
-    @referral =
-      content: "lala i'm a referral"
-      content: "referral content"
-      recipient: @recipient
-      customizations: []
-      referral_batch_id: 1
+    Ember.run =>
+      @referral = Weave.Referral.createRecord
+        content: "referral content"
+        recipient_attributes: @recipient
+        customizations: []
+        referral_batch_id: 1
 
+      @referralController = Weave.ReferralController.create content: @referral
+  describe "ceateWithRecipient model", ->
+    beforeEach ->
+      @ajax = sinon.stub(jQuery, "ajax")
+    it "ajaxes with the correct payload", ->
+      Ember.run =>
+        @referralController.createWithRecipient()
+      payload = @ajax.getCall(0).args[0].data
+      debugger
 
+    afterEach ->
+      @ajax.restore()
 
-    @referralController = Weave.ReferralController.create content: @referral
-  describe "createWithRecipient", ->
+  xdescribe "createWithRecipient", ->
     beforeEach ->
       @post = sinon.stub(utils, "post")
     afterEach ->
       @post.restore()
-    it "posts to the correct url with correct data ", ->
+    xit "posts to the correct url with correct data ", ->
       @referralController.createWithRecipient()
       expect(@post).toHaveBeenCalledOnce()
       expect(@post).toHaveBeenCalledWith
@@ -45,6 +55,3 @@ describe "ReferralController", ->
       expect(formatted.referral.recipient_attributes.user_infos_attributes[0].name).toEqual "sherwin yu"
       expect(formatted.referral.recipient_attributes.user_infos_attributes[0].uid).toEqual "sherwinxyu"
       expect(formatted.referral.recipient_attributes.user_infos_attributes[0].email).toEqual "abc@beg.com"
-
-
-

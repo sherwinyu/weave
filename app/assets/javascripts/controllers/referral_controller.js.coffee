@@ -1,6 +1,9 @@
 Weave.ReferralController = Ember.ObjectController.extend
   myView: null
   createWithRecipient: ->
+    @get('content').save()
+
+  createWithRecipient2: ->
     referral_batch_id = 1 # @get('content').referral_batch_id
     params = @formatNew @get('content')
     # params.referral_batch_id = 1

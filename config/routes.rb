@@ -12,7 +12,7 @@ Weave::Application.routes.draw do
     end
   end
   resources :referrals, only: [:update, :create]
-  resources :campaigns, only: [:show]
+  resources :campaigns, only: [:show, :create, :update]
   resources :products, only: [:show]
 
   # resources :referrers
