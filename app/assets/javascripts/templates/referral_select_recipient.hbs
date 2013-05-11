@@ -4,5 +4,5 @@
   {{view Ember.TextField class="recipient-name-or-email" valueBinding="view.recipient.email" id="wala"}}
   vre: {{view.recipient.email}}
 {{else}}
-  <h2>Select a friend</h2>
+  <a {{action selectRecipient}}><h2>Select a friend</h2></a>
 {{/if}}

@@ -5,5 +5,5 @@
   {{view Weave.ReferralCustomizationsSelectView customizationsBinding="customizations"}}
   content: {{content}}
 {{else}}
-  <h2>Customize dat body</h2>
+  <a {{action editBody this}}><h2>Customize dat body</h2></a>
 {{/if}}

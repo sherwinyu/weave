@@ -70,6 +70,9 @@ Weave.ReferralSelectRecipientRoute = Ember.Route.extend
     @controllerFor('referral').set('selectingRecipient', true)
   renderTemplate: ->
     @controllerFor('referral').get('myView')?.$('.select-recipient > input').val 'wala'
+  deactivate: ->
+    @controllerFor('referral').set('selectingRecipient', false)
+
 
     # renderTemplate: ->
     # @render 'ReferralSelectRecipient'
@@ -81,3 +84,5 @@ Weave.ReferralEditBodyRoute = Ember.Route.extend
   setupController: (controller, model) ->
     @controllerFor('referral').set('content', model)
     @controllerFor('referral').set('editingBody', true)
+  deactivate: ->
+    @controllerFor('referral').set('editingBody', false)
