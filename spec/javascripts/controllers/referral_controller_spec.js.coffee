@@ -9,21 +9,44 @@ describe "ReferralController", ->
         uid: "sherwinxyu"
         email: "abc@beg.com"
     Ember.run =>
+      @referralBatch = Weave.ReferralBatch.createRecord()
+      @referralBatch.set 'id', 55
       @referral = Weave.Referral.createRecord
         content: "referral content"
         recipient_attributes: @recipient
         customizations: []
-        referral_batch_id: 1
+        referralBatch: @referralBatch
 
       @referralController = Weave.ReferralController.create content: @referral
   describe "ceateWithRecipient model", ->
     beforeEach ->
       @ajax = sinon.stub(jQuery, "ajax")
+
+    # the following spec is kind of integrationy-y, but needs to be here because ember data is rather unstable"
     it "ajaxes with the correct payload", ->
-      Ember.run =>
-        @referralController.createWithRecipient()
+      Ember.run => @referralController.createWithRecipient()
       payload = @ajax.getCall(0).args[0].data
-      debugger
+      referral_json =
+        referral:
+          content: "referral content"
+          recipient_attributes:
+            name: "sherwin yu"
+            email: "abc@beg.com"
+            user_infos_attributes: [
+              {
+              provider: "FACEBOOK"
+              name: "sherwin yu"
+              uid: "sherwinxyu"
+              email: "abc@beg.com"
+              }
+            ]
+          referral_batch_id: 55
+      expect(payload).toEqual JSON.stringify referral_json
+
+    it "ajaxes with the correct url", ->
+      Ember.run => @referralController.createWithRecipient()
+      url = @ajax.getCall(0).args[0].url
+      expect(url).toEqual "/referrals"
 
     afterEach ->
       @ajax.restore()

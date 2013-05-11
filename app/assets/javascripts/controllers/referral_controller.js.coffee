@@ -1,6 +1,10 @@
 Weave.ReferralController = Ember.ObjectController.extend
   myView: null
   createWithRecipient: ->
+    # TODO(syu): refactor out into its own format method?
+    recip = @get('content').get('recipient_attributes')
+    recip.user_infos_attributes = [recip.info]
+    delete recip.info
     @get('content').save()
 
   createWithRecipient2: ->
