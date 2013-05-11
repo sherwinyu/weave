@@ -54,15 +54,15 @@ FactoryGirl.define do
   end
 
   factory :referral do |referral|
-    content "you should totally buy this!"
+    message "you should totally buy this!"
     sender
     recipient
     referral_batch
     trait(:not_delivered) {delivered_at nil}
-    trait(:no_content) {content nil}
+    trait(:no_message) {message nil}
     trait(:no_sender) {sender nil}
     trait(:no_recipient) {recipient nil}
-    factory :blank_referral, traits: [:no_content, :no_sender, :no_recipient]
+    factory :blank_referral, traits: [:no_message, :no_sender, :no_recipient]
   end
 
   factory :campaign do |campaign|
@@ -91,7 +91,7 @@ FactoryGirl.define do
   end
 
   factory :customization do |customization|
-    content { "#{generate :random_string} this product is perfect for the tech savvy asshole! totally rad!" }
+    description { "#{generate :random_string} this product is perfect for the tech savvy asshole! totally rad!" }
   end
 
 end

@@ -13,7 +13,7 @@ describe "ReferralController", ->
       @referralBatch = Weave.ReferralBatch.createRecord()
       @referralBatch.set 'id', 55
       @referral = Weave.Referral.createRecord
-        content: "referral content"
+        message: "referral content"
         recipient_attributes: @recipient
         customizations: []
         referralBatch: @referralBatch
@@ -29,7 +29,7 @@ describe "ReferralController", ->
       payload = @ajax.getCall(0).args[0].data
       referral_json =
         referral:
-          content: "referral content"
+          message: "referral content"
           recipient_attributes:
             name: "sherwin yu"
             email: "abc@beg.com"

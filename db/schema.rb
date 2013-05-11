@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130509224521) do
+ActiveRecord::Schema.define(:version => 20130511221406) do
 
   create_table "authorizations", :force => true do |t|
     t.string   "uid"
@@ -45,10 +45,10 @@ ActiveRecord::Schema.define(:version => 20130509224521) do
   end
 
   create_table "customizations", :force => true do |t|
-    t.string   "content"
+    t.string   "description"
     t.integer  "product_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "customizations_referrals", :id => false, :force => true do |t|
@@ -112,7 +112,7 @@ ActiveRecord::Schema.define(:version => 20130509224521) do
   end
 
   create_table "referrals", :force => true do |t|
-    t.string   "content"
+    t.string   "message"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
     t.integer  "recipient_id"

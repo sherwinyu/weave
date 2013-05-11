@@ -23,23 +23,23 @@ describe ReferralsController do
       end
     end
 
-    pending "raises an error if recipient.content was passed as a param" do
+    pending "raises an error if recipient.message was passed as a param" do
       @params = params
-      @params[:referral].merge! content: "You should totally buy this!"
-      expect {get :create_with_recipient, @params}.to raise_error /create_with_recipient.*not.*request.*referral.*content/
+      @params[:referral].merge! message: "You should totally buy this!"
+      expect {get :create_with_recipient, @params}.to raise_error /create_with_recipient.*not.*request.*referral.*message/
     end
 
     it "creates and saves a new recipient and user info if no existing recipient is found" do
       get :create_with_recipient, params
       created_referral = Referral.last
-      created_referral.content.should be_nil
+      created_referral.message.should be_nil
     end
     it "assigns @referral with the correct properties" do
       get :create_with_recipient, params
       assigns(:referral).referral_batch.should eq @referral_batch
       assigns(:referral).sender.should eq @sender
       assigns(:referral).recipient.should be_persisted
-      assigns(:referral).content.should be_nil
+      assigns(:referral).message.should be_nil
       assigns(:referral).incentives.should be_empty
       assigns(:referral).customizations.should be_empty
     end
@@ -57,20 +57,20 @@ describe ReferralsController do
   describe "#update" do
     before :each do
       @referral = create :blank_referral
-      @referral_params = attributes_for :referral, content: "buy this!"
+      @referral_params = attributes_for :referral, message: "buy this!"
       @referral_params.merge! customization_ids: @customizations.map(&:id)
     end
     let(:params) { super().merge id: @referral.id }
 
-    it "updates referral's customizations and content" do
+    it "updates referral's customizations and message" do
       put :update_body, params
       @referral.reload
-      @referral.content.should eq @referral_params[:content]
+      @referral.message.should eq @referral_params[:message]
       @referral.customizations.should have(3).customizations
       @referral.customizations.should eq @customizations
     end
     describe "errors" do
-      it "responds with errors if content or customizations are invalid"
+      it "responds with errors if message or customizations are invalid"
     end
     pending "requested with referral id and customization ids"
     pending "calls @referral.send if params send"

@@ -1,5 +1,5 @@
 Weave.Referral = DS.Model.extend
-  content: DS.attr 'string'
+  message: DS.attr 'string'
   customizations: DS.hasMany 'Weave.Customization'
   referralBatch: DS.belongsTo 'Weave.ReferralBatch'
   recipient_attributes: DS.attr 'json'
