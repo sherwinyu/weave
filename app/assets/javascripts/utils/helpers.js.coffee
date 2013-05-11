@@ -13,7 +13,7 @@ window.vf = Weave.vf
 window.cp = Weave.u.currentPath
 window.rt = -> Weave.lu "router:main"
 window.ctrl = (name) -> Weave.lu "controller:#{name}"
-window.routes = -> App.Router.router.recognizer.names
+window.routes = -> Weave.Router.router.recognizer.names
 
 window.utils =
   # expects: URL, data

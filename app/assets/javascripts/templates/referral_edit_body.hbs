@@ -1,6 +1,9 @@
-<h2>Customize dat body</h2>
-<hr>
-{{view Ember.TextField valueBinding="content" class="referral-content"}}
-{{view Weave.ReferralCustomizationsSelectView customizationsBinding="customizations"}}
-content: {{content}}
-<hr>
+{{#if editingBody}}
+  <h2>Customize dat body</h2>
+  <hr>
+  {{view Ember.TextField valueBinding="content" class="referral-content"}}
+  {{view Weave.ReferralCustomizationsSelectView customizationsBinding="customizations"}}
+  content: {{content}}
+{{else}}
+  <h2>Customize dat body</h2>
+{{/if}}
