@@ -1,8 +1,9 @@
-{{#if selectingRecipient}}
+<div {{bindAttr class="selectingRecipient:visible:invisible"}}>
   <h2>Select a friend</h2>
   <h3>Enter a friend's name or email</h3>
   {{view Ember.TextField class="recipient-name-or-email" valueBinding="view.recipient.email" id="wala"}}
   vre: {{view.recipient.email}}
-{{else}}
+</div>
+<div class {{bindAttr class="selectingRecipient:invisible:visible"}}>
   <a {{action selectRecipient}}><h2>Select a friend</h2></a>
-{{/if}}
+</div>
