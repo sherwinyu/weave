@@ -6,7 +6,7 @@ describe "Referrals" do
       create :referral_batch
     end
     it "works", js: true do
-      visit  '#/stories/1/referrals/1'
+      visit  '#/stories/1/referrals/1/select_recipient'
 
       fill_in "wala", with: "y z"
       ex "$('#wala').keydown()"

@@ -45,7 +45,7 @@ Weave.ReferralBatchesNewRoute = Ember.Route.extend
 Weave.ReferralBatchRoute = Ember.Route.extend
   model: (params)->
     console.log "story id #{params.story_id}"
-    params
+    Weave.ReferralBatch.find params.story_id
   events:
     selectRecipient: ->
       @transitionTo 'referral.select_recipient' #, {referral: {}
@@ -80,7 +80,10 @@ Weave.ReferralIndex = Ember.Route.extend
 Weave.ReferralSelectRecipientRoute = Ember.Route.extend
   model: (params)->
     console.log "referral id#{params.referal_id}"
-    params
+    Weave.Referral.createRecord(referralBatch: @modelFor('referralBatch'))
+  setupController: (controller, model) ->
+    debugger
+    @controllerFor('referral').set('content', model)
   renderTemplate: ->
     debugger
     @controllerFor('referral').get('myView')?.$('.select-recipient > input').val 'wala'

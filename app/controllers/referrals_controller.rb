@@ -39,7 +39,14 @@ class ReferralsController < ApplicationController
     @referral = Referral.new
   end
   def create
-    create_with_recipient
+    @referral = Referral.create referral_params
+    if @referral.save
+      render json: @referral
+    else
+      render json: @referral, status: 422
+    end
+
+    # create_with_recipient
   end
   def show
 
@@ -49,7 +56,7 @@ class ReferralsController < ApplicationController
   end
   private
   def referral_params
-    params.require(:referral).permit :content, {customization_ids: []},
+    params.require(:referral).permit :content, :referral_batch_id, {customization_ids: []},
       { recipient_attributes: [:name,
                              :id,
                              :email,
