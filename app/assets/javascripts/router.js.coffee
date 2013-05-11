@@ -1,10 +1,10 @@
 Weave.Router.map (match)->
   @resource "campaign", path: "/campaigns/:campaign_id", ->
-    @resource "stories", path: "/stories", ->
+    @resource "referralBatches", path: "/stories", ->
        @route "new"
-  @resource "stories", path: "/stories", ->
+  @resource "referralBatches", path: "/stories", ->
      @route "new"
-  @resource "story", path: "/stories/:story_id", ->
+  @resource "referralBatch", path: "/stories/:story_id", ->
     @route "show"
     @resource "referral", path: "/referrals/:referral_id", ->
       @route "select_recipient"
@@ -19,16 +19,30 @@ Weave.CampaignRoute = Ember.Route.extend()
 
 Weave.IndexRoute = Ember.Route.extend()
 
-Weave.StoriesRoute = Ember.Route.extend
+Weave.ReferralBatchesRoute = Ember.Route.extend
   model: (params)->
     console.log "stories id #{params.story_id}"
-Weave.StoriesIndexRoute = Ember.Route.extend()
-Weave.StoriesNewRoute = Ember.Route.extend
+Weave.ReferralBatchesIndexRoute = Ember.Route.extend()
+
+Weave.ReferralBatchesNewRoute = Ember.Route.extend
   activate: ->
     console.log 'walawala'
     cc = Weave.Campaign.createRecord()
+  model: ->
 
-Weave.StoryRoute = Ember.Route.extend
+  setupController: (controller, model) ->
+    @campaign = @controllerFor('campaign').get 'content'
+    @referralBatch = Weave.ReferralBatch.createRecord(campaign: @campaign)
+    @referralBatch.save().then(
+      ((result) =>
+        @transitionTo('referralBatch.show', result)
+      ),
+      (error) -> console.log('Error occured')
+      ).then(null, (error) -> debugger; console.log error)
+
+
+
+Weave.ReferralBatchRoute = Ember.Route.extend
   model: (params)->
     console.log "story id #{params.story_id}"
     params
@@ -37,6 +51,12 @@ Weave.StoryRoute = Ember.Route.extend
       @transitionTo 'referral.select_recipient' #, {referral: {}
     editBody: ->
       @transitionTo 'referral.edit_body'
+
+Weave.ReferralBatchShowRoute = Ember.Route.extend
+ wala: 5
+
+
+
 Weave.FirstReferralRoute = Ember.Route.extend
   model: (params) ->
     console.log "first referral id#{params.referral_id}"

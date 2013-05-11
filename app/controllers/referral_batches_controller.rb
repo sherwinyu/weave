@@ -42,11 +42,11 @@ class ReferralBatchesController < ApplicationController
   end
 
   def create
-    @referral_batch = ReferralBatch.new(params[:referral_batch])
+    @referral_batch = ReferralBatch.new referral_batch_params
     if @referral_batch.save
-      redirect_to root_url, :notice => "Successfully created referral batch."
+      render json: @referral_batch
     else
-      render :action => 'new'
+      render json: @referral_batch, status: 422
     end
   end
 
@@ -65,5 +65,9 @@ class ReferralBatchesController < ApplicationController
     else
       render :action => 'edit'
     end
+  end
+  private
+  def referral_batch_params
+    params.require(:referral_batch).permit :campaign_id, :sender_page_visited, :sender_page_personalized
   end
 end
