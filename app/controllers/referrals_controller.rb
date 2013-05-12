@@ -56,6 +56,7 @@ class ReferralsController < ApplicationController
   end
   private
   def referral_params
+    params[:referral][:customization_ids] = params[:referral].delete(:customizations).map{|c| c[:id]}
     params.require(:referral).permit :message, :referral_batch_id, {customization_ids: []},
       { recipient_attributes: [:name,
                              :id,

@@ -5,10 +5,10 @@ DS.RESTAdapter.configure 'plurals',
   referral_batch: "referral_batches"
   referralBatch: "referralBatches"
 
-  # DS.RESTAdapter.map 'Weave.Campaign',
-  # product:
-  # embedded: 'always'
-  #
+DS.RESTAdapter.map 'Weave.Referral',
+  customizations:
+    embedded: 'always'
+
 DS.RESTAdapter.registerTransform 'json',
   serialize: (json) ->
     json
