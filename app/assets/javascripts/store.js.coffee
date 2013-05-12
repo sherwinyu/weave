@@ -13,7 +13,7 @@ DS.RESTAdapter.registerTransform 'json',
   serialize: (json) ->
     json
   deserialize: (json) ->
-    Em.assert 'this should never happen', false
+    json # Em.assert 'this should never happen', false
 
 Weave.Store = DS.Store.extend
   revision: 12

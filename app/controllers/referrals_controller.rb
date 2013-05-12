@@ -49,7 +49,8 @@ class ReferralsController < ApplicationController
     # create_with_recipient
   end
   def show
-
+    @referral = Referral.find params[:id]
+    render json: @referral
   end
   def update
     @referral = Referral.find(params[:id])

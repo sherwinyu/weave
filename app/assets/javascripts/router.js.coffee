@@ -9,8 +9,6 @@ Weave.Router.map (match)->
     @resource "referral", path: "/referrals", ->
       @route "select_recipient"
       @route "edit_body", path: "/:referral_id/edit_body"
-      @resource "referralx", path: "/:referral_id", ->
-        @route "edit_body"
     ###
     @resource "referral", path: "/referrals/:referral_id", ->
       @route "select_recipient"

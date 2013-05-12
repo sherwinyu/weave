@@ -22,17 +22,23 @@ Weave.Referral = DS.Model.extend
   referralBatch: DS.belongsTo 'Weave.ReferralBatch'
   recipient_attributes: DS.attr 'json'
 
+  availableCustomizations: (->
+    @get('stateManager') and
+    @get('referralBatch.campaign.product.customizations')
+      ?.map (customization) =>
+        Weave.ReferralCustomization.create(customization: customization, referral: @)
+    ).property('referralBatch')
 
   setAvailableCustomizations: (->
     @set 'availableCustomizations',
       @get('referralBatch.campaign.product.customizations')
-        .map (customization) =>
+        ?.map (customization) =>
           Weave.ReferralCustomization.create(customization: customization, referral: @)
   )
   init: ->
     @_super()
     Ember.run.next @, ->
-      @setAvailableCustomizations()
+      # @setAvailableCustomizations()
 
   customizationSelected: (->
     console.log 'customization selected'
