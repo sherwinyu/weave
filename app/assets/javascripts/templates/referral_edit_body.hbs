@@ -1,8 +1,8 @@
 <div {{bindAttr class="editingBody:visible:invisible"}}>
   <h2>Customize dat body</h2>
   <hr>
-  {{view Ember.TextField valueBinding="content" class="referral-content"}}
-  {{view Weave.ReferralCustomizationsSelectView customizationsBinding="customizations"}}
+  {{view Ember.TextField valueBinding="message" class="referral-content"}}
+  {{view Weave.ReferralCustomizationsSelectView availableCustomizationsBinding="referralBatch.campaign.product.customizatoins" customizationsBinding="customizations"}}
   message: {{message}}
 </div>
 <div {{bindAttr class="editingBody:invisible:visible"}}>

@@ -24,13 +24,16 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
         @get('context').set('recipient_attributes', ui.item.user)
         # Fill in the input fields
         @$("#name-or-email").val ui.item.label
-        false
-        @get('controller').createWithRecipient()
+        @get('controller').send 'recipientSelected'
       minLength: 2
       source: (request, response) =>
         console.log "WALAWALAWALA"
         @get('friendFilter').filterAndRankAgainst(request.term).then (friends) ->
           response(friends)
+  selectingRecipientDidChange: ( ->
+    unless @get('context.selectingRecipient')
+      @$('input')?.autocomplete('zug')
+  ).observes('context.selectingRecipient')
 
 Weave.ReferralEditBodyView = Ember.View.extend
 # context: referral

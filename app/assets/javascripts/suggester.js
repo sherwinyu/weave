@@ -463,6 +463,11 @@ $.widget( "ui.autocomplete", {
 		// this.cancelSearch = true;
 		// this._close( event );
 	},
+        zug: function ( event ) {
+          console.log('closnig down bitches');
+		this.cancelSearch = true;
+		this._close( event );
+        },
 
 	_close: function( event ) {
 		if ( this.menu.element.is( ":visible" ) ) {
