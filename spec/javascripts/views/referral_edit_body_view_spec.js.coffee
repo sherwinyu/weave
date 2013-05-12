@@ -1,7 +1,7 @@
 describe "ReferralEditBodyView", ->
   beforeEach ->
     @context = Ember.Object.create
-      content: "referral content"
+      message: "referral message"
       recipient: null
       customizations: []
     @view = Weave.ReferralEditBodyView.create
@@ -11,27 +11,28 @@ describe "ReferralEditBodyView", ->
 
   afterEach ->
     Ember.run =>
+      return
       @view.remove()
       @view.destroy()
 
   describe "structure", ->
-    it "contains a referral-content input", ->
-      expect(@view.$()).toContain 'input.referral-content'
+    it "contains a referral-message input", ->
+      expect(@view.$()).toContain 'textarea.referral-message'
     it "contains a referral-customizations div", ->
       expect(@view.$()).toContain '.referral-customizations'
 
-  it "prepopulates referral.content", ->
-    expect(@view.$('input')).toHaveValue @context.content
+  it "prepopulates referral.message", ->
+    expect(@view.$('textarea.referral-message')).toHaveValue @context.message
 
-  it "binds input.value -> referral.content", ->
+  it "binds input.value -> referral.message", ->
     Ember.run =>
-      @view.$('input').val('new referral content')
-      @view.$('input').blur()
-    expect(@context.get 'content').toBe 'new referral content'
-  it "binds referral.content -> input.value", ->
+      @view.$('textarea.referral-message').val('new referral message')
+      @view.$('textarea.referral-message').blur()
+    expect(@context.get 'message').toBe 'new referral message'
+  it "binds referral.message -> input.value", ->
     Ember.run =>
-      @context.set('content', 'new content')
-    expect(@view.$('input')).toHaveValue 'new content'
+      @context.set('message', 'new message')
+    expect(@view.$('textarea.referral-message')).toHaveValue 'new message'
   it "binds referral.customizations", ->
     customizations_select_view = @view.get('childViews')
       .findProperty('constructor', Weave.ReferralCustomizationsSelectView)
