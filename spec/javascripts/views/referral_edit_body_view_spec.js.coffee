@@ -11,7 +11,6 @@ describe "ReferralEditBodyView", ->
 
   afterEach ->
     Ember.run =>
-      return
       @view.remove()
       @view.destroy()
 
@@ -20,6 +19,8 @@ describe "ReferralEditBodyView", ->
       expect(@view.$()).toContain 'textarea.referral-message'
     it "contains a referral-customizations div", ->
       expect(@view.$()).toContain '.referral-customizations'
+    it "contains a primary deliver button", ->
+      expect(@view.$()).toContain '.btn.btn-primary#deliver-button'
 
   it "prepopulates referral.message", ->
     expect(@view.$('textarea.referral-message')).toHaveValue @context.message
