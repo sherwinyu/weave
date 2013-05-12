@@ -75,12 +75,10 @@ Weave.ReferralSelectRecipientRoute = Ember.Route.extend
     @controllerFor('referral').set('selectingRecipient', false)
   events:
     recipientSelected: ->
-      debugger
       @modelFor('referral.select_recipient').one 'didCreate', =>
-        debugger
         Ember.run.next @, =>
-          debugger
           rf = @controllerFor('referral').get 'content'
+          debugger
           @send 'editBody', rf
       @controllerFor('referral').createWithRecipient()
 
