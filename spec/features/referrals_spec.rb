@@ -12,6 +12,7 @@ describe "Referrals" do
       ex "$('#wala').keydown()"
 
       find("a", text: "Yan Zhang").click
+      page.should have_content "customizations"
       uri = URI.parse(current_url)
       uri.fragment.split("/").last.should eq "edit_body"
     end

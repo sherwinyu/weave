@@ -9,9 +9,10 @@ describe "ReferralController", ->
         uid: "sherwinxyu"
         email: "abc@beg.com"
         other_info: "walawala!"
+    Ember.testing = false
     Ember.run =>
-      @referralBatch = Weave.ReferralBatch.createRecord()
-      @referralBatch.set 'id', 55
+      @referralBatch = Weave.ReferralBatch.find(1)
+    Ember.run =>
       @referral = Weave.Referral.createRecord
         message: "referral content"
         recipient_attributes: @recipient
@@ -21,6 +22,7 @@ describe "ReferralController", ->
       @referralController = Weave.ReferralController.create content: @referral
   describe "ceateWithRecipient model", ->
     beforeEach ->
+      Ember.testing = false
       @ajax = sinon.stub(jQuery, "ajax")
 
     # the following spec is kind of integrationy-y, but needs to be here because ember data is rather unstable"
@@ -42,7 +44,8 @@ describe "ReferralController", ->
               other_info: "walawala!"
               }
             ]
-          referral_batch_id: 55
+          customizations: []
+          referral_batch_id: 1
       expect(payload).toEqual JSON.stringify referral_json
 
     it "ajaxes with the correct url", ->
@@ -52,31 +55,3 @@ describe "ReferralController", ->
 
     afterEach ->
       @ajax.restore()
-
-  xdescribe "createWithRecipient", ->
-    beforeEach ->
-      @post = sinon.stub(utils, "post")
-    afterEach ->
-      @post.restore()
-    xit "posts to the correct url with correct data ", ->
-      @referralController.createWithRecipient()
-      expect(@post).toHaveBeenCalledOnce()
-      expect(@post).toHaveBeenCalledWith
-        data: @referralController.formatNew @referral
-        url: "/referrals"
-    describe "on success", ->
-      it "sends event transitionTo editBody", ->
-        @send = sinon.stub(@referralController, "send")
-        @referralController.createWithRecipient()
-        expect(@send).toHaveBeenCalled()
-
-  xdescribe "formatNew", ->
-    it "works", ->
-      formatted = @referralController.formatNew @content
-      expect(formatted.referral_batch_id).toEqual 1
-      expect(formatted.referral.recipient_attributes.name).toEqual "sherwin yu"
-      expect(formatted.referral.recipient_attributes.email).toEqual "abc@beg.com"
-      expect(formatted.referral.recipient_attributes.user_infos_attributes[0].provider).toEqual "FACEBOOK"
-      expect(formatted.referral.recipient_attributes.user_infos_attributes[0].name).toEqual "sherwin yu"
-      expect(formatted.referral.recipient_attributes.user_infos_attributes[0].uid).toEqual "sherwinxyu"
-      expect(formatted.referral.recipient_attributes.user_infos_attributes[0].email).toEqual "abc@beg.com"
