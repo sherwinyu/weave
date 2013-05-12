@@ -6,12 +6,9 @@ Weave.ReferralCustomization = Ember.Object.extend
   descriptionBinding: "customization.description"
   selectedToggled: ( ->
     if @get('selected')
-      debugger
       @get('customizationSet').pushObject( @get 'customization' )
     else
-      debugger
       if @get('customizationSet').contains( @get 'customization' )
-        debugger
         @get('customizationSet').removeObject @get('customization')
 
   ).observes 'selected'

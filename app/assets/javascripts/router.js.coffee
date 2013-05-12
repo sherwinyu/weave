@@ -58,6 +58,12 @@ Weave.ReferralRoute = Ember.Route.extend
       @transitionTo 'referral.select_recipient' #, {referral: {}
     editBody: (referral)->
       @transitionTo 'referral.edit_body', referral
+    startNewReferral: ->
+      # debugger
+      # referralBatch = @modelFor 'referralBatch'
+      # rf = Weave.Referral.createRecord referralBatch: referralBatch
+      @transitionTo 'referral.select_recipient'
+
 
 Weave.ReferralSelectRecipientRoute = Ember.Route.extend
   model: (params)->
@@ -89,7 +95,14 @@ Weave.ReferralEditBodyRoute = Ember.Route.extend
     @transitionTo 'referral.select_recipient' unless model?
 
   setupController: (controller, model) ->
+    debugger
     @controllerFor('referral').set('content', model)
     @controllerFor('referral').set('editingBody', true)
   deactivate: ->
     @controllerFor('referral').set('editingBody', false)
+  events:
+    deliverClicked: (referral) ->
+      @controllerFor('referral').get('content').one 'didUpdate', =>
+        debugger
+        @send 'startNewReferral'
+      @controllerFor('referral').updateAndDeliver()

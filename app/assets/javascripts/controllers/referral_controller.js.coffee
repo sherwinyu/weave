@@ -13,6 +13,8 @@ Weave.ReferralController = Ember.ObjectController.extend
     # @get('content').save()
     # .then (referral) -> @send 'editBody', referral
     # @send 'editBody', @get('content')
+  updateAndDeliver: ->
+    @get('store').commit()
 
 
   createWithRecipient2: ->
