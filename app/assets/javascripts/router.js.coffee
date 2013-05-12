@@ -76,7 +76,7 @@ Weave.ReferralSelectRecipientRoute = Ember.Route.extend
       @modelFor('referral.select_recipient').one 'didCreate', =>
         Ember.run.next @, =>
           rf = @controllerFor('referral').get 'content'
-          rf.get('stateManager').send('finishedMaterializing')
+          # rf.get('stateManager').send('finishedMaterializing')
           @send 'editBody', rf
       @controllerFor('referral').createWithRecipient()
 

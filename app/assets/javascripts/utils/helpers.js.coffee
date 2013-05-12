@@ -14,6 +14,9 @@ window.cp = Weave.u.currentPath
 window.rt = -> Weave.lu "router:main"
 window.ctrl = (name) -> Weave.lu "controller:#{name}"
 window.routes = -> Weave.Router.router.recognizer.names
+window.msm = (model)-> model.get('stateManager')
+window.mcp = (model)-> msm(model).get('currentPath')
+window.mcs = (model)-> msm(model).get('currentState')
 
 window.utils =
   # expects: URL, data
