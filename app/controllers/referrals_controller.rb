@@ -52,7 +52,12 @@ class ReferralsController < ApplicationController
 
   end
   def update
-
+    @referral = Referral.find(params[:id])
+    if @referral.update_attributes referral_params
+      render json: @referral
+    else
+      render json: @referral, status: 422
+    end
   end
   private
   def referral_params
