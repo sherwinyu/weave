@@ -5,7 +5,7 @@
     <%= stylesheet_link_tag "application" %>
     <%= javascript_tag do %>
       window.facebookToken = "<%=j current_user.authorizations.last.oauth_token if user_signed_in? %>";
-      window.ember_params = "<%=j @ember_params if @ember_params %>"
+      window.rails = <%=raw  @rails.to_json if @rails %>;
     <% end %>
     <%= javascript_include_tag "application" %>
     <%= javascript_include_tag "testing_stubs" if Rails.env.test? %>

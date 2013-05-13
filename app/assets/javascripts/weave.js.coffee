@@ -10,6 +10,8 @@
 #= require_self
 
 
+# set Weave.rails
+Weave.rails = window.rails if window.rails?
 # Initialize Ember routing
-if window.ember_params? && !window.location.hash
-  window.location.hash = ember_params
+if Weave.rails?.path? && !window.location.hash
+  window.location.hash = Weave.rails.path

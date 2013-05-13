@@ -83,10 +83,6 @@ Weave.ReferralSelectRecipientRoute = Ember.Route.extend
           @send 'editBody', rf
       @controllerFor('referral').createWithRecipient()
 
-
-    # renderTemplate: ->
-    # @render 'ReferralSelectRecipient'
-
 Weave.ReferralEditBodyRoute = Ember.Route.extend
   redirect: (model) ->
     @transitionTo 'referral.select_recipient' unless model?

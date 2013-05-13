@@ -29,7 +29,12 @@ class ApplicationController < ActionController::Base
   before_filter :inject_ember_params
 
   def inject_ember_params
-    @ember_params = request.path
+    @rails = {
+      pathHelpers: {
+        userOmniauthCallbackPathFacebook: user_omniauth_callback_path(:facebook)
+      },
+      path: request.path
+    }
   end
 
 
