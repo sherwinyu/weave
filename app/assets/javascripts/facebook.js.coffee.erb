@@ -24,7 +24,7 @@ window.facebook =
       else
         console.log "User didn't auth.."
         dfd.reject(response)
-    ), scope: scope
+    ), scope: facebook.scope
     dfd.promise()
 
   logout: (cb) ->
