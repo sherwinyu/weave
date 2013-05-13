@@ -15,3 +15,4 @@
 # require_tree .
 window.Weave = Ember.Application.create
   LOG_TRANSITIONS: true
+Weave.rails = -> Weave._rails

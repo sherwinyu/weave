@@ -7,6 +7,7 @@ jQuery ->
     cache: 'true'
 
 window.facebook =
+  scope: 'email, user_education_history, user_interests, user_likes, user_activities, friends_status, user_status, friends_about_me, friends_activities, friends_education_history, friends_interests, friends_location, friends_religion_politics'
   populateUserInfo: ->
 
   unwrap: (dfd) ->
@@ -15,16 +16,16 @@ window.facebook =
     x
 
   login: ->
+    dfd = new $.Deferred()
     FB.login ((response) ->
       if response.authResponse
-        $.ajax
-          url: '<%= Weave::Application.routes.url_helpers.user_omniauth_callback_path :facebook %>'
-          success: ->
-            FB.api '/me', (response) ->
-              console.log 'Good to see you, ' + response.name + '.'
+        console.log "User did auth"
+        dfd.resolve(response)
       else
-        console.log "user didn't auth"
-    ), scope: 'email, user_education_history, user_interests, user_likes, user_activities, friends_status, user_status, friends_about_me, friends_activities, friends_education_history, friends_interests, friends_location, friends_religion_politics'
+        console.log "User didn't auth.."
+        dfd.reject(response)
+    ), scope: scope
+    dfd.promise()
 
   logout: (cb) ->
     console.log 'FB.logging out'
