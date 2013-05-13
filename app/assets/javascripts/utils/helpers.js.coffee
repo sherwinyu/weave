@@ -9,6 +9,7 @@ Weave.vf = Weave.u.viewFromNumber
 Weave.lu = (str) ->
   Weave.__container__.lookup str
 
+window.lu = Weave.lu
 window.vf = Weave.vf
 window.cp = Weave.u.currentPath
 window.rt = -> Weave.lu "router:main"

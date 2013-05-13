@@ -22,7 +22,7 @@ describe "FriendFilter", ->
         next: "http://someurl.com/somemethod/someparams?123"
     @facebookQuery = sinon.stub(facebook, "query")
     @facebookQuery.withArgs("/me/friends").returns dfd.promise()
-    @friendSource = @friendFilter.friendSource()
+    # @friendSource = @friendFilter.friendSource()
 
   afterEach ->
     @facebookQuery.restore()
@@ -44,17 +44,29 @@ describe "FriendFilter", ->
 
   describe "friendSource", ->
 
+    beforeEach ->
+      @getAuth = sinon.stub(@friendFilter, 'get')
+      @getAuth.withArgs('auth.omniauthed').returns true
+    afterEach ->
+      @getAuth.restore()
     it "calls facebook.query", ->
+      @friendSource = @friendFilter.friendSource()
       expect(@facebookQuery).toHaveBeenCalledOnce()
       expect(@facebookQuery).toHaveBeenCalledWith("/me/friends")
     it "returns a promise of friend structs", ->
+      @friendSource = @friendFilter.friendSource()
       @friendSource.then (results) =>
         expect(results).toEqual
         [ @fbFriendResult1,
           @fbFriendResult2,
           @fbFriendResult3,
           @fbFriendResult4 ].map (fb) => @friendFilter.friendResultToFriendStruct(fb, "FACEBOOK")
+
   describe "filterAndRank", ->
+    beforeEach ->
+      dfd = new $.Deferred()
+      dfd.resolve [@fbFriendResult1, @fbFriendResult2, @fbFriendResult3, @fbFriendResult4].map (f) => @friendFilter.friendResultToFriendStruct f, "FACEBOOK"
+      @friendSource = dfd.promise()
 
     it "excludes results that score 0", ->
       term = "walasdl"
@@ -79,14 +91,19 @@ describe "FriendFilter", ->
         expect(friends[1].user.name).toBe "Yan Zhang"
         expect(friends[2].user.name).toBe "Jeff Chen"
 
-    describe "filterAndRankAgainst", ->
-      it "returns a promise of friends #function_integration", ->
-        results = @friendFilter.filterAndRankAgainst("je zh")
-        results.then (friends) ->
-          expect(friends.length).toBe 3
-          expect(friends[0].user.name).toBe "Jeff Zhang"
-          expect(friends[1].user.name).toBe "Yan Zhang"
-          expect(friends[2].user.name).toBe "Jeff Chen"
+  describe "filterAndRankAgainst", ->
+    beforeEach ->
+      @getAuth = sinon.stub(@friendFilter, 'get')
+      @getAuth.withArgs('auth.omniauthed').returns true
+    afterEach ->
+      @getAuth.restore()
+    it "returns a promise of friends #function_integration", ->
+      results = @friendFilter.filterAndRankAgainst("je zh")
+      results.then (friends) ->
+        expect(friends.length).toBe 3
+        expect(friends[0].user.name).toBe "Jeff Zhang"
+        expect(friends[1].user.name).toBe "Yan Zhang"
+        expect(friends[2].user.name).toBe "Jeff Chen"
 
   describe "score", ->
     beforeEach ->

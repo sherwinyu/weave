@@ -1,24 +1,33 @@
 Weave.FriendFilter = Ember.Object.extend
   friendResultToFriendStruct: (friendResult, provider) ->
-    if provider == "FACEBOOK"
-      {
-        label: friendResult.name
-        user:
+    Em.assert "provider is facebook", provider == "FACEBOOK"
+    {
+      label: friendResult.name
+      user:
+        name: friendResult.name
+        email: friendResult.email
+        info:
+          uid: friendResult.id
           name: friendResult.name
           email: friendResult.email
-          info:
-            uid: friendResult.id
-            name: friendResult.name
-            email: friendResult.email
-            provider: "FACEBOOK"
-            other_info: friendResult
-      }
+          provider: "FACEBOOK"
+          other_info: friendResult
+    }
 
-  friendSource: ->
+  facebookFriends: ->
     @_friends ||= facebook.query("/me/friends").then (friendResults) =>
       @_cached_friends = friendResults
       friendResults.data.map (friendResult) =>
         @friendResultToFriendStruct(friendResult, "FACEBOOK")
+
+  # always returns a promise of friends
+  friendSource: ->
+    if @get('auth.omniauthed')
+      @facebookFriends()
+    else
+      d = new $.Deferred()
+      d.resolve []
+      d.promise()
 
   # TODO(syu): Refactor this bad boy
   filterAndRank: (pfriends, score) ->
