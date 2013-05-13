@@ -5,7 +5,11 @@ Weave.ReferralBatchShowView = Ember.View.extend
 Weave.ReferralView = Ember.View.extend
   classNames: ['referral']
   didInsertElement: ->
+    debugger
     @set('context.myView', @)
+  willDestroyElement: ->
+    @set 'context.myView', null
+    debugger
 
 
 Weave.ReferralSelectRecipientView = Ember.View.extend
