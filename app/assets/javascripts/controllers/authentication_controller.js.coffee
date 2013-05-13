@@ -2,22 +2,23 @@ Weave.AuthenticationController = Ember.Object.extend
   facebookStatus: ""
   auths: null
   omniauthed: (->
-    !!auths.get('facebook')
-  )
+    !!@get('auths.facebook')
+  ).property( 'auths.facebook', 'auths.gmail')
 
 # public events:
-  facebookLoginClicked: ->
+  facebookLogin: ->
     promise = facebook.login().then(
       (success) => @_ajaxOmniauth('facebook'),
       (error) => console.log(error)
     )
     @_handleOmniauthResponse(promise)
 
-  gmailLoginClicked: ->
-    promise = facebook.loginPromise().then(
+  gmailLogin: ->
+    promise = facebook.login().then(
       (success) => @ajaxOmniauth('gmail'),
       (error) => console.log(error)
     )
+    @_handleOmniauthResponse(promise)
 ############
 
   _handleOmniauthResponse: (ajax) ->
@@ -26,7 +27,8 @@ Weave.AuthenticationController = Ember.Object.extend
       (error) -> console.log(error)
     ).fail (e)-> debugger
 
-  _ajaxOmniauth: (provier)->
+  _ajaxOmniauth: (provider)->
+    Em.assert 'only supporting facebook right now', provider == 'facebook'
     $.ajax url: Weave.rails().pathHelpers.userOmniauthCallbackPathFacebook
 
   userAuthenticated: (payload) ->
