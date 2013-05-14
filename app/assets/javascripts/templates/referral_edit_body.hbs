@@ -1,7 +1,7 @@
 <div {{bindAttr class="editingBody:visible:invisible"}}>
   <h2>2. Finish your message.</h2>
   <hr>
-  Personalize your referral by adding a short message to your friend. {{recipient.name}}
+  <h5>Personalize your referral by adding a short message to your friend, {{recipientFirstName}}.</h5>
   {{view Ember.TextArea valueBinding="message" class="referral-message"}}
   {{view Weave.ReferralCustomizationsSelectView
     availableCustomizationsBinding=

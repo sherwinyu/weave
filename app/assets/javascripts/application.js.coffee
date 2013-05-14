@@ -3,6 +3,7 @@
 #= require handlebars
 #= require ember
 #= require ember-data
+#= require ember-bootstrap/all
 #
 #= require_self
 #= require weave

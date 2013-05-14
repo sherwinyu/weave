@@ -35,6 +35,7 @@ gem 'bootstrap-sass', '~> 2.3.1.0'
 gem 'simple_form', '2.1.0'
 gem 'ember-rails'
 gem 'ember-source', '1.0.0.rc3.3'
+gem 'ember-bootstrap-rails'
 
 group :development, :test do
   gem 'sqlite3'

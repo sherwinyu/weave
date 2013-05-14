@@ -80,6 +80,8 @@ GEM
       http_parser.rb (>= 0.5.3)
     em-socksify (0.2.1)
       eventmachine (>= 1.0.0.beta.4)
+    ember-bootstrap-rails (0.0.3)
+      rails (>= 3.1.0)
     ember-data-source (0.0.5)
       ember-source
     ember-rails (0.12.0)
@@ -299,6 +301,7 @@ DEPENDENCIES
   coffee-rails (= 3.2.2)
   coffee-script-source (= 1.6.1)
   devise (= 2.2.3)
+  ember-bootstrap-rails
   ember-rails
   ember-source (= 1.0.0.rc3.3)
   factory_girl_rails (= 4.2.1)
