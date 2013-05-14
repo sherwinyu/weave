@@ -27,7 +27,7 @@ group :assets do
   # gem 'bootstrap-sass', '~> 2.0.3'
 end
 
-gem 'coffee-rails-source-maps'
+# gem 'coffee-rails-source-maps'
 
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
