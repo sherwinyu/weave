@@ -1,15 +1,15 @@
 <div {{bindAttr class="editingBody:visible:invisible"}}>
-  <h2>Customize dat body</h2>
+  <h2>2. Finish your message.</h2>
   <hr>
+  Personalize your referral by adding a short message to your friend. {{recipient.name}}
   {{view Ember.TextArea valueBinding="message" class="referral-message"}}
   {{view Weave.ReferralCustomizationsSelectView
     availableCustomizationsBinding=
     "avaliableCustomizations"
   customizationsBinding="customizations"}}
-  message: {{message}}
-  availableCustomizations:: {{availableCustomizations}}
+  <br>
   <a id="deliver-button" class='btn btn-primary' {{action deliverClicked this}}> Deliver! </a>
 </div>
 <div {{bindAttr class="editingBody:invisible:visible"}}>
-  <a {{action editBody this}}><h2>Customize dat body</h2></a>
+  <a {{action editBody this}}><h2>2. Finish your message.</h2></a>
 </div>
