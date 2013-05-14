@@ -1,5 +1,6 @@
 Weave.ReferralSelectRecipientView = Ember.View.extend
   # dependencies: 'referalView'
+  friendFilterBinding: "context.friendFilter"
   classNames: ['select-recipient']
   templateName: "referral_select_recipient"
   didInsertElement: ->
