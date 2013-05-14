@@ -4,12 +4,11 @@
 #= require ember
 #= require ember-data
 #
-#= require_self
-#= require weave
+# require_self
+# require weave
 #
-#= require facebook
-#= require referrals
-#= require suggester
-# require_tree .
+# require facebook
+# require referrals
+# require suggester
 window.Weave = Ember.Application.create
   LOG_TRANSITIONS: true
