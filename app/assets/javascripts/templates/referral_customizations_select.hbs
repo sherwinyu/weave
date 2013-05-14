@@ -1,8 +1,10 @@
-<h3> Select dem customizations </h3>
-availableCustomizations {{availableCustomizations}}
+<h5> You can also tell {{recipientFirstName}} about some of these reasons to get excited about NewLiving:</h5>
+<div class="customizations">
 {{#each customization in availableCustomizations}}
-  <li class="customization">
-    {{view Ember.Checkbox checkedBinding="customization.selected"}}
+
+  <label class="checkbox">
+    {{view Ember.Checkbox checkedBinding="customization.selected" class=""}}
     {{customization.description}}
-  </li>
+  </label>
 {{/each}}
+</div>

@@ -13,4 +13,15 @@
   .referral-message {
     width: 80%;
   }
+  .customizations {
+    text-align: left;
+    margin: auto;
+    display: inline;
+    label {
+      display: inline-block;
+    }
+    li {
+      list-style: none;
+    }
+  }
 }
