@@ -62,11 +62,8 @@ group :test do
   gem 'launchy'
   gem 'guard-rspec', '1.2.1'
   gem 'spork-rails', '3.2.1'
-  gem 'thin'
-
-  # gem 'jasmine-sinon-rails'
-  # gem 'sinon-rails'
 end
+gem 'thin'
 
 gem 'puffing-billy'
 
