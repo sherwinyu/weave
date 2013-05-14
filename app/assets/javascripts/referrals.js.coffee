@@ -1,16 +1,15 @@
-# facebookToken = '<%# app.current_user.authorizations.last.oauth_token %>'
 window.referrals =
+  ###
   ajax:
     createReferral: (args) ->
       utils.ajax
         type: 'POST'
-        url: '<%= Weave::Application.routes.url_helpers.referrals_path %>'
         data: args
 
     updateReferral: (args) ->
       utils.put
-        url: '<%= Weave::Application.routes.url_helpers.referrals_path %>/1'
         data: args
+  ###
 
   friends: null
   nameAutoComplete: ->
