@@ -5,7 +5,7 @@
 #= require ember-data
 #
 #= require_self
-# require weave
+#= require weave
 #
 #= require facebook
 #= require referrals
