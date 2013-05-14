@@ -7,8 +7,8 @@
 #= require_self
 # require weave
 #
-# require facebook
-# require referrals
-# require suggester
+#= require facebook
+#= require referrals
+#= require suggester
 window.Weave = Ember.Application.create
   LOG_TRANSITIONS: true
