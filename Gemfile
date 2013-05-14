@@ -1,12 +1,17 @@
 source 'https://rubygems.org'
+ruby '1.9.3'
 
 gem 'rails', '3.2.13'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
 gem 'figaro', '0.6.3'
+group :production do
+  gem 'pg'
+  gem 'factory_girl_rails', '4.2.1'
+end
+
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -21,6 +26,7 @@ group :assets do
   gem 'uglifier', '1.2.3'
   # gem 'bootstrap-sass', '~> 2.0.3'
 end
+
 gem 'coffee-rails-source-maps'
 
 gem 'jquery-rails'
@@ -31,6 +37,7 @@ gem 'ember-rails'
 gem 'ember-source', '1.0.0.rc3.3'
 
 group :development, :test do
+  gem 'sqlite3'
   gem 'rspec-rails', '2.13.0'
   gem 'pry', '0.9.11'
   gem 'pry-debugger', '0.2.2'
