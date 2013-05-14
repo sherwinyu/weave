@@ -28,7 +28,10 @@ describe OmniauthCallbacksController do
         subject.current_user.should eq @user
       end
       it "redirects to root" do
-        response.should redirect_to :root
+        raw_json = response.body
+        json = JSON.parse raw_json
+        raw_json.should eq controller.json_for @user
+        json.should have_key "user"
       end
       it "sets a notice " do
         flash[:notice].should =~ /signed in through facebook/i
@@ -61,10 +64,13 @@ describe OmniauthCallbacksController do
         flash[:notice].should =~ /signed in through facebook/i
       end
       it "redirects to root" do
-        response.should redirect_to :root
+        raw_json = response.body
+        json = JSON.parse raw_json
+        raw_json.should eq controller.json_for subject.current_user
+        json.should have_key "user"
       end
     end
-   
+
     context "when signed in" do
       before :each do
         @user = create(:user)

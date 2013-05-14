@@ -24,4 +24,10 @@ unless jasmine?
       @facebookQuery ||= facebookQuery = sinon.stub(facebook, "query")
       facebookQuery.withArgs("/me/friends").returns dfd.promise()
       @facebookQuery
+    friendFilterGetAuth: ->
+      friendFilter = lu("friendFilter:main")
+      @getAuth = sinon.stub(friendFilter, 'get')
+      @getAuth.withArgs('auth.omniauthed').returns true
+
   @stubs.facebook()
+  @stubs.friendFilterGetAuth()
