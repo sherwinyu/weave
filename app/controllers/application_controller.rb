@@ -33,7 +33,8 @@ class ApplicationController < ActionController::Base
       pathHelpers: {
         userOmniauthCallbackPathFacebook: user_omniauth_callback_path(:facebook)
       },
-      path: request.path
+      path: request.path,
+      env: Figaro.env
     }
   end
 

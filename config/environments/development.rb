@@ -34,4 +34,7 @@ Weave::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  # from http://stackoverflow.com/questions/8013478/how-to-avoid-precompiled-assets-being-served-in-development-mode
+  config.assets.prefix = "/assets_dev"
 end

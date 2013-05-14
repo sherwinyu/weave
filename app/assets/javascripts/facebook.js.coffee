@@ -68,7 +68,7 @@ window.facebook =
 
 window.fbAsyncInit = ->
   FB.init
-    appId: '<%= Figaro.env.FACEBOOK_APP_ID %>'
+    appId: Weave.rails().env.FACEBOOK_APP_ID
     status: true
     cookie: true
     oauth: true
