@@ -40,7 +40,7 @@ Weave.ReferralBatchesNewRoute = Ember.Route.extend
         @transitionTo('referralBatch.show', result)
       ),
       (error) -> console.log('Error occured')
-      ).then(null, (error) -> debugger; console.log error)
+      )
 
 Weave.ReferralBatchRoute = Ember.Route.extend
   model: (params)->
