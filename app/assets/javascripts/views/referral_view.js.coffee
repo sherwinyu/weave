@@ -18,3 +18,7 @@ Weave.ReferralCustomizationsSelectView = Ember.View.extend
   customizations: null
   classNames: ['referral-customizations']
   templateName: "referral_customizations_select"
+
+Weave.ReferralConfirmSenderView = Ember.View.extend
+  classNames: ['confirm-sender']
+  templateName: "referral_confirm_sender"

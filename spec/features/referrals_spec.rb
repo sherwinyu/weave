@@ -10,9 +10,10 @@ describe "Referrals" do
 
       fill_in "wala", with: "y z"
       ex "$('#wala').keydown()"
+      page.should_not have_content "Personalize your referral"
 
       find("a", text: "Yan Zhang").click
-      page.should have_content "customizations"
+      page.should have_content "Personalize your referral"
       uri = URI.parse(current_url)
       uri.fragment.split("/").last.should eq "edit_body"
     end

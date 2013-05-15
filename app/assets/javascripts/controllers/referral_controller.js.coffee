@@ -1,5 +1,6 @@
 Weave.ReferralController = Ember.ObjectController.extend
   myView: null
+  firstReferralSent: false
   editingBody: false
   selectingRecipient: false
 

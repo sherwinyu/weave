@@ -47,7 +47,13 @@ Weave.ReferralBatchRoute = Ember.Route.extend
     Weave.ReferralBatch.find params.story_id
   events:
     startReferring: ->
+      @controllerFor('referral').set 'firstReferralSent', false
       @transitionTo 'referral.select_recipient' #, {referral: {}
+    startNewReferral: ->
+      @controllerFor('referral').set 'firstReferralSent', true
+      @transitionTo 'referral.select_recipient' #, {referral: {}
+  renderTemplate: ->
+    @_super()
 
 Weave.ReferralBatchShowRoute = Ember.Route.extend
   wala: 5
@@ -58,8 +64,9 @@ Weave.ReferralRoute = Ember.Route.extend
       @transitionTo 'referral.select_recipient' #, {referral: {}
     editBody: (referral)->
       @transitionTo 'referral.edit_body', referral
-    startNewReferral: ->
-      @transitionTo 'referral.select_recipient'
+  renderTemplate: ->
+    @_super()
+
 
 
 Weave.ReferralSelectRecipientRoute = Ember.Route.extend
@@ -71,6 +78,11 @@ Weave.ReferralSelectRecipientRoute = Ember.Route.extend
     @controllerFor('referral').set 'message', "Enter your content here"
     @controllerFor('referral').set('selectingRecipient', true)
   renderTemplate: ->
+    if @controllerFor('referral').get('firstReferralSent')
+      debugger
+      @render 'referral_confirm_sender', outlet: 'wala'
+
+
     @controllerFor('referral').get('myView')?.$('.select-recipient > input').val 'wala'
   deactivate: ->
     @controllerFor('referral').set('selectingRecipient', false)
@@ -97,3 +109,5 @@ Weave.ReferralEditBodyRoute = Ember.Route.extend
       @controllerFor('referral').get('content').one 'didUpdate', =>
         @send 'startNewReferral'
       @controllerFor('referral').updateAndDeliver()
+
+      renderTemplate: ->
