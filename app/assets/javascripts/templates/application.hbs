@@ -1,3 +1,9 @@
 <h1> Weave! </h1>
+{{#each notification in notifications}}
+  <div class="alert">
+    <button type="button" class="close"  {{action destroyNotification notification}}>&times;</button>
+    {{notification.message}}
+  </div>
+{{/each}}
 {{outlet}}
 <h1> !evaeW </h1>
