@@ -53,10 +53,16 @@ Weave.ReferralBatchRoute = Ember.Route.extend
   model: (params)->
     Weave.ReferralBatch.find params.story_id
   events:
+    attemptAuthAndRefer: ->
+      p = @controllerFor('authentication').facebookLogin()
+      p.then(
+        (success) => @send 'startRefering',
+        (failure) => @controllerFor('application').pushNotification ("Sorry, you need to login via Facebook to refer friends")
+      )
     startReferring: ->
       @controllerFor('referral').set 'firstReferralSent', false
-      @controllerFor('authentication').facebookLogin()
-      @transitionTo 'referral.select_recipient' #, {referral: {}
+      @transitionTo 'referral.select_recipient',
+
     startNewReferral: ->
       @controllerFor('referral').set 'firstReferralSent', true
       @transitionTo 'referral.select_recipient' #, {referral: {}
@@ -121,6 +127,18 @@ Weave.ReferralEditBodyRoute = Ember.Route.extend
   setupController: (controller, model) ->
     @controllerFor('referral').set('content', model)
     @controllerFor('referral').set('editingBody', true)
+  renderTemplate: ->
+
+    @render 'referralSelectRecipient',
+      into: 'referral'
+      outlet: 'referralSelectRecipient'
+      controller: 'referral'
+
+    @render 'referralEditBody',
+      into: 'referral'
+      outlet: 'referralEditBody'
+      controller: 'referral'
+
   deactivate: ->
     @controllerFor('referral').set('editingBody', false)
   events:
