@@ -10,6 +10,12 @@
  */
 @import "bootstrap";
 @import "referral_select_recipient";
+h2 {
+  text-align: center;
+}
+p {
+  font-size: 1.2em;
+}
 .invisible {
   display: none;
 }
@@ -39,5 +45,4 @@ li.ui-menu-item {
     margin: 15px 15px;
     font-size: 1.5em;
   }
-
 }

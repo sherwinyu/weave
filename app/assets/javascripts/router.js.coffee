@@ -55,6 +55,7 @@ Weave.ReferralBatchRoute = Ember.Route.extend
   events:
     startReferring: ->
       @controllerFor('referral').set 'firstReferralSent', false
+      @controllerFor('authentication').facebookLogin()
       @transitionTo 'referral.select_recipient' #, {referral: {}
     startNewReferral: ->
       @controllerFor('referral').set 'firstReferralSent', true
@@ -63,7 +64,8 @@ Weave.ReferralBatchRoute = Ember.Route.extend
     @_super()
 
 Weave.ReferralBatchShowRoute = Ember.Route.extend
-  wala: 5
+  model: ->
+    @modelFor('referralBatch')
 
 Weave.ReferralRoute = Ember.Route.extend
   events:
