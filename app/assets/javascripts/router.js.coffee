@@ -24,7 +24,9 @@ Weave.Router.map (match)->
   @resource "referral", path: "/referrals", ->
     @route "new"
   ###
-Weave.ProductsRoute = Ember.Route.extend()
+Weave.ProductsRoute = Ember.Route.extend
+  model: ->
+    Weave.Product.find()
 Weave.ProductsSelectProduct = Ember.Route.extend()
 
 Weave.CampaignRoute = Ember.Route.extend()

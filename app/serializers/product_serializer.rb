@@ -1,6 +1,6 @@
 class ProductSerializer < ActiveModel::Serializer
-  embed :ids, include: true
+  embed :ids
   attributes :id, :name, :description
   has_many :customizations
-  # has_many :campaigns
+  has_many :campaigns
 end
