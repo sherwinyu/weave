@@ -3,6 +3,14 @@
   margin: auto;
 }
 
+.referral-batch-done {
+  @extend .well;
+}
+
+.confirm-sender {
+  @extend .well;
+}
+
 .referral {
   @extend .span8;
   margin: auto;

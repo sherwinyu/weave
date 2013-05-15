@@ -1,4 +1,5 @@
 Weave.ReferralController = Ember.ObjectController.extend
+  needs: 'referralBatch'
   myView: null
   firstReferralSent: false
   editingBody: false
@@ -15,17 +16,9 @@ Weave.ReferralController = Ember.ObjectController.extend
     # .then (referral) -> @send 'editBody', referral
     # @send 'editBody', @get('content')
   updateAndDeliver: ->
+    @get('content').one 'didUpdate', =>
+      @get('controllers.referralBatch.referrals').pushObject @get('content')
     @get('store').commit()
-
-
-  createWithRecipient2: ->
-    referral_batch_id = 1 # @get('content').referral_batch_id
-    params = @formatNew @get('content')
-    # params.referral_batch_id = 1
-    utils.post
-      data: params
-      url:  "/referrals"#referral_batches/#{referral_batch_id}/referrals"
-    @send 'editBody'
 
   formatUpdate:  ->
     # clone the referral object

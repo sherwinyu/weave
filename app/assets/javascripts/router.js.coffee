@@ -81,10 +81,10 @@ Weave.ReferralSelectRecipientRoute = Ember.Route.extend
 
   renderTemplate: ->
     if @controllerFor('referral').get('firstReferralSent')
-      debugger
-      @render 'ReferralConfirmSender',
+      @render 'referralBatchDone',
         outlet: 'addendum'
         into: 'referralBatch'
+        controller: 'referralBatch'
     @controllerFor('referral').get('myView')?.$('.select-recipient > input').val 'wala'
 
   deactivate: ->

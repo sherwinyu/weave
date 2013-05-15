@@ -19,7 +19,8 @@ describe "ReferralController", ->
         customizations: []
         referralBatch: @referralBatch
 
-      @referralController = Weave.ReferralController.create content: @referral
+
+      @referralController = Weave.ReferralController.create content: @referral, container: Weave.__container__
   describe "ceateWithRecipient model", ->
     beforeEach ->
       Ember.testing = false

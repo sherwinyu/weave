@@ -3,3 +3,7 @@ Weave.ReferralBatch = DS.Model.extend
   senderPageVisited_at: DS.attr 'date'
   senderPagePersonalized: DS.attr 'boolean'
   campaign: DS.belongsTo 'Weave.Campaign'
+  referrals: null
+  init: ->
+    @_super()
+    @set 'referrals', []
