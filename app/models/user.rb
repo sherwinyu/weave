@@ -79,4 +79,26 @@ class User < ActiveRecord::Base
   def emailable?
     !!(email && email =~/\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i)
   end
+
+  def add_user_info_from_omniauth omniauth
+    if omniauth.provider == "facebook"
+      self.user_infos.create(
+        uid: omniauth.uid,
+        name: omniauth.info.name,
+        first_name: omniauth.info.first_name,
+        last_name: omniauth.info.last_name,
+        email: omniauth.info.email,
+        location: omniauth.info.email,
+        other_info: omniauth.extra.to_json,
+      )
+    end
+  end
+
+  # alias_method :original_email, :email
+  # def email
+    # self.original_email || email_from_infos
+  # end
+  def email_from_infos
+    user_infos.map(&:email).try(:first)
+  end
 end

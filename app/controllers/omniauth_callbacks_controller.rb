@@ -4,6 +4,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     if user_signed_in?
       @user = current_user
       if @auth.new_record?
+        @user.add_user_info_from_omniauth request.env['omniauth.auth']
         @user.authorizations << @auth
         flash.notice = "Associating with new account"
       else
@@ -16,6 +17,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       @user.save validate: false
       if @user.persisted? #
         sign_in @user
+        @user.add_user_info_from_omniauth request.env['omniauth.auth']
         flash.notice = "Welcome, #{@user.name}. You've signed in through Facebook"
       else
         flash.alert = "An error occured"
