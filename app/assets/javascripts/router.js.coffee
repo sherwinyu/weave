@@ -23,7 +23,7 @@ Weave.Router.map (match)->
       @route "edit_body"
 Weave.IndexRoute = Ember.Route.extend
   redirect: ->
-
+    @transitionTo "products.selectProduct"
 
 Weave.ProductsRoute = Ember.Route.extend()
 Weave.ProductsSelectProductRoute = Ember.Route.extend
@@ -87,7 +87,6 @@ Weave.ReferralBatchRoute = Ember.Route.extend
     finishReferralBatch: ->
       FB.logout()
       @controllerFor('application').pushSuccessNotification "Successfully logged out of Facebook"
-      Weave.reset()
       @transitionTo 'products.selectProduct'
 
   renderTemplate: ->
