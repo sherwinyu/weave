@@ -58,7 +58,6 @@ product.customizations.create description: "New Living air filters removes benze
 product.customizations.create description: "New Living's Air Filtration machines are great for the nursery as they remove dust, pollen, and harmful gases from the air. They also reduce nighttime asthma, allergies, runny nose, congestion, dry mouth, coughing and wheezing."
 c1 = Campaign.create product: product, name: "#{product.name} sender:no-incentives recipient:noncontingent-plant"
 
-binding.pry
 
 ### Water Filter:
 product = Product.create name: "Premium Water Filtration System"
