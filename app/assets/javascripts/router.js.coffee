@@ -24,13 +24,19 @@ Weave.Router.map (match)->
   @resource "referral", path: "/referrals", ->
     @route "new"
   ###
-Weave.ProductsRoute = Ember.Route.extend
+Weave.ProductsRoute = Ember.Route.extend()
+Weave.ProductsSelectProductRoute = Ember.Route.extend
   model: ->
     Weave.Product.find()
-Weave.ProductsSelectProduct = Ember.Route.extend()
+# setupController: (controller, model)->
+# @controllerFor('products')
+    # renderTemplate: ->
+    # @_super() # @render 'productsSelectProduct', controller: 'products'
+
 
 Weave.CampaignRoute = Ember.Route.extend()
 Weave.IndexRoute = Ember.Route.extend()
+
 Weave.ReferralBatchesRoute = Ember.Route.extend()
 Weave.ReferralBatchesNewRoute = Ember.Route.extend
   activate: ->
@@ -120,5 +126,3 @@ Weave.ReferralEditBodyRoute = Ember.Route.extend
       @controllerFor('referral').get('content').one 'didUpdate', =>
         @send 'startNewReferral'
       @controllerFor('referral').updateAndDeliver()
-
-      renderTemplate: ->

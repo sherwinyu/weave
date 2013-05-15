@@ -1,0 +1,4 @@
+<h3> What product did you buy? </h3>
+{{#each product in content}}
+  <a {{action startCampaignForProduct product}} class="product-link"> {{product.name}} </a>
+{{/each}}
