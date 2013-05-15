@@ -1,3 +1,7 @@
+.select-product {
+  @extend .well;
+}
+
 .referral-batch {
   @extend .span8;
   margin: auto;
