@@ -88,6 +88,7 @@ Weave.ReferralBatchRoute = Ember.Route.extend
       FB.logout()
       @controllerFor('application').pushSuccessNotification "Successfully logged out of Facebook"
       @transitionTo 'products.selectProduct'
+      @controllerFor('authentication').reset()
 
   renderTemplate: ->
     @_super()

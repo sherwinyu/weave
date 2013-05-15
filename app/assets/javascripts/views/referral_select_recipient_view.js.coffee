@@ -6,6 +6,8 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
   didInsertElement: ->
     @bindAutocompletion @$('input')
     @set 'friendFilter', @get('context.friendFilter')
+    if @get('controller.selectingRecipient')
+      @$('#wala')?.val ''
 
   init: ->
     @_super()
@@ -32,4 +34,6 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
   selectingRecipientDidChange: ( ->
     unless @get('controller.selectingRecipient')
       @$('input')?.autocomplete('zug')
+    @$('#wala')?.val ''
   ).observes('controller.selectingRecipient')
+

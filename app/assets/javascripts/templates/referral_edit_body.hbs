@@ -8,9 +8,12 @@
     "avaliableCustomizations"
   customizationsBinding="customizations"}}
   <br>
-  <a id="deliver-button" class='btn btn-primary' {{action deliverClicked this}}> Deliver! </a>
   {{! TODO(syu): though REALLY should be creating a user info for the recipient}}
+  Your friend's email address:
+  <br>
   {{view Ember.TextField valueBinding="recipient.email" label="Your friend's email address"}}
+  <br>
+  <a id="deliver-button" class='btn btn-primary' {{action deliverClicked this}}> Deliver! </a>
 </div>
 
 <div {{bindAttr class="editingBody:invisible:visible"}}>

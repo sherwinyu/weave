@@ -1,4 +1,6 @@
 Weave.AuthenticationController = Ember.Object.extend
+  reset: ->
+    @set 'auths', []
   facebookStatus: ""
   auths: null
   omniauthed: (->
