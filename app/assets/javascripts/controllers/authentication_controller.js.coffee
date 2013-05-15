@@ -25,7 +25,7 @@ Weave.AuthenticationController = Ember.Object.extend
     ajax.then(
       (payload) => @userAuthenticated(payload),
       (error) -> console.log(error)
-    ).fail (e)-> debugger
+    )
 
   _ajaxOmniauth: (provider)->
     Em.assert 'only supporting facebook right now', provider == 'facebook'
@@ -33,7 +33,10 @@ Weave.AuthenticationController = Ember.Object.extend
 
   userAuthenticated: (payload) ->
     user = payload.user
+    @set 'user', user
+    # TODO (syu): allow gmail
     @get('auths').set 'facebook', user.authorizations[0]
+    user
 
   init: ->
     @_super()
