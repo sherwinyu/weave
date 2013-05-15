@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130515120628) do
+ActiveRecord::Schema.define(:version => 20130515154824) do
 
   create_table "authorizations", :force => true do |t|
     t.string   "uid"
@@ -24,13 +24,13 @@ ActiveRecord::Schema.define(:version => 20130515120628) do
 
   create_table "campaigns", :force => true do |t|
     t.string   "name"
-    t.string   "description"
-    t.string   "outreach_email_content"
-    t.string   "sender_page_content"
-    t.string   "recipient_page_content"
+    t.text     "description",            :limit => 255
+    t.text     "outreach_email_content", :limit => 255
+    t.text     "sender_page_content",    :limit => 255
+    t.text     "recipient_page_content", :limit => 255
     t.boolean  "live"
-    t.datetime "created_at",             :null => false
-    t.datetime "updated_at",             :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.integer  "product_id"
   end
 
@@ -45,10 +45,10 @@ ActiveRecord::Schema.define(:version => 20130515120628) do
   end
 
   create_table "customizations", :force => true do |t|
-    t.string   "description"
+    t.text     "description", :limit => 255
     t.integer  "product_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
   end
 
   create_table "customizations_referrals", :id => false, :force => true do |t|
@@ -88,10 +88,10 @@ ActiveRecord::Schema.define(:version => 20130515120628) do
 
   create_table "products", :force => true do |t|
     t.string   "name"
-    t.string   "description"
+    t.text     "description", :limit => 255
     t.integer  "client_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
   end
 
   create_table "products_segments", :id => false, :force => true do |t|
@@ -112,13 +112,13 @@ ActiveRecord::Schema.define(:version => 20130515120628) do
   end
 
   create_table "referrals", :force => true do |t|
-    t.string   "message"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.text     "message",             :limit => 255
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
     t.integer  "recipient_id"
     t.integer  "sender_id"
     t.integer  "product_id"
-    t.boolean  "delivered",           :default => false
+    t.boolean  "delivered",                          :default => false
     t.datetime "delivered_at"
     t.boolean  "recipient_opened"
     t.datetime "recipient_opened_at"
@@ -128,20 +128,20 @@ ActiveRecord::Schema.define(:version => 20130515120628) do
   end
 
   create_table "segments", :force => true do |t|
-    t.string   "description"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.text     "description", :limit => 255
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
   end
 
   create_table "user_infos", :force => true do |t|
     t.string   "email"
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
     t.string   "provider"
     t.string   "name"
     t.string   "uid"
-    t.string   "other_info"
+    t.text     "other_info", :limit => 255
     t.string   "location"
     t.string   "first_name"
     t.string   "last_name"
