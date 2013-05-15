@@ -32,6 +32,7 @@ class ApplicationController < ActionController::Base
     @rails = {
       pathHelpers: {
         userOmniauthCallbackPathFacebook: user_omniauth_callback_path(:facebook)
+        # userPath: user_path,
       },
       path: request.path,
       env: {

@@ -1,4 +1,6 @@
 Weave.Router.map (match)->
+  @route 'index'
+
   @resource "products", path: "/products", ->
     @route "selectProduct"
 
@@ -19,6 +21,8 @@ Weave.Router.map (match)->
     @resource "firstReferral", path: "/referrals/first/:referral_id", ->
       @route "select_recipient"
       @route "edit_body"
+Weave.IndexRoute = Ember.Route.extend
+  redirect: ->
 
 
 Weave.ProductsRoute = Ember.Route.extend()
@@ -79,8 +83,13 @@ Weave.ReferralBatchRoute = Ember.Route.extend
     startNewReferral: ->
       @controllerFor('referral').set 'firstReferralSent', true
       @transitionTo 'referral.select_recipient' #, {referral: {}
-    finishReferalBatch: ->
-      # TODO(syu): ASK FOR EMAIL CONFIRMATIONs
+
+    finishReferralBatch: ->
+      FB.logout()
+      @controllerFor('application').pushSuccessNotification "Successfully logged out of Facebook"
+      Weave.reset()
+      @transitionTo 'products.selectProduct'
+
   renderTemplate: ->
     @_super()
 
