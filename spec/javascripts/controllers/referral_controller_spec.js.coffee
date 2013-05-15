@@ -18,8 +18,6 @@ describe "ReferralController", ->
         recipient_attributes: @recipient
         customizations: []
         referralBatch: @referralBatch
-
-
       @referralController = Weave.ReferralController.create content: @referral, container: Weave.__container__
   describe "ceateWithRecipient model", ->
     beforeEach ->

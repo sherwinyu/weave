@@ -16,3 +16,14 @@
 .visible {
   display: block;
 }
+
+.ui-helper-hidden-accessible {
+  display: none;
+}
+
+li.ui-menu-item {
+  list-style: none;
+  a {
+    background: whitesmoke;
+  }
+}

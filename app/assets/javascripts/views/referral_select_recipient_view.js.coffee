@@ -17,7 +17,13 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
         # Fill in the input fields
         @$("#name-or-email").val ui.item.label
         @get('controller').send 'recipientSelected'
+
+      focus: (event, ui) =>
+        @$(".recipient-name-or-email").val ui.item.label
+
+        # appendTo: ".select-recipient"
       minLength: 2
+
       source: (request, response) =>
         @get('friendFilter').filterAndRankAgainst(request.term).then (friends) ->
           response(friends)
