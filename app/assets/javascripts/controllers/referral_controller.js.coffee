@@ -40,6 +40,5 @@ Weave.ReferralController = Ember.ObjectController.extend
       referral:
         content: null
         recipient_attributes: recipient
-        #sender_id:
       referral_batch_id: 1
     }

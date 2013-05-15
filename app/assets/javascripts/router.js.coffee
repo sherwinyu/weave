@@ -74,8 +74,6 @@ Weave.ReferralRoute = Ember.Route.extend
   renderTemplate: ->
     @_super()
 
-
-
 Weave.ReferralSelectRecipientRoute = Ember.Route.extend
   model: (params)->
     console.log "referral id#{params.referal_id}"

@@ -27,3 +27,17 @@ li.ui-menu-item {
     background: whitesmoke;
   }
 }
+
+.select-product {
+  @extend .span8;
+  margin: auto;
+  h3 {
+    text-align: center;
+  }
+  li.product {
+    list-style: none;
+    margin: 15px 15px;
+    font-size: 1.5em;
+  }
+
+}
