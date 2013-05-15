@@ -101,4 +101,7 @@ class User < ActiveRecord::Base
   def email_from_infos
     user_infos.map(&:email).try(:first)
   end
+  def canonical_email
+    self.email || self.email_from_infos
+  end
 end

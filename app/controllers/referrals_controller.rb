@@ -39,7 +39,9 @@ class ReferralsController < ApplicationController
     @referral = Referral.new
   end
   def create
+    @sender = User.find_by_id params[:referral].delete :sender_id
     @referral = Referral.create referral_params
+    @referral.sender = @sender
     if @referral.save
       render json: @referral
     else

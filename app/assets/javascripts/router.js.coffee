@@ -83,9 +83,15 @@ Weave.ReferralRoute = Ember.Route.extend
     @_super()
 
 Weave.ReferralSelectRecipientRoute = Ember.Route.extend
+  redirect: (model) ->
+    unless @controllerFor('authentication').get('omniauthed')
+      @controllerFor('application').pushNotification ("Sorry, you need to login via Facebook to refer friends")
+      @transitionTo "referralBatch.show", @modelFor('referralBatch')
+
   model: (params)->
-    console.log "referral id#{params.referal_id}"
-    Weave.Referral.createRecord(referralBatch: @modelFor('referralBatch'))
+    sender_id = @controllerFor('authentication').get('user.id')
+    debugger
+    Weave.Referral.createRecord(referralBatch: @modelFor('referralBatch'), sender_id: sender_id)
   setupController: (controller, model) ->
     @controllerFor('referral').set('content', model)
     @controllerFor('referral').set 'message', "Enter your content here"
