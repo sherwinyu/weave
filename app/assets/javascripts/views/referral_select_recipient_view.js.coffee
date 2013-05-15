@@ -1,10 +1,11 @@
 Weave.ReferralSelectRecipientView = Ember.View.extend
   # dependencies: 'referalView'
-  friendFilterBinding: "context.friendFilter"
+  friendFilterBinding: null
   classNames: ['select-recipient']
   templateName: "referral_select_recipient"
   didInsertElement: ->
     @bindAutocompletion @$('input')
+    @set 'friendFilter', @get('context.friendFilter')
 
   init: ->
     @_super()
@@ -27,7 +28,8 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
       source: (request, response) =>
         @get('friendFilter').filterAndRankAgainst(request.term).then (friends) ->
           response(friends)
+
   selectingRecipientDidChange: ( ->
-    unless @get('context.selectingRecipient')
+    unless @get('controller.selectingRecipient')
       @$('input')?.autocomplete('zug')
-  ).observes('context.selectingRecipient')
+  ).observes('controller.selectingRecipient')

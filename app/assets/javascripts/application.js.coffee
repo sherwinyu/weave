@@ -2,6 +2,7 @@
 #= require jquery_ujs
 #= require handlebars
 #= require ember
+#= require bootstrap
 #= require ember-data
 #= require ember-bootstrap/all
 #
