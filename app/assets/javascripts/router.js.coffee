@@ -77,6 +77,8 @@ Weave.ReferralSelectRecipientRoute = Ember.Route.extend
     @controllerFor('referral').set('content', model)
     @controllerFor('referral').set 'message', "Enter your content here"
     @controllerFor('referral').set('selectingRecipient', true)
+    Ember.run.sync()
+
   renderTemplate: ->
     if @controllerFor('referral').get('firstReferralSent')
       debugger
@@ -84,8 +86,10 @@ Weave.ReferralSelectRecipientRoute = Ember.Route.extend
 
 
     @controllerFor('referral').get('myView')?.$('.select-recipient > input').val 'wala'
+
   deactivate: ->
     @controllerFor('referral').set('selectingRecipient', false)
+
   events:
     recipientSelected: ->
       @modelFor('referral.select_recipient').one 'didCreate', =>
