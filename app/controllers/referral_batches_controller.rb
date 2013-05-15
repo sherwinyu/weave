@@ -57,6 +57,13 @@ class ReferralBatchesController < ApplicationController
   def edit
     @referral_batch = ReferralBatch.find(params[:id])
   end
+  # TODO(syu): don't be such a hack
+  def update_sender_email
+    @user = User.find(params[:id])
+    @user.email = params[:user_email]
+    @user.save
+    render json: @user
+  end
 
   def update
     @referral_batch = ReferralBatch.find(params[:id])

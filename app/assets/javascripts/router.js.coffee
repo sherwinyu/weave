@@ -48,11 +48,24 @@ Weave.ReferralBatchesNewRoute = Ember.Route.extend
       ),
       (error) -> console.log('Error occured')
       )
+window.email_update = (user_id, email) ->
 
 Weave.ReferralBatchRoute = Ember.Route.extend
   model: (params)->
     Weave.ReferralBatch.find params.story_id
   events:
+    updateEmail: (email)->
+      # TODO (syu) validate me!!!!
+
+      user_id = @controllerFor('authentication').get('user.id')
+      email = @controllerFor('authentication').get('user.canonical_email')
+
+      email_update(user_id, email)
+      utils.post
+        url: "/users/#{user_id}"
+        data:
+          user_email: email
+
     attemptAuthAndRefer: ->
       p = @controllerFor('authentication').facebookLogin()
       p.then(
@@ -90,7 +103,6 @@ Weave.ReferralSelectRecipientRoute = Ember.Route.extend
 
   model: (params)->
     sender_id = @controllerFor('authentication').get('user.id')
-    debugger
     Weave.Referral.createRecord(referralBatch: @modelFor('referralBatch'), sender_id: sender_id)
   setupController: (controller, model) ->
     @controllerFor('referral').set('content', model)

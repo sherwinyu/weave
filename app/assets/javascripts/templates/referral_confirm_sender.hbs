@@ -1,4 +1,5 @@
 <h3>Confirm your email</h3>
 Is this the best email to contact you at? We'll be send updates about your rewards, so make sure it's an email address you check often!
-
-{{view Ember.TextField class="sender-email" valueBinding="sender.email"}}
+<br>
+{{view Ember.TextField class="sender-email" valueBinding="auth.user.canonical_email"}}
+<a {{action updateEmail}} class="btn"> Confirm email</a>

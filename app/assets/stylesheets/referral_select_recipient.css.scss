@@ -12,7 +12,10 @@
 }
 
 .confirm-sender {
-  @extend .well;
+  a.btn {
+    position: relative;
+    top: -5px;
+  }
 }
 
 .referral {

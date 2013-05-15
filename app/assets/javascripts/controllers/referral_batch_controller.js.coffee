@@ -1,4 +1,5 @@
 Weave.ReferralBatchController = Ember.ObjectController.extend
-  wala: true
-
-
+  content: null
+  needs: 'authentication'
+  auth: null
+  authBinding: 'controllers.authentication'
