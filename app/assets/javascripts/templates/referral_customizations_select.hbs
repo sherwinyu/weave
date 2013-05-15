@@ -2,7 +2,7 @@
 <div class="customizations">
 {{#each customization in availableCustomizations}}
 
-  <label class="checkbox">
+  <label class="checkbox customization">
     {{view Ember.Checkbox checkedBinding="customization.selected" class=""}}
     {{customization.description}}
   </label>
