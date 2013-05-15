@@ -29,8 +29,6 @@ Weave.ProductsSelectProductRoute = Ember.Route.extend
     startCampaignForProduct: (product)->
       @transitionTo 'referralBatches.new', Weave.Campaign.find product.get('campaign_ids.0')
 
-
-
 Weave.CampaignRoute = Ember.Route.extend()
 Weave.IndexRoute = Ember.Route.extend()
 
@@ -48,7 +46,6 @@ Weave.ReferralBatchesNewRoute = Ember.Route.extend
       ),
       (error) -> console.log('Error occured')
       )
-window.email_update = (user_id, email) ->
 
 Weave.ReferralBatchRoute = Ember.Route.extend
   model: (params)->
@@ -60,11 +57,14 @@ Weave.ReferralBatchRoute = Ember.Route.extend
       user_id = @controllerFor('authentication').get('user.id')
       email = @controllerFor('authentication').get('user.canonical_email')
 
-      email_update(user_id, email)
-      utils.post
+      p = utils.post
         url: "/users/#{user_id}"
         data:
           user_email: email
+      p.then(
+        (success) => @controllerFor('application').pushSuccessNotification "Email confirmed!",
+        (error) => @controllerFor('application').pushNotification "Invalid email."
+      )
 
     attemptAuthAndRefer: ->
       p = @controllerFor('authentication').facebookLogin()
@@ -79,6 +79,8 @@ Weave.ReferralBatchRoute = Ember.Route.extend
     startNewReferral: ->
       @controllerFor('referral').set 'firstReferralSent', true
       @transitionTo 'referral.select_recipient' #, {referral: {}
+    finishReferalBatch: ->
+      # TODO(syu): ASK FOR EMAIL CONFIRMATIONs
   renderTemplate: ->
     @_super()
 
@@ -114,6 +116,7 @@ Weave.ReferralSelectRecipientRoute = Ember.Route.extend
     if @controllerFor('referral').get('firstReferralSent')
       @render 'referralBatchDone',
         outlet: 'addendum'
+
         into: 'referralBatch'
         controller: 'referralBatch'
 

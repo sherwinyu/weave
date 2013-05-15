@@ -1,6 +1,6 @@
 <h1> Weave! </h1>
 {{#each notification in notifications}}
-  <div class="alert">
+  <div class="alert" {{bindAttr class="notification.type"}}>
     <button type="button" class="close"  {{action destroyNotification notification}}>&times;</button>
     {{notification.message}}
   </div>

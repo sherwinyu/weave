@@ -59,17 +59,22 @@ class ReferralsController < ApplicationController
     if @referral.update_attributes referral_params
       render json: @referral
     else
-      render json: @referral, status: 422
+      render json: @referral #, status: 422 TODO(syu): REALLY HOULNDT DO THIS
     end
   end
   private
   def referral_params
     params[:referral][:customization_ids] = params[:referral].delete(:customizations).map{|c| c[:id]} if params[:referral][:customizations]
+    if params[:referral][:recipient]
+      params[:referral][:recipient_attributes]  =  params[:referral].delete(:recipient)
+      params[:referral][:recipient_attributes].slice!(:id, :email) if params[:referral][:recipient_attributes]
+    end
     params.require(:referral).permit :message, :referral_batch_id, {customization_ids: []},
       { recipient_attributes: [:name,
                              :id,
                              :email,
                              {user_infos_attributes: [:name, :email, :provider, :uid]}]
-      }
+      },
+      { recipient: [:id, :email] }
   end
 end

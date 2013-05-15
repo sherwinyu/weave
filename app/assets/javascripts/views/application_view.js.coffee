@@ -7,6 +7,8 @@ Weave.ApplicationController = Ember.Object.extend
     @get('notifications').removeObject notif
   pushNotification: (message) ->
     @get('notifications').pushObject Ember.Object.create(message: message)
+  pushNotification: (message) ->
+    @get('notifications').pushObject Ember.Object.create(message: message, type: 'success')
   init: ->
     @_super()
     @set 'notifications', []

@@ -4,7 +4,7 @@ Weave.ReferralBatchDoneView = Ember.View.extend
   ).property('context.firstReferralSent')
   pluralizedReferrals: (->
     count = @get 'context.referrals.length'
-    "#{count} referral#{'s' if count > 1 or ""}"
+    "#{count} referral#{count > 1 ? "s" : ""}"
   ).property('context.referrals.length')
   classNames: ["referral-batch-done"]
 
