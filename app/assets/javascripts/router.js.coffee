@@ -9,7 +9,6 @@ Weave.Router.map (match)->
     @resource "referralBatches", path: "/stories", ->
        @route "new"
 
-
   @resource "referralBatch", path: "/stories/:story_id", ->
     @route "show"
     @route "done"
@@ -171,6 +170,7 @@ Weave.ReferralEditBodyRoute = Ember.Route.extend
 
   deactivate: ->
     @controllerFor('referral').set('editingBody', false)
+
   events:
     deliverClicked: (referral) ->
       @controllerFor('referral').get('content').one 'didUpdate', =>

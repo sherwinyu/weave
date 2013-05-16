@@ -4,10 +4,10 @@
 #
 #  id                     :integer          not null, primary key
 #  name                   :string(255)
-#  description            :string(255)
-#  outreach_email_content :string(255)
-#  sender_page_content    :string(255)
-#  recipient_page_content :string(255)
+#  description            :text(255)
+#  outreach_email_content :text(255)
+#  sender_page_content    :text(255)
+#  recipient_page_content :text(255)
 #  live                   :boolean
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null

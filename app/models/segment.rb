@@ -3,7 +3,7 @@
 # Table name: segments
 #
 #  id          :integer          not null, primary key
-#  description :string(255)
+#  description :text(255)
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #

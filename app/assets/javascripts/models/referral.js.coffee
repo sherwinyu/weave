@@ -32,3 +32,8 @@ Weave.Referral = DS.Model.extend
       ?.map (customization) =>
         Weave.ReferralCustomization.create(customization: customization, referral: @)
     ).property('referralBatch')
+
+Weave.User = DS.Model.extend
+  DS.attr 'name'
+  DS.attr 'email'
+

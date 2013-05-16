@@ -2,11 +2,11 @@
 #
 # Table name: customizations
 #
-#  id         :integer          not null, primary key
-#  content    :string(255)
-#  product_id :integer
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id          :integer          not null, primary key
+#  description :text(255)
+#  product_id  :integer
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
 #
 
 class Customization < ActiveRecord::Base

@@ -3,7 +3,7 @@
 # Table name: referrals
 #
 #  id                  :integer          not null, primary key
-#  content             :string(255)
+#  message             :text(255)
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  recipient_id        :integer

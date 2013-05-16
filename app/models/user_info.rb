@@ -10,7 +10,10 @@
 #  provider   :string(255)
 #  name       :string(255)
 #  uid        :string(255)
-#  other_info :string(255)
+#  other_info :text(255)
+#  location   :string(255)
+#  first_name :string(255)
+#  last_name  :string(255)
 #
 
 class UserInfo < ActiveRecord::Base
