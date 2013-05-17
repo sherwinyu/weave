@@ -84,10 +84,9 @@ Weave.ReferralBatchRoute = Ember.Route.extend
       @transitionTo 'referral.select_recipient' #, {referral: {}
 
     finishReferralBatch: ->
-      FB.logout()
+      @controllerFor('authentication').logout()
       @controllerFor('application').pushSuccessNotification "Successfully logged out of Facebook"
       @transitionTo 'products.selectProduct'
-      @controllerFor('authentication').reset()
 
   renderTemplate: ->
     @_super()
@@ -112,8 +111,8 @@ Weave.ReferralSelectRecipientRoute = Ember.Route.extend
       @transitionTo "referralBatch.show", @modelFor('referralBatch')
 
   model: (params)->
-    sender_id = @controllerFor('authentication').get('user.id')
-    Weave.Referral.createRecord(referralBatch: @modelFor('referralBatch'), sender_id: sender_id)
+    sender = @controllerFor('authentication').get('user')
+    Weave.Referral.createRecord referralBatch: @modelFor('referralBatch'), sender: sender
   setupController: (controller, model) ->
     @controllerFor('referral').set('content', model)
     @controllerFor('referral').set 'message', "Enter your content here"

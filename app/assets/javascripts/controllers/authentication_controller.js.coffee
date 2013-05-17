@@ -1,7 +1,5 @@
 Weave.AuthenticationController = Ember.Object.extend
   user: null
-  reset: ->
-    @set 'auths', []
   facebookStatus: ""
   auths: null
   omniauthed: (->
@@ -42,6 +40,12 @@ Weave.AuthenticationController = Ember.Object.extend
     # TODO (syu): allow gmail
     @get('auths').set 'facebook', payload.user.authorizations[0]
     user
+
+  logout: ->
+    FB.logout()
+    #google.logout()
+    @set 'auths.facebook', null
+    @set 'auths.google', null
 
   init: ->
     @_super()
