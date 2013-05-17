@@ -17,8 +17,7 @@
 class ReferralBatch < ActiveRecord::Base
 
   include ActiveModel::ForbiddenAttributesProtection
-
-  attr_accessible :sender_page_visited, :sender_page_personalized, :outreach_email_sent, :campaign_id
+  # attr_accessible :sender_page_visited, :sender_page_personalized, :outreach_email_sent, :campaign_id
 
   belongs_to :sender, class_name: "User", inverse_of: :referral_batches
   has_many :referrals, inverse_of: :referral_batch

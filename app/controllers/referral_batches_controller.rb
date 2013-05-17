@@ -67,14 +67,17 @@ class ReferralBatchesController < ApplicationController
 
   def update
     @referral_batch = ReferralBatch.find(params[:id])
-    if @referral_batch.update_attributes(params[:referral_batch])
-      redirect_to root_url, :notice  => "Successfully updated referral batch."
+    if @referral_batch.update_attributes referral_batch_params
+      render json: @referral_batch
     else
-      render :action => 'edit'
+      render json: @referral_batch, status: 422
     end
   end
   private
   def referral_batch_params
-    params.require(:referral_batch).permit :campaign_id, :sender_page_visited, :sender_page_personalized
+    params[:referral_batch][:sender_id] = params[:referral_batch].delete(:sender_attributes)[:id] if params[:referral_batch][:sender_attributes]
+    params.require(:referral_batch).permit :campaign_id, :sender_page_visited, :sender_page_personalized, :sender_id
+
+
   end
 end
