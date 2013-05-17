@@ -64,7 +64,6 @@ class ReferralsController < ApplicationController
   end
   private
   def referral_params
-    binding.pry
     params[:referral][:customization_ids] = params[:referral].delete(:customizations_attributes).map{|c| c[:id]} if params[:referral][:customizations_attributes]
 =begin
     if params[:referral][:recipient]

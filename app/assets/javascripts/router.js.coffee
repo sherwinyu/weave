@@ -59,11 +59,17 @@ Weave.ReferralBatchRoute = Ember.Route.extend
 
       user_id = @controllerFor('authentication').get('user.id')
       email = @controllerFor('authentication').get('user.canonical_email')
+      sender = @controllerFor('authentication').get('user')
 
+      # TODO (syu): convert this to correctly
       p = utils.post
         url: "/users/#{user_id}"
         data:
           user_email: email
+
+          # user.
+
+
       p.then(
         (success) => @controllerFor('application').pushSuccessNotification "Email confirmed!",
         (error) => @controllerFor('application').pushNotification "Invalid email."

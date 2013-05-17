@@ -35,6 +35,7 @@ class ApplicationController < ActionController::Base
         # userPath: user_path,
       },
       path: request.path,
+      current_user: current_user.try(:to_json),
       env: {
         FACEBOOK_APP_ID: Figaro.env.FACEBOOK_APP_ID
       }
@@ -46,7 +47,6 @@ class ApplicationController < ActionController::Base
   def normalize_params
     params.select {|k| k.singularize.classify.constantize < ActiveRecord::Base rescue nil}.each do |model_name, model_params|
       assocs = model_name.singularize.classify.constantize.reflections
-      binding.pry
       assocs.each do |association_key, association|
         association_params = model_params.delete association_key
         if association_params
