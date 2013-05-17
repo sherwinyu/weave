@@ -46,7 +46,10 @@ namespace :weave do
 ##################################################
 
   task :populateNewliving => [:environment] do
-    p "Manufacutinrg New living objecst"
+    p "deleting products: #{Product.delete_all}"
+    p "deleting campaigns: #{Campaign.delete_all}"
+    p "deleting customizations: #{Customization.delete_all}"
+    p "Manufacutinrg New living objects"
 ### Air Filter::
 
 product = Product.create name: "Premium Air Filtration System"
