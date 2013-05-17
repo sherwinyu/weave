@@ -1,4 +1,5 @@
 Weave.AuthenticationController = Ember.Object.extend
+  user: null
   reset: ->
     @set 'auths', []
   facebookStatus: ""
@@ -34,10 +35,12 @@ Weave.AuthenticationController = Ember.Object.extend
     $.ajax url: Weave.rails().pathHelpers.userOmniauthCallbackPathFacebook
 
   userAuthenticated: (payload) ->
-    user = payload.user
+    Ember.assert "User shouldnt already exist", !@get('user')?
+
+    user = Weave.User.loadFromJson payload
     @set 'user', user
     # TODO (syu): allow gmail
-    @get('auths').set 'facebook', user.authorizations[0]
+    @get('auths').set 'facebook', payload.user.authorizations[0]
     user
 
   init: ->

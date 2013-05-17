@@ -14,3 +14,12 @@
 #= require suggester
 window.Weave = Ember.Application.create
   LOG_TRANSITIONS: true
+
+DS.Model.reopenClass
+  loadFromJson: (json) ->
+    key = @toString().split('.')[1].toLowerCase()
+    id = json[key].id
+    store =  DS.get('defaultStore')
+    adapter = store.adapterForType(@)
+    adapter.didFindRecord( store, @, json, id)
+    @find id
