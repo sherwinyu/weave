@@ -18,8 +18,8 @@ Weave.Referral = DS.Model.extend
   customizations: DS.hasMany 'Weave.Customization'
   referralBatch: DS.belongsTo 'Weave.ReferralBatch'
   recipient_attributes: DS.attr 'json'
-  recipient: DS.attr 'json'
-  sender_id: DS.attr 'json'
+  recipient: DS.belongsTo 'Weave.User'
+  sender: DS.belongsTo 'Weave.User'
 
   recipientFirstName: (->
     [first, last] = @get('recipient.name')?.trim().split(/\s+/) || ["your friend"]

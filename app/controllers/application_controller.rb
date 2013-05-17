@@ -26,8 +26,8 @@ class ApplicationController < ActionController::Base
   def other_token
     fb_oauth.get_user_info_from_cookies cookies
   end
-  before_filter :inject_ember_params
 
+  before_filter :inject_ember_params
   def inject_ember_params
     @rails = {
       pathHelpers: {
@@ -41,5 +41,20 @@ class ApplicationController < ActionController::Base
     }
   end
 
+  # TODO(syu): TEST this. Also, this doesn't work with doubly nested hashes! -- Post -> post.comments_attributes -> post.comments_attributes.0.author_attriibutes
+  before_filter :normalize_params
+  def normalize_params
+    params.select {|k| k.singularize.classify.constantize < ActiveRecord::Base rescue nil}.each do |model_name, model_params|
+      assocs = model_name.singularize.classify.constantize.reflections
+      binding.pry
+      assocs.each do |association_key, association|
+        association_params = model_params.delete association_key
+        if association_params
+          # attributes_key = "_attributes" + ( [:belongs_to, :has_one].include? association.macro ? "" : "s")
+          model_params[association_key.to_s + "_attributes"] = association_params
+        end
+      end
+    end
+  end
 
 end

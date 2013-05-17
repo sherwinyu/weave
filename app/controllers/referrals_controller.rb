@@ -64,17 +64,19 @@ class ReferralsController < ApplicationController
   end
   private
   def referral_params
-    params[:referral][:customization_ids] = params[:referral].delete(:customizations).map{|c| c[:id]} if params[:referral][:customizations]
+    binding.pry
+    params[:referral][:customization_ids] = params[:referral].delete(:customizations_attributes).map{|c| c[:id]} if params[:referral][:customizations_attributes]
+=begin
     if params[:referral][:recipient]
       params[:referral][:recipient_attributes]  =  params[:referral].delete(:recipient)
       params[:referral][:recipient_attributes].slice!(:id, :email) if params[:referral][:recipient_attributes]
     end
+=end
     params.require(:referral).permit :message, :referral_batch_id, {customization_ids: []},
       { recipient_attributes: [:name,
-                             :id,
-                             :email,
-                             {user_infos_attributes: [:name, :email, :provider, :uid]}]
-      },
-      { recipient: [:id, :email] }
+                               :id,
+                               :email,
+                               {user_infos_attributes: [:name, :email, :provider, :uid]}]
+      }
   end
 end
