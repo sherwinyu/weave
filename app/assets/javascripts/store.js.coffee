@@ -11,6 +11,10 @@ DS.RESTAdapter.map 'Weave.Referral',
   recipient:
     embedded: 'always'
 
+DS.RESTAdapter.map 'Weave.ReferralBatch',
+  sender:
+    embedded: 'always'
+
 DS.RESTAdapter.registerTransform 'json',
   serialize: (json) ->
     json

@@ -54,6 +54,8 @@ Weave.ReferralBatchRoute = Ember.Route.extend
   model: (params)->
     Weave.ReferralBatch.find params.story_id
   events:
+    facebookAuthenticated: ->
+      @modelFor('referralBatch').set 'sender', @controllerFor('authentication').get 'user'
     updateEmail: (email)->
       # TODO (syu) validate me!!!!
 

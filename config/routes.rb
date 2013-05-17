@@ -21,7 +21,7 @@ Weave::Application.routes.draw do
 
   # match 'af', to: redirect("/auth/facebook")
   match 'welcome', to: 'referrers#welcome'
-  match 'users/:id', to: 'referral_batches#update_sender_email', via: [:post, :put]
+  # match 'users/:id', to: 'referral_batches#update_sender_email', via: [:post, :put]
 
   match 'THISSHOULDNTEVERHAPPEN/BUTITNEEDSTOBEHERE', to: redirect('/WALAWALWAWALAK')
   root to: 'referrals#new'

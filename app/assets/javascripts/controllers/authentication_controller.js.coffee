@@ -34,11 +34,13 @@ Weave.AuthenticationController = Ember.Object.extend
 
   userAuthenticated: (payload) ->
     Ember.assert "User shouldnt already exist", !@get('user')?
-
     user = Weave.User.loadFromJson payload
     @set 'user', user
-    # TODO (syu): allow gmail
+
+    # TODO (syu): allow gmail and not dependant on 0th index
     @get('auths').set 'facebook', payload.user.authorizations[0]
+
+    @get('target').send 'facebookAuthenticated'
     user
 
   logout: ->
