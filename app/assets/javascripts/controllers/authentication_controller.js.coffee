@@ -45,6 +45,7 @@ Weave.AuthenticationController = Ember.Object.extend
 
   logout: ->
     FB.logout()
+    @set 'user', null
     #google.logout()
     @set 'auths.facebook', null
     @set 'auths.google', null
