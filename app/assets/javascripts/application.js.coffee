@@ -22,4 +22,5 @@ DS.Model.reopenClass
     store =  DS.get('defaultStore')
     adapter = store.adapterForType(@)
     adapter.didFindRecord( store, @, json, id)
-    @find id
+    p = @find id
+    p
