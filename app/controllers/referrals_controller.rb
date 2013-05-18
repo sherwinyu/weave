@@ -59,10 +59,12 @@ class ReferralsController < ApplicationController
   end
   def update
     @referral = Referral.find(params[:id])
-    if @referral.update_attributes referral_params
+    @referral.attributes = referral_params
+    @referral.valid?
+    if @referral.save validate: false
       render json: @referral
     else
-      render json: @referral #, status: 422 TODO(syu): REALLY HOULNDT DO THIS
+      render json: @referral, status: 422
     end
   end
   private
@@ -74,7 +76,7 @@ class ReferralsController < ApplicationController
       params[:referral][:recipient_attributes].slice!(:id, :email) if params[:referral][:recipient_attributes]
     end
 =end
-    params.require(:referral).permit :message, :referral_batch_id, {customization_ids: []},
+    params.require(:referral).permit :message, :referral_batch_id, {customization_ids: []}, :sender_id,
       { recipient_attributes: [:name,
                                :id,
                                :email,
