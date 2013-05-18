@@ -37,10 +37,10 @@ gem 'ember-rails'
 gem 'ember-source', '1.0.0.rc3.3'
 gem 'ember-bootstrap-rails'
 
+gem 'pry', '0.9.11'
 group :development, :test do
   gem 'sqlite3'
   gem 'rspec-rails', '2.13.0'
-  gem 'pry', '0.9.11'
   gem 'pry-debugger', '0.2.2'
   gem 'annotate', "2.5.0"
 
