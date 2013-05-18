@@ -81,6 +81,9 @@ class User < ActiveRecord::Base
   end
 
   def add_user_info_from_omniauth omniauth
+    binding.pry
+    p "fn", omniauth.info.first_name
+    p "ln", omniauth.info.last_name
     if omniauth.provider == "facebook"
       self.user_infos.create(
         uid: omniauth.uid,
