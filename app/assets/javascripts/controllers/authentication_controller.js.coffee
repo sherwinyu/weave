@@ -45,8 +45,8 @@ Weave.AuthenticationController = Ember.Object.extend
 
   logout: ->
     FB.logout()
+    utils.delete url: Weave.rails().pathHelpers.destroyUserSessionPath
     @set 'user', null
-    #google.logout()
     @set 'auths.facebook', null
     @set 'auths.google', null
 

@@ -15,6 +15,8 @@ Weave.rails = -> window._rails
 if Weave.rails()?.path? && !window.location.hash
   window.location.hash = Weave.rails.path || "products/selectProduct"
 
+console.log('currentUser:', Weave.rails().current_user)
+
 Weave.register('friendFilter:main', Weave.FriendFilter)
 
 Weave.inject('controller:referral', 'friendFilter', 'friendFilter:main')

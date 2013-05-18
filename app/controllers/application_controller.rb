@@ -31,11 +31,11 @@ class ApplicationController < ActionController::Base
   def inject_ember_params
     @rails = {
       pathHelpers: {
-        userOmniauthCallbackPathFacebook: user_omniauth_callback_path(:facebook)
-        # userPath: user_path,
+        userOmniauthCallbackPathFacebook: user_omniauth_callback_path(:facebook),
+        destroyUserSessionPath: destroy_user_session_path
       },
       path: request.path || "products/selectProduct",
-      current_user: current_user.try(:to_json),
+      current_user: current_user && current_user.active_model_serializer.new(current_user).to_json,
       env: {
         FACEBOOK_APP_ID: Figaro.env.FACEBOOK_APP_ID
       }

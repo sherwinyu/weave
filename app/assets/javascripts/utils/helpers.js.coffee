@@ -47,3 +47,11 @@ window.utils =
     $.extend defaults, opts
     @ajax defaults
 
+  delete: (opts) ->
+    $.extend true, opts, data: {"_method": 'delete'}
+    defaults =
+      headers:
+        "X-Http-Method-Override": "delete"
+      type: 'post'
+    $.extend defaults, opts
+    @ajax defaults
