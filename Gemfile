@@ -29,17 +29,17 @@ end
 
 # gem 'coffee-rails-source-maps'
 
-gem 'jquery-rails'
-gem 'jquery-ui-rails'
+gem 'jquery-rails', '2.2.1'
+gem 'jquery-ui-rails', '4.0.2'
 gem 'bootstrap-sass', '~> 2.3.1.0'
 gem 'simple_form', '2.1.0'
-gem 'ember-rails'
+gem 'ember-rails', '0.12.0'
 gem 'ember-source', '1.0.0.rc3.3'
 gem 'ember-bootstrap-rails'
 
 gem 'pry', '0.9.11'
 group :development, :test do
-  gem 'sqlite3'
+  gem 'sqlite3', '1.3.7'
   gem 'rspec-rails', '2.13.0'
   gem 'pry-debugger', '0.2.2'
   gem 'annotate', "2.5.0"
@@ -53,22 +53,22 @@ group :development, :test do
   # gem 'jasmine-rails', '0.4.2'
   gem 'guard-jasmine', '1.15.1'
   gem "jasminerice", '0.0.10'
-  gem 'jasmine-sinon-rails'
-  gem 'sinon-rails'
+  gem 'jasmine-sinon-rails', '1.3.4'
+  gem 'sinon-rails', '1.4.2.1'
 end
 
 group :test do
-  gem 'capybara'
-  gem 'poltergeist'
-  gem 'launchy'
+  gem 'capybara', '2.1.0'
+  gem 'poltergeist', '1.3.0'
   gem 'guard-rspec', '1.2.1'
   gem 'spork-rails', '3.2.1'
+  gem 'shoulda-matchers', '1.5.6'
 end
 # gem 'thin'
 
 gem 'puffing-billy'
 
-gem 'strong_parameters'
+gem 'strong_parameters', '0.2.1'
 gem 'devise', '2.2.3'
 gem 'omniauth-facebook', '1.4.0'
 gem 'koala', '1.6.0'

@@ -32,9 +32,9 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :user_infos_attributes, :user_infos
-  has_many :sent_referrals, class_name: "Referral", inverse_of: :sender
+  has_many :sent_referrals, class_name: "Referral", inverse_of: :sender, foreign_key: "sender_id"
   has_many :referral_batches, inverse_of: :sender
-  has_many :received_referrals, class_name: "Referral", inverse_of: :recipient
+  has_many :received_referrals, class_name: "Referral", inverse_of: :recipient, foreign_key: "recipient_id"
   has_many :user_infos, inverse_of: :user
   has_many :authorizations, inverse_of: :user
 
@@ -104,7 +104,16 @@ class User < ActiveRecord::Base
   def email_from_infos
     user_infos.map(&:email).try(:first)
   end
+
   def canonical_email
     self.email || self.email_from_infos
+  end
+
+  def name_from_infos
+    user_infos.map(&:name).try(:first)
+  end
+
+  def canonical_name
+    self.name || self.name_from_infos
   end
 end

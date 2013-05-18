@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 describe User do
-  # pending "add some examples to (or delete) #{__FILE__}"
+
+  describe "associations" do
+  end
   describe "self.find_or_initialize_from_omniauth" do
     before :each do
       @auth_hash = {otherstuff: "derp", credentials: {token: "1234567890"} }
@@ -43,6 +45,7 @@ describe User do
       end
     end
   end
+
   describe "visit!" do
     before (:each) do
       @user = build_stubbed :sender
