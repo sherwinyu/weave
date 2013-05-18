@@ -1,6 +1,6 @@
 class ReferralSerializer < ActiveModel::Serializer
   embed :ids
-  attributes :id, :message
+  attributes :id, :message, :errors
   has_one :referral_batch
   has_one :sender
   has_one :recipient, embed: :objects

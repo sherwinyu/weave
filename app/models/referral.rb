@@ -33,6 +33,8 @@ class Referral < ActiveRecord::Base
 
   accepts_nested_attributes_for :recipient
 
+  validate :deliverable?
+
   def self.mail_gun_test
 
   end
@@ -63,8 +65,8 @@ class Referral < ActiveRecord::Base
   end
 
   def deliver
-    if deliverable
-      mailgun_send!
+    if deliverable?
+      mailgun_send
       self.delivered_at = Time.now
       true
     else
@@ -76,17 +78,18 @@ class Referral < ActiveRecord::Base
     !!delivered_at
   end
 
+  def deliverable?
+    valid = sender && sender.emailable? && sender.email_provided? && recipient && recipient.emailable? && !delivered?
+    errors[:sender_email] << "Sender email invalid" unless sender && sender.emailable?
+    errors[:sender_email] << "Sender email unconfirmed" unless sender && sender.email_provided?
+    errors[:recipient_email] << "Recipient needs a valid email" unless recipient && recipient.emailable?
+    errors[:deliverable] << "already delivered" if delivered?
+    valid
+  end
+
  private
   def mailgun_send!
   end
 
-  def deliverable
-    valid = sender && sender.emailable? && sender.email_provided? && recipient && recipient.emailable? && !delivered?
-    errors[:deliverable] << "sender not emailable" unless sender && sender.emailable?
-    errors[:deliverable] << "sender email unconfirmed" unless sender && sender.email_provided?
-    errors[:deliverable] << "recipient not emailable" unless recipient && recipient.emailable?
-    errors[:deliverable] << "already delivered" if delivered?
-    valid
-  end
 
 end
