@@ -20,7 +20,6 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
     $el.autocomplete
       select: (event, ui) =>
         recipient = Weave.User.createRecord ui.item.user
-        @get('context').set('recipient_attributes', ui.item.user)
         @get('context').set('recipient', recipient)
 
         # Fill in the input fields

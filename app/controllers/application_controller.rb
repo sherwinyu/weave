@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
         userOmniauthCallbackPathFacebook: user_omniauth_callback_path(:facebook)
         # userPath: user_path,
       },
-      path: request.path,
+      path: request.path || "products/selectProduct",
       current_user: current_user.try(:to_json),
       env: {
         FACEBOOK_APP_ID: Figaro.env.FACEBOOK_APP_ID

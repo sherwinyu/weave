@@ -1,6 +1,4 @@
 Weave.Router.map (match)->
-  @route 'index'
-
   @resource "products", path: "/products", ->
     @route "selectProduct"
 
@@ -20,6 +18,9 @@ Weave.Router.map (match)->
     @resource "firstReferral", path: "/referrals/first/:referral_id", ->
       @route "select_recipient"
       @route "edit_body"
+
+  @route 'index', path: '*:'
+
 Weave.IndexRoute = Ember.Route.extend
   redirect: ->
     @transitionTo "products.selectProduct"
@@ -33,7 +34,6 @@ Weave.ProductsSelectProductRoute = Ember.Route.extend
       @transitionTo 'referralBatches.new', Weave.Campaign.find product.get('campaign_ids.0')
 
 Weave.CampaignRoute = Ember.Route.extend()
-Weave.IndexRoute = Ember.Route.extend()
 
 Weave.ReferralBatchesRoute = Ember.Route.extend()
 Weave.ReferralBatchesNewRoute = Ember.Route.extend
