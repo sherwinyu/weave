@@ -72,7 +72,7 @@ Weave.ReferralBatchRoute = Ember.Route.extend
 
           # user.
       ###
-      p = @controllerFor('authentication').get('user').get('transaction').commit()
+      p = @controllerFor('authentication').get('user').save()
       p.then(
         (success) => @controllerFor('application').pushSuccessNotification "Email confirmed!",
         (error) => @controllerFor('application').pushNotification "Invalid email."

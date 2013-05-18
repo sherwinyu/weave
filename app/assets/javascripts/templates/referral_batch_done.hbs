@@ -1,5 +1,7 @@
 <h3>Thanks!</h3>
 <h5> You've sent {{view.pluralizedReferrals}}. </h5>
 You can send another one, or you can call it quits.
-{{view Weave.ReferralConfirmSenderView}}
+{{#unless sender.email_provided}}
+  {{view Weave.ReferralConfirmSenderView}}
+{{/unless}}
 <a {{action finishReferralBatch}}>{{view.logoutText}}</a>

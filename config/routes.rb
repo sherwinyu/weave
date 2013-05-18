@@ -1,5 +1,8 @@
 Weave::Application.routes.draw do
-  devise_for :users, controllers: {omniauth_callbacks: "omniauth_callbacks", registrations: "registrations"}
+  devise_for :users, controllers: {omniauth_callbacks: "omniauth_callbacks", registrations: "users"}
+  devise_scope :user do
+    match 'users/:id', to: 'users#update_email', via: [:post, :put]
+  end
 
   # match '*', to: "
 
@@ -21,7 +24,6 @@ Weave::Application.routes.draw do
 
   # match 'af', to: redirect("/auth/facebook")
   match 'welcome', to: 'referrers#welcome'
-  # match 'users/:id', to: 'referral_batches#update_sender_email', via: [:post, :put]
 
   match 'THISSHOULDNTEVERHAPPEN/BUTITNEEDSTOBEHERE', to: redirect('/WALAWALWAWALAK')
   root to: 'referrals#new'
