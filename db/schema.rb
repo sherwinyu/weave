@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130515154824) do
+ActiveRecord::Schema.define(:version => 20130519021547) do
 
   create_table "authorizations", :force => true do |t|
     t.string   "uid"
@@ -125,6 +125,8 @@ ActiveRecord::Schema.define(:version => 20130515154824) do
     t.boolean  "converted"
     t.integer  "referral_batch_id"
     t.string   "url_code"
+    t.string   "recipient_email"
+    t.string   "sender_email"
   end
 
   create_table "segments", :force => true do |t|
