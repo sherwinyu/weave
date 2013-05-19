@@ -39,6 +39,9 @@ Weave.FriendFilter = Ember.Object.extend
       friends = friends.filter (friend) -> friend.score > 0
       friends.slice(0, 6)
 
+  clearCache: ->
+    @_friends = null
+
   filterAndRankAgainst: (term)->
     @filterAndRank( @friendSource(), @scoreAgainstTerm(term))
 

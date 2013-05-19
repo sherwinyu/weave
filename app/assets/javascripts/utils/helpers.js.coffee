@@ -55,3 +55,6 @@ window.utils =
       type: 'post'
     $.extend defaults, opts
     @ajax defaults
+
+  delayed: (ms, callback) ->
+    setTimeout(callback, ms)

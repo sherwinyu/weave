@@ -1,4 +1,5 @@
-Weave.AuthenticationController = Ember.Object.extend
+Weave.AuthenticationController = Ember.ObjectController.extend
+  needs: "referral"
   user: null
   facebookStatus: ""
   auths: null
@@ -45,10 +46,19 @@ Weave.AuthenticationController = Ember.Object.extend
 
   logout: ->
     FB.logout()
-    utils.delete url: Weave.rails().pathHelpers.destroyUserSessionPath
+    @controllerFor('application').pushSuccessNotification "Successfully logged out of Facebook"
+    p = utils.delete url: Weave.rails().pathHelpers.destroyUserSessionPath
+    @get('controllers.referral.friendFilter').clearCache()
     @set 'user', null
     @set 'auths.facebook', null
     @set 'auths.google', null
+    p.then ->
+      utils.delayed 2000, ->
+        window.location.href = "/"
+
+
+
+
 
   init: ->
     @_super()

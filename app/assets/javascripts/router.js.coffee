@@ -94,7 +94,6 @@ Weave.ReferralBatchRoute = Ember.Route.extend
 
     finishReferralBatch: ->
       @controllerFor('authentication').logout()
-      @controllerFor('application').pushSuccessNotification "Successfully logged out of Facebook"
       @transitionTo 'products.selectProduct'
 
   renderTemplate: ->
@@ -121,12 +120,11 @@ Weave.ReferralSelectRecipientRoute = Ember.Route.extend
 
   model: (params)->
     sender = @controllerFor('authentication').get('user')
-    Weave.Referral.createRecord referralBatch: @modelFor('referralBatch'), sender: sender
+    model = Weave.Referral.createRecord referralBatch: @modelFor('referralBatch'), sender: sender
   setupController: (controller, model) ->
     @controllerFor('referral').set('content', model)
     @controllerFor('referral').set 'message', "I just shopped at New Living, a mission-driven Certified Benefit Corporation that has made a commitment to measure success on a social, environmental and economic level. I know you care a lot about where you shop, so I thought I'd let you know about New Living."
     @controllerFor('referral').set('selectingRecipient', true)
-    Ember.run.sync()
 
   renderTemplate: ->
     if @controllerFor('referral').get('firstReferralSent')
