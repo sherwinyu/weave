@@ -76,7 +76,7 @@ class ReferralsController < ApplicationController
       params[:referral][:recipient_attributes].slice!(:id, :email) if params[:referral][:recipient_attributes]
     end
 =end
-    params.require(:referral).permit :message, :referral_batch_id, {customization_ids: []}, :sender_id,
+    params.require(:referral).permit :message, :referral_batch_id, {customization_ids: []}, :sender_id, :recipient_email, :sender_email,
       { recipient_attributes: [:name,
                                :id,
                                :email,
