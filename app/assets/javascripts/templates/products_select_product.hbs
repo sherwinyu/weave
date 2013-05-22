@@ -1,7 +1,10 @@
+<div class="content">
 <h3> What product did you buy? </h3>
 
+<hr class="style-two">
 <ul class="products">
   {{#each product in content}}
     <li class="product"><a {{action startCampaignForProduct product}} class="product-link"> {{product.name}} </a></li>
   {{/each}}
 </ul>
+</div>

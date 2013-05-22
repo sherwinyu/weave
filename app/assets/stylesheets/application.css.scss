@@ -72,7 +72,16 @@ li.ui-menu-item {
 }
 
 .select-product {
-  @extend .span8;
+  @extend .pane;
+  .content {
+    @extend .span8;
+    margin: 0 auto;
+  }
+  background: $accent-teal;
+  color: white;
+  a {
+    color: white;
+  }
   margin: auto;
   h3 {
     text-align: center;
@@ -141,10 +150,7 @@ li.ui-menu-item {
  */
 
 .referral {
-  // @extend .span8;
   width: 100%;
-  // margin: auto;
-  border: 1px solid red;
 }
 
 .pane {
@@ -373,6 +379,23 @@ li.ui-menu-item {
     }
   }
   div.customization.unselected {
+  }
+}
+
+.referral-batch {
+  padding: 1px;
+  background: $fabric;
+}
+.referral-batch-show {
+  @extend .pane;
+  .content {
+    @extend .span8;
+    margin: auto;
+  }
+  background: $accent-blue;
+  color: darken(white, 5);
+  a {
+    color: white;
   }
 
 }
