@@ -1,6 +1,12 @@
 # Binds against referral controller
 Weave.ReferralSelectRecipientView = Ember.View.extend
   # dependencies: 'referalView'
+  listedFriends: null
+  displayedFriends: (->
+    console.log 'change!'
+    @get('listedFriends')
+  ).property 'listedFriends', 'listedFriends.@each'
+
   recipientEmailOrName: ((key, val)->
     @get('controller.recipient.name')
   ).property('controller.recipient')
@@ -14,6 +20,7 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
       @$('#wala')?.val ''
 
   init: ->
+    @set('listedFriends', [])
     @_super()
 
   bindAutocompletion: ($el) ->
@@ -33,7 +40,9 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
       minLength: 2
 
       source: (request, response) =>
-        @get('friendFilter').filterAndRankAgainst(request.term).then (friends) ->
+        @get('friendFilter').filterAndRankAgainst(request.term).then (friends) =>
+          @set('listedFriends', friends.copy())
+          @notifyPropertyChange('listedFriends')
           response(friends)
 
   selectingRecipientDidChange: ( ->

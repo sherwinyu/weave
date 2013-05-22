@@ -3,6 +3,7 @@ Weave.FriendFilter = Ember.Object.extend
     Em.assert "provider is facebook", provider == "FACEBOOK"
     {
       label: friendResult.name
+      pictureUrl: friendResult.picture.url
       user:
         name: friendResult.name
         email: friendResult.email
@@ -12,10 +13,11 @@ Weave.FriendFilter = Ember.Object.extend
           email: friendResult.email
           provider: "FACEBOOK"
           other_info: friendResult
+
     }
 
   facebookFriends: ->
-    @_friends ||= facebook.query("/me/friends").then (friendResults) =>
+    @_friends ||= facebook.query("/me/friends?fields=name,picture,location").then (friendResults) =>
       @_cached_friends = friendResults
       friendResults.data.map (friendResult) =>
         @friendResultToFriendStruct(friendResult, "FACEBOOK")
