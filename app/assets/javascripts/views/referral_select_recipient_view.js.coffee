@@ -6,13 +6,26 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
     console.log 'change!'
     @get('listedFriends')
   ).property 'listedFriends', 'listedFriends.@each'
+  friendClicked: (friend)->
+    recipient = Weave.User.createRecord friend
+    @get('context').set('recipient', recipient)
+
+    # Fill in the input fields
+    @$("#name-or-email").val friend.name
+    @get('controller').send 'recipientSelected'
+
+
 
   recipientEmailOrName: ((key, val)->
     @get('controller.recipient.name')
   ).property('controller.recipient')
+
   friendFilterBinding: null
+
   classNames: ['select-recipient']
+
   templateName: "referral_select_recipient"
+
   didInsertElement: ->
     @bindAutocompletion @$('input')
     @set 'friendFilter', @get('context.friendFilter')

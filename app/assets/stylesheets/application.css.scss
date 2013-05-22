@@ -36,6 +36,7 @@ hr.style-three {
 h2 {
   text-align: center;
 }
+
 p {
   font-size: 1.2em;
 }
@@ -46,6 +47,9 @@ p {
   &:focus {
     box-shadow: $teal-glow;
   }
+}
+.ui-autocomplete {
+  display:none !important;
 }
 /*
  .invisible {
@@ -172,6 +176,52 @@ li.ui-menu-item {
     text-align: center;
   }
 }
+.select-recipient .friend-suggestions {
+  margin: auto;
+  width: 60%;
+  text-align: left;
+  background: lighten($light-gray, 5);
+  padding: 3px;
+  border-radius: 3px;
+}
+.select-recipient .friend-suggestion {
+  height: 50px;
+  padding: 5px;
+  background: $light-gray;
+  background-clip: padding-box;
+  border: 1px solid transparent;
+  border-top: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+  .friend-name {
+    color: $accent-gray;
+    font-weight: bold;
+  }
+  img.friend-picture {
+    display: inline;
+    float: left;
+  }
+  .friend-location {
+    color: darken($neutral-gray, 5);
+  }
+  div.friend-info {
+    float: left;
+    padding-left: 5px;
+  }
+  border-radius: 2px;
+  padding: 3px;
+
+  &:hover {
+    background: $trans-teal;
+    .friend-name {
+      color: white;
+    }
+    .friend-location {
+      color: darken(white, 5);
+    }
+    color: white;
+  }
+
+}
 
 .edit-body .z-index-container {
   position: relative;
@@ -203,7 +253,6 @@ li.ui-menu-item {
     margin: auto;
     border: none;
     padding: 10px;
-    // border-radius: 0px;
     box-shadow: $inset-chiseled;
     resize: none;
     background: $trans-white;
@@ -248,7 +297,9 @@ li.ui-menu-item {
     right: 0px;
     bottom: 35%;
     font-family: "Univers 67 Condensed Bold";
-
+  }
+  &:hover{
+    background: $accent-teal;
   }
 }
 
@@ -273,7 +324,7 @@ li.ui-menu-item {
     border: 1px solid transparent;
     border-top: 2px solid transparent;
     border-bottom: 2px solid transparent;
-    color: $neutral-gray;
+    color: darken($neutral-gray, 5);
     position: relative;
   }
   div.customization.selected {
@@ -283,7 +334,19 @@ li.ui-menu-item {
     label {
       color: white;
     }
-    //border: 1px solid red;
+  }
+  div.customization:hover {
+
+    box-shadow: inset 0px 0px 2px $accent-teal;
+    .customization-selection-circle-indicator {
+      top: 10%;
+      position: relative;
+      width: 80%;
+      height: 80%;
+      margin: auto;
+      background: $accent-teal;
+      border-radius: 50%;
+    }
   }
   span.customization-selection-indicator {
     pointer-events: none;

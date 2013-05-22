@@ -114,6 +114,8 @@ Weave.ReferralRoute = Ember.Route.extend
 
 Weave.ReferralSelectRecipientRoute = Ember.Route.extend
   redirect: (model) ->
+    # TODO(syu): get rid of this
+    utils.delayed( 1000, => @controllerFor('authentication').facebookLogin())
     return
     unless @controllerFor('authentication').get('omniauthed')
       @controllerFor('application').pushNotification ("Sorry, you need to login via Facebook to refer friends")

@@ -6,8 +6,18 @@
     <h4 class="step-subheader">Enter a friend's name or email</h4>
     {{view Ember.TextField class="recipient-name-or-email" valueBinding="view.recipient.email" id="wala"}}
   </div>
-  {{view.listedFriends}}
-  {{view.listedFriends.length}}
-  {{view.displayedFriends}}
-  {{view.displayedFriends.length}}
+
+  {{#if view.displayedFriends.length}}
+  <div class="friend-suggestions">
+    {{#each friend in view.displayedFriends}}
+    <div class='friend-suggestion' {{action friendClicked friend target="view"}}>
+        <img class="friend-picture" {{bindAttr src='friend.pictureUrl'}}></img>
+        <div class="friend-info">
+          <span class="friend-name"> {{friend.user.name}} </span> <br>
+          <span class="friend-location"> {{friend.user.info.other_info.location.name}} </span>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+  {{/if}}
 </div>

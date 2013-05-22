@@ -3,7 +3,8 @@ Weave.FriendFilter = Ember.Object.extend
     Em.assert "provider is facebook", provider == "FACEBOOK"
     {
       label: friendResult.name
-      pictureUrl: friendResult.picture.url
+      pictureUrl: friendResult.picture.data.url
+      location: friendResult.location?.name
       user:
         name: friendResult.name
         email: friendResult.email
