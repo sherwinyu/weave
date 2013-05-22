@@ -134,8 +134,6 @@ Weave.ReferralSelectRecipientRoute = Ember.Route.extend
         into: 'referralBatch'
         controller: 'referralBatch'
 
-    @controllerFor('referral').get('myView')?.$('.select-recipient > input').val 'wala'
-
     @render 'referralSelectRecipient',
       into: 'referral'
       outlet: 'referralSelectRecipient'

@@ -8,8 +8,13 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  */
+@import "constants";
+@import "compass/css3";
+@import "compass/utilities";
 @import "bootstrap";
 @import "referral_select_recipient";
+
+
 h2 {
   text-align: center;
 }
@@ -45,4 +50,19 @@ li.ui-menu-item {
     margin: 15px 15px;
     font-size: 1.5em;
   }
+}
+
+/*
+ * Utils
+ */
+.circle {
+  border-radius: 50%;
+}
+
+/*
+ * Banner
+ */
+.banner {
+  height: 160px;
+  background: image-url('fabric.png');// $light-white;
 }

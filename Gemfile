@@ -20,7 +20,8 @@ group :assets do
   # gem 'coffee-rails', '~> 3.2.2'
   # gem 'uglifier', '>= 1.0.3'
 
-  gem 'sass-rails',   '3.2.4'
+  gem 'sass-rails', '3.2.4'
+  gem 'compass-rails'
   gem 'coffee-rails', '3.2.2'
   gem 'coffee-script-source', '1.6.1'
   gem 'uglifier', '1.2.3'

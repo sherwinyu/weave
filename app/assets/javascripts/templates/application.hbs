@@ -1,7 +1,12 @@
+<div class="banner">
+  wala wala
+</div>
+<div class="notifications">
 {{#each notification in notifications}}
   <div class="alert" {{bindAttr class="notification.type"}}>
     <button type="button" class="close"  {{action destroyNotification notification}}>&times;</button>
     {{notification.message}}
   </div>
 {{/each}}
+</div>
 {{outlet}}
