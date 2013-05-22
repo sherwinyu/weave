@@ -18,16 +18,6 @@
   }
 }
 
-.referral {
-  @extend .span8;
-  margin: auto;
-}
-
-.select-recipient {
-  @extend .well;
-  text-align: center;
-}
-
 .edit-body {
   @extend .well;
   text-align: center;
