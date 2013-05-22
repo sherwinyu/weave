@@ -1,8 +1,13 @@
 <div class="customizations">
 {{#each customization in availableCustomizations}}
-  <label class="checkbox customization">
-    {{view Ember.Checkbox checkedBinding="customization.selected" class=""}}
-    {{customization.description}}
-  </label>
+<div class="customization"{{bindAttr class="customization.selected:selected:unselected"}}>
+  <span class="customization-selection-indicator" {{bindAttr class="customization.selected:selected:unselected"}}>
+    <div class="customization-selection-circle-indicator"></div>
+  </span>
+  <label class="checkbox customization" >
+      {{view Ember.Checkbox checkedBinding="customization.selected" class="hidden-checkbox"}}
+      {{customization.description}}
+    </label>
+</div>
 {{/each}}
 </div>

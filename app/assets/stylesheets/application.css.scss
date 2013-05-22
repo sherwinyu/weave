@@ -33,23 +33,26 @@ hr.style-three {
   background: #999;
 }
 
-hr.style-four {
-  height: 12px;
-  border: 0;
-  box-shadow: inset 0 12px 12px -12px rgba(0,0,0,0.5);
-}
 h2 {
   text-align: center;
 }
 p {
   font-size: 1.2em;
 }
+
+.weave input, textarea {
+  box-shadow: $inset-chiseled;
+  border: none;
+  &:focus {
+    box-shadow: $teal-glow;
+  }
+}
 /*
-.invisible {
-  display: none;
+ .invisible {
+ display: none;
 }
 .visible {
-  display: block;
+display: block;
 }
 */
 
@@ -140,14 +143,18 @@ li.ui-menu-item {
   border: 1px solid red;
 }
 
+.pane {
+  padding: 45px 0px;
+}
+
 /*
  *  Referral > Select Recipient
  */
 
 .select-recipient {
+  @extend .pane;
   text-align: center;
   width: 100%;
-  padding: 15px 0px;
   background: $shadow-blue;
   .content {
     @extend .span8;
@@ -166,14 +173,29 @@ li.ui-menu-item {
   }
 }
 
+.edit-body .z-index-container {
+  position: relative;
+}
 .edit-body {
+  @extend .pane;
+
   background: $fabric;
-  padding: 15px 0px;
+
   .content {
     @extend .span8;
     margin: 0 auto;
   }
+  .content .body {
+    @extend .well;
+    margin-bottom: 0px;
+  }
+
   .step-name {
+    color: $accent-blue;
+  }
+  .step-subheader{
+    font-weight: normal;
+    color: $accent-blue;
   }
   textarea.referral-message {
     width: 90%;
@@ -182,19 +204,113 @@ li.ui-menu-item {
     border: none;
     padding: 10px;
     // border-radius: 0px;
-    box-shadow: none;
+    box-shadow: $inset-chiseled;
     resize: none;
-    background: rgba(white, 0.75);
+    background: $trans-white;
     overflow: hidden;
     vertical-align: top;
-    min-height: 150px;
+    min-height: 100px;
     &:focus {
       // border: none;
-      box-shadow: none;
+      box-shadow: $teal-glow;
     }
   }
-  .step-subheader{
-    font-weight: normal;
+}
+.edit-body .deliver-button {
+  $vertical-clip: 40px;
+  display: block;
+  border-radius: 0% 0% 125px 125px;
+
+  height: 125px;
+  width: 250px;
+
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -1*$vertical-clip;
+
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  clip: rect($vertical-clip, 250px, 250px, 0px);
+  background: $accent-blue;
+
+  color: white;
+  font-weight: bold;
+  font-size: 3em;
+  text-align: center;
+  padding-top: 10px;
+  z-index: 0;
+  span.deliver {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0px;
+    right: 0px;
+    bottom: 35%;
+    font-family: "Univers 67 Condensed Bold";
+
   }
+}
+
+.customizations {
+  width: 90%;
+  margin: auto;
+  padding: 7px 7px;
+  background: lighten($light-gray, 5);
+  label.customization{
+    padding-left: 24px;
+  }
+  input.hidden-checkbox {
+    display: none;
+    position: absolute;
+    left: -4000px;
+    top: -4000px;
+  }
+  div.customization {
+    padding: 5px;
+    background: $light-gray;
+    background-clip: padding-box;
+    border: 1px solid transparent;
+    border-top: 2px solid transparent;
+    border-bottom: 2px solid transparent;
+    color: $neutral-gray;
+    position: relative;
+  }
+  div.customization.selected {
+    background: $accent-teal;
+    text-color: white;
+    background-clip: padding-box;
+    label {
+      color: white;
+    }
+    //border: 1px solid red;
+  }
+  span.customization-selection-indicator {
+    pointer-events: none;
+    background: rgba(white, 0.75);
+    width: 18px;
+    height: 18px;
+    display: block;
+    position: absolute;
+    top: 25%;
+    content: "X";
+    border-radius: 15%;
+    &.selected {
+      background: white;
+
+      .customization-selection-circle-indicator {
+        top: 10%;
+        position: relative;
+        width: 80%;
+        height: 80%;
+        margin: auto;
+        background: $accent-teal;
+        border-radius: 50%;
+      }
+    }
+  }
+  div.customization.unselected {
+  }
+
 }
 
