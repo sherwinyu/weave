@@ -14,19 +14,44 @@
 @import "bootstrap";
 // @import "referral_select_recipient";
 
+hr {
+  background: rgba(gray, 0.5);
+  height: 1px;
+}
+hr.style-two {
+  border: 0;
+  height: 2px;
+  background-image: -webkit-linear-gradient(left, rgba(0,0,0,0.05), rgba(0,0,0,0.55), rgba(0,0,0,0.05));
+  background-image:    -moz-linear-gradient(left, rgba(0,0,0,0.05), rgba(0,0,0,0.55), rgba(0,0,0,0.05));
+  background-image:     -ms-linear-gradient(left, rgba(0,0,0,0.05), rgba(0,0,0,0.55), rgba(0,0,0,0.05));
+  background-image:      -o-linear-gradient(left, rgba(0,0,0,0.05), rgba(0,0,0,0.55), rgba(0,0,0,0.05));
+}
 
+hr.style-three {
+  border: 0;
+  border-bottom: 1px dashed #ccc;
+  background: #999;
+}
+
+hr.style-four {
+  height: 12px;
+  border: 0;
+  box-shadow: inset 0 12px 12px -12px rgba(0,0,0,0.5);
+}
 h2 {
   text-align: center;
 }
 p {
   font-size: 1.2em;
 }
+/*
 .invisible {
   display: none;
 }
 .visible {
   display: block;
 }
+*/
 
 .ui-helper-hidden-accessible {
   display: none;
@@ -79,7 +104,7 @@ li.ui-menu-item {
  */
 .banner {
   height: 150px;
-  background: image-url('fabric.png');// $light-white;
+  background: $fabric;// image-url('fabric.png');// $light-white;
 }
 .logo {
   margin-left: auto;
@@ -92,6 +117,14 @@ li.ui-menu-item {
   // height: 100px;
   // background: image-url('weave_logo.png')
 }
+/*
+ *  Notifications
+ */
+.notifications {
+  margin: auto;
+  @extend .span8;
+}
+
 /*
  *  Instructions
  */
@@ -119,6 +152,49 @@ li.ui-menu-item {
   .content {
     @extend .span8;
     margin: 0 auto;
+  }
+  .step-name {
+    color: white;
+    &:hover {text-decoration: none}
+  }
+  .step-subheader {
+    color: white;
+    font-weight: normal;
+  }
+  input.recipient-name-or-email {
+    text-align: center;
+  }
+}
+
+.edit-body {
+  background: $fabric;
+  padding: 15px 0px;
+  .content {
+    @extend .span8;
+    margin: 0 auto;
+  }
+  .step-name {
+  }
+  textarea.referral-message {
+    width: 90%;
+    display: block;
+    margin: auto;
+    border: none;
+    padding: 10px;
+    // border-radius: 0px;
+    box-shadow: none;
+    resize: none;
+    background: rgba(white, 0.75);
+    overflow: hidden;
+    vertical-align: top;
+    min-height: 150px;
+    &:focus {
+      // border: none;
+      box-shadow: none;
+    }
+  }
+  .step-subheader{
+    font-weight: normal;
   }
 }
 

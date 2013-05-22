@@ -1,9 +1,9 @@
 <div class='content'>
   <div class="accordion-heading" data-toggle="collapse" data-target=".select-recipient .accordion-body">
-    <a {{action selectRecipient}}><h2> 1. Select a friend</h2></a>
+    <a {{action selectRecipient}}><h2 class="step-name"> 1. Select a friend</h2></a>
   </div>
-  <div {{bindAttr class="selectingRecipient:visible:invisible :accordion-body" }} >
-    <h3>Enter a friend's name or email</h3>
+  <div {{bindAttr class="XXselectingRecipient:XXvisible:XXinvisible :accordion-body" }} >
+    <h4 class="step-subheader">Enter a friend's name or email</h4>
     {{view Ember.TextField class="recipient-name-or-email" valueBinding="view.recipient.email" id="wala"}}
   </div>
 </div>

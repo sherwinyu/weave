@@ -1,21 +1,23 @@
-<div {{bindAttr class="editingBody:visible:invisible"}}>
-  <h2>2. Finish your message.</h2>
-  <hr>
-  <h5>Personalize your referral by adding a short message to your friend, {{recipientFirstName}}.</h5>
-  {{view Ember.TextArea valueBinding="message" class="referral-message"}}
-  {{view Weave.ReferralCustomizationsSelectView
-    availableCustomizationsBinding=
-    "avaliableCustomizations"
-  customizationsBinding="customizations"}}
-  <br>
-  {{! TODO(syu): though REALLY should be creating a user info for the recipient}}
-  Your friend's email address:
-  <br>
-  {{view Ember.TextField valueBinding="recipient_email" label="Your friend's email address"}}
-  <br>
-  <a id="deliver-button" class='btn btn-primary' {{action deliverClicked this}}> Deliver! </a>
-</div>
+<div class="content">
 
-<div {{bindAttr class="editingBody:invisible:visible"}}>
-  <a {{action editBody this}}><h2>2. Finish your message.</h2></a>
+  <div {{bindAttr class="editingBody:visible:invisible"}}>
+    <h2 class="step-name">2. Finish your message and send!</h2>
+    <hr class="style-one">
+    <h4 class="step-subheader">Personalize your referral by adding a short message {{recipientFirstName}}.</h4>
+    {{view Ember.TextArea valueBinding="message" class="referral-message"}}
+
+    <h4 class="step-subheader">Select a few of the following highlights {{recipientFirstName}} might be interested in.</h4>
+    {{view Weave.ReferralCustomizationsSelectView
+      availableCustomizationsBinding=
+      "avaliableCustomizations"
+    customizationsBinding="customizations"}}
+    {{! TODO(syu): though REALLY should be creating a user info for the recipient}}
+    <div class='center'>
+      Your friend&#039;s email address:
+      <br>
+      {{view Ember.TextField class="recipient-email-address" valueBinding="recipient_email" label="Your friend's email address"}}
+      <br>
+      <a id="deliver-button" class='btn btn-primary' {{action deliverClicked this}}> Deliver! </a>
+    </div>
+  </div>
 </div>
