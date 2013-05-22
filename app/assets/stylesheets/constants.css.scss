@@ -3,8 +3,16 @@ $light-white: #f0f0f0;
 $accent-blue: #326bb0;
 $shadow-blue: darken($accent-blue, 5%);
 $accent-teal: #0faa8f;
+$trans-teal: rgba($accent-teal, 0.6);
 $shadow-teal: darken($accent-teal, 5%);
+$trans-white: rgba(white, 0.75);
+$accent-gray: #444444;
+$neutral-gray: #777777;
+$trans-gray: rgba($accent-gray, 0.75);
+$light-gray: adjust-lightness($neutral-gray, 40);
 $fabric: image-url('fabric.png');
+$teal-glow: 0px 0px 5px $trans-teal, inset 0px 0px 5px $trans-teal;
+$inset-chiseled: 0px 0px 3px $neutral-gray;
 
 .center {
   margin-left: auto;
@@ -14,5 +22,18 @@ $fabric: image-url('fabric.png');
 
 @font-face {
   font-family: "Source Sans";
-  src: url('SourceSansPro-light.otf');
+  src: font-url('SourceSansPro-light.otf');
+}
+
+@font-face {
+  font-family: "Univers 45 Light";
+  src: font-url('Univers45light.ttf');
+}
+@font-face {
+  font-family: "Univers 47 Light";
+  src: font-url('Univers47Light.ttf');
+}
+@font-face {
+  font-family: "Univers 67 Condensed Bold";
+  src: font-url('Univers67CondensedBold.ttf');
 }

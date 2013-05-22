@@ -37,4 +37,5 @@ Weave::Application.configure do
 
   # from http://stackoverflow.com/questions/8013478/how-to-avoid-precompiled-assets-being-served-in-development-mode
   config.assets.prefix = "/assets_dev"
+  config.assets.paths << "#{Rails.root}/app/assets_dev/fonts"
 end
