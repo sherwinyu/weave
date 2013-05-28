@@ -39,6 +39,7 @@ gem 'ember-source', '1.0.0.rc3.3'
 gem 'ember-bootstrap-rails'
 
 gem 'pry', '0.9.11'
+gem 'spring', require: false
 group :development, :test do
   gem 'sqlite3', '1.3.7'
   gem 'rspec-rails', '2.13.0'
@@ -50,7 +51,9 @@ group :development, :test do
   # gem 'jasmine-headless-webkit', '0.8.4'
   # gem 'guard-jasmine-headless-webkit'
   gem 'factory_girl_rails', '4.2.1'
-  gem 'guard-spork', '1.5.0'
+  # gem 'guard-spork', '1.5.0'
+  # gem 'guard-spring'
+  gem 'guard-zeus'
   # gem 'jasmine-rails', '0.4.2'
   gem 'guard-jasmine', '1.15.1'
   gem "jasminerice", '0.0.10'
@@ -62,7 +65,7 @@ group :test do
   gem 'capybara', '2.1.0'
   gem 'poltergeist', '1.3.0'
   gem 'guard-rspec', '1.2.1'
-  gem 'spork-rails', '3.2.1'
+  # gem 'spork-rails', '3.2.1'
   gem 'shoulda-matchers', '1.5.6'
 end
 # gem 'thin'
