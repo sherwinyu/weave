@@ -54,6 +54,7 @@ group :development, :test do
   # gem 'guard-spork', '1.5.0'
   # gem 'guard-spring'
   gem 'guard-zeus'
+  gem 'guard-rspec', '3.0.0'
   # gem 'jasmine-rails', '0.4.2'
   gem 'guard-jasmine', '1.15.1'
   gem "jasminerice", '0.0.10'
@@ -64,9 +65,9 @@ end
 group :test do
   gem 'capybara', '2.1.0'
   gem 'poltergeist', '1.3.0'
-  gem 'guard-rspec', '1.2.1'
   # gem 'spork-rails', '3.2.1'
   gem 'shoulda-matchers', '1.5.6'
+  gem 'zeus'
 end
 # gem 'thin'
 
