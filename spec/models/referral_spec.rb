@@ -31,35 +31,35 @@ describe Referral do
       it "adds an error if missing sender" do
         referral.update_attribute :sender, nil
         referral.deliver.should be false
-        referral.errors[:deliverable].to_s.should match /sender/i
+        referral.errors[:sender_email].to_s.should match /sender/i
       end
       it "adds an error if no sender email" do
         referral.sender.update_attribute :email, nil
         referral.deliver.should be false
-        referral.errors[:deliverable].to_s.should match /sender/i
+        referral.errors[:sender_email].to_s.should match /sender/i
       end
 
       it "adds an error if sender email not confirmed" do
         referral.sender.update_attribute :email_provided, false
         referral.deliver.should be false
-        referral.errors[:deliverable].to_s.should match /sender.*unconfirmed/i
+        referral.errors[:sender_email].to_s.should match /sender.*unconfirmed/i
       end
 
       it "adds an error if missing recipient" do
         referral.update_attribute :recipient, nil
         referral.deliver.should be false
-        referral.errors[:deliverable].to_s.should match /recipient.*not.*emailable/i
+        referral.errors[:recipient_email].to_s.should match /recipient/i
       end
       it "adds an error if no recipient email" do
         referral.recipient.update_attribute :email, nil
         referral.deliver.should be false
-        referral.errors[:deliverable].to_s.should match /recipient.*not.*emailable/i
+        referral.errors[:recipient_email].to_s.should match /recipient/i
       end
 
       it "adds an error if no recipient email" do
         referral.recipient.update_attribute :email, nil
         referral.deliver.should be false
-        referral.errors[:deliverable].to_s.should match /recipient.*not.*emailable/i
+        referral.errors[:recipient_email].to_s.should match /recipient/i
       end
     end
   end

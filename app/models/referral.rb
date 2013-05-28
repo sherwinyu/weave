@@ -88,7 +88,7 @@ class Referral < ActiveRecord::Base
   end
 
  private
-  def mailgun_send!
+  def mailgun_send
   end
 
 
