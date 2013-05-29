@@ -79,11 +79,26 @@ class Referral < ActiveRecord::Base
   end
 
   def deliverable?
-    valid = sender && sender.emailable? && sender.email_provided? && recipient && recipient.emailable? && !delivered?
-    errors[:sender_email] << "Sender email invalid" unless sender && sender.emailable?
-    errors[:sender_email] << "Sender email unconfirmed" unless sender && sender.email_provided?
-    errors[:recipient_email] << "Recipient needs a valid email" unless recipient && recipient.emailable?
+    valid = sendable? && receivable? && !delivered?  # sender && sender.emailable? && sender.email_provided? && recipient && recipient.emailable? && !delivered?
+    # errors[:sender_email] << "Sender email invalid" unless sender && sender.emailable?
+    # errors[:sender_email] << "Sender email unconfirmed" unless sender && sender.email_provided?
+    # errors[:recipient_email] << "Recipient needs a valid email" unless recipient && recipient.emailable?
     errors[:deliverable] << "already delivered" if delivered?
+    valid
+  end
+
+  def sendable?
+    # TODO(syu)
+    valid = Utils.valid_email? self.sender_email
+    errors[:sender_email] << "Sender email invalid" unless valid
+    valid
+    # || sender && sender.emailable?
+    # errors[:sender_email] << "Sender email unconfirmed" unless sender && sender.email_provided?
+  end
+
+  def receivable?
+    valid = Utils.valid_email? self.recipient_email
+    errors[:recipient_email] << "Recipient email invalid" unless valid
     valid
   end
 

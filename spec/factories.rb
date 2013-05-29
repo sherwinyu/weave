@@ -58,6 +58,8 @@ FactoryGirl.define do
     sender
     recipient
     referral_batch
+    sender_email "some_sender_email@gmail.com"
+    recipient_email "some_recipient_email@gmail.com"
     trait(:not_delivered) {delivered_at nil}
     trait(:no_message) {message nil}
     trait(:no_sender) {sender nil}
