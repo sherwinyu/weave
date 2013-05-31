@@ -106,5 +106,4 @@ class Referral < ActiveRecord::Base
   def mailgun_send
   end
 
-
 end
