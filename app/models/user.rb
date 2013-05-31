@@ -116,4 +116,8 @@ class User < ActiveRecord::Base
   def canonical_name
     self.name || self.name_from_infos
   end
+
+  def first_name
+    self.canonical_name.split[0]
+  end
 end
