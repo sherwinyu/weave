@@ -154,7 +154,10 @@ Weave.ReferralSelectRecipientRoute = Ember.Route.extend
           rf = @controllerFor('referral').get 'content'
           # rf.get('stateManager').send('finishedMaterializing')
           @send 'editBody', rf
-      @controllerFor('referral').createWithRecipient()
+      @controllerFor('referral').createWithRecipient().then(null, (errors) ->
+        debugger
+        @controllerFor('application').pushNotification "there was an error! #{errors}"
+        )
 
 Weave.ReferralEditBodyRoute = Ember.Route.extend
   redirect: (model) ->

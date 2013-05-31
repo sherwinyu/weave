@@ -11,7 +11,7 @@ Weave.ReferralController = Ember.ObjectController.extend
     # recip.user_infos_attributes = [recip.info]
     # delete recip.info
     @get('content').set('meta.action', 'create_with_recipient')
-    @get('content.transaction').commit()
+    @get('content').save() # .transaction').commit()
 
     # @get('content').save()
     # .then (referral) -> @send 'editBody', referral
