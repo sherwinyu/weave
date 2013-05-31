@@ -10,6 +10,7 @@ Weave.ReferralController = Ember.ObjectController.extend
     # recip = @get('content').get('recipient_attributes')
     # recip.user_infos_attributes = [recip.info]
     # delete recip.info
+    @get('content').set('meta.action', 'create_with_recipient')
     @get('content.transaction').commit()
 
     # @get('content').save()

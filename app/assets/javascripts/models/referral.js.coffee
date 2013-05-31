@@ -22,6 +22,8 @@ Weave.Referral = DS.Model.extend
   recipient_email: DS.attr 'string'
   sender_email: DS.attr 'string'
 
+  meta: DS.attr 'json', defaultValue: {}
+
   recipientFirstName: (->
     [first, last] = @get('recipient.name')?.trim().split(/\s+/) || ["your friend"]
     first
@@ -33,5 +35,3 @@ Weave.Referral = DS.Model.extend
       ?.map (customization) =>
         Weave.ReferralCustomization.create(customization: customization, referral: @)
     ).property('referralBatch')
-
-

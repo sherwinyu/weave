@@ -67,7 +67,7 @@ class ReferralsController < ApplicationController
       render json: @referral, status: 422
     end
   end
-  private
+
   def referral_params
     params[:referral][:customization_ids] = params[:referral].delete(:customizations_attributes).map{|c| c[:id]} if params[:referral][:customizations_attributes]
 =begin
