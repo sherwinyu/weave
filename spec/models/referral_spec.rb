@@ -11,10 +11,12 @@ describe Referral do
     context "when sendable, receivable, and not delivered yet" do
       before :each do
         @referral = referral
+        @mailgun_send = @referral.should_receive(:mailgun_send)
         @ret = @referral.deliver
       end
 
       it "sets sent_at to now" do
+        # @ret = @referral.deliver
         @referral.delivered_at.should eq @time
       end
 
@@ -24,6 +26,10 @@ describe Referral do
 
       it "returns true" do
         @ret.should be true
+      end
+
+      it "calls mailgun_send" do
+        @referral.should have_received :mailgun_send
       end
 
       it "prevents the referral from getting delivered twice" do

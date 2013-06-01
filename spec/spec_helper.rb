@@ -2,6 +2,7 @@ require 'rubygems'
 # require 'spork'
 require 'capybara/rspec'
 require 'capybara/poltergeist'
+require 'rspec-spies'
 #uncomment the following line to use spork with the debugger
 #require 'spork/ext/ruby-debug'
 

@@ -66,7 +66,9 @@ group :test do
   gem 'capybara', '2.1.0'
   gem 'poltergeist', '1.3.0'
   # gem 'spork-rails', '3.2.1'
+  gem 'rspec-spies'
   gem 'shoulda-matchers', '1.5.6'
+  gem 'bourne', '1.4.0'
   gem 'zeus'
 end
 # gem 'thin'

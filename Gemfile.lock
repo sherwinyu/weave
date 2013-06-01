@@ -265,6 +265,8 @@ GEM
       rspec-core (~> 2.13.0)
       rspec-expectations (~> 2.13.0)
       rspec-mocks (~> 2.13.0)
+    rspec-spies (2.1.4)
+      rspec (~> 2.0)
     sass (3.2.8)
     sass-rails (3.2.4)
       railties (~> 3.2.0)
@@ -314,6 +316,7 @@ DEPENDENCIES
   active_model_serializers (~> 0.7.0)
   annotate (= 2.5.0)
   bootstrap-sass (~> 2.3.1.0)
+  bourne (= 1.4.0)
   capybara (= 2.1.0)
   coffee-rails (= 3.2.2)
   coffee-script-source (= 1.6.1)
@@ -343,6 +346,7 @@ DEPENDENCIES
   rb-inotify
   rest-client (= 1.6.7)
   rspec-rails (= 2.13.0)
+  rspec-spies
   sass-rails (= 3.2.4)
   shoulda-matchers (= 1.5.6)
   simple_form (= 2.1.0)
