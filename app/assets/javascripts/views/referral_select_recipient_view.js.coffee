@@ -6,12 +6,13 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
     console.log 'change!'
     @get('listedFriends')
   ).property 'listedFriends', 'listedFriends.@each'
+
   friendClicked: (friend)->
     recipient = Weave.User.createRecord friend
     @get('context').set('recipient', recipient)
 
     # Fill in the input fields
-    @$("#name-or-email").val friend.name
+    @$("#name-or-email").val friend.user.name
     @get('controller').send 'recipientSelected'
 
 
@@ -39,6 +40,7 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
   bindAutocompletion: ($el) ->
     $el.autocomplete
       select: (event, ui) =>
+        Em.assert "jquery-autocomplete-select event should not happen because we are custom rolling a solution", false
         recipient = Weave.User.createRecord ui.item.user
         @get('context').set('recipient', recipient)
 
