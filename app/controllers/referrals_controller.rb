@@ -35,7 +35,6 @@ class ReferralsController < ApplicationController
     # @sender = User.find_by_id params[:referral].delete :sender_id
     @referral = Referral.create referral_params
     @referral.valid?
-    raise "walawala"
     if @referral.save validate: false
       render json: @referral
     else
