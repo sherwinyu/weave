@@ -114,9 +114,6 @@ Weave.ReferralRoute = Ember.Route.extend
 
 Weave.ReferralSelectRecipientRoute = Ember.Route.extend
   redirect: (model) ->
-    # TODO(syu): get rid of this
-    utils.delayed( 1000, => @controllerFor('authentication').facebookLogin())
-    return
     unless @controllerFor('authentication').get('omniauthed')
       @controllerFor('application').pushNotification ("Sorry, you need to login via Facebook to refer friends")
       @transitionTo "referralBatch.show", @modelFor('referralBatch')
@@ -154,8 +151,7 @@ Weave.ReferralSelectRecipientRoute = Ember.Route.extend
           rf = @controllerFor('referral').get 'content'
           # rf.get('stateManager').send('finishedMaterializing')
           @send 'editBody', rf
-      @controllerFor('referral').createWithRecipient().then(null, (errors) ->
-        )
+      @controllerFor('referral').createWithRecipient()
 
 Weave.ReferralEditBodyRoute = Ember.Route.extend
   redirect: (model) ->
