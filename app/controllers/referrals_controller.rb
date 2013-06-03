@@ -59,6 +59,9 @@ class ReferralsController < ApplicationController
 
   def update
     @referral = Referral.find(params[:id])
+    if meta_params[:action] == "update_body_and_deliver"
+      update_body_and_deliver and return
+    end
     @referral.attributes = referral_params
     @referral.valid?
     if @referral.save validate: false
@@ -79,8 +82,23 @@ class ReferralsController < ApplicationController
     render json: @referral
   end
 
+  def update_body_and_deliver
+    @referral = Referral.find params[:id]
+    @referral.attributes = referral_params
+    @referral.valid?
+    if @referral.save(validate: false) && @referral.deliver
+      render json: @referral
+    else
+      render json: @referral, status: 422
+    end
+  end
 
+
+  def meta_params
+    @meta ||= params[:referral].delete(:meta)
+  end
   def referral_params
+    @meta ||= params[:referral].delete(:meta)
     params[:referral][:customization_ids] = params[:referral].delete(:customizations_attributes).map{|c| c[:id]} if params[:referral][:customizations_attributes]
 =begin
     if params[:referral][:recipient]
@@ -88,7 +106,12 @@ class ReferralsController < ApplicationController
       params[:referral][:recipient_attributes].slice!(:id, :email) if params[:referral][:recipient_attributes]
     end
 =end
-    params.require(:referral).permit :message, :referral_batch_id, {customization_ids: []}, :sender_id, :recipient_email, :sender_email,
+    params.require(:referral).permit :message, :referral_batch_id,
+      { customization_ids: []},
+      :sender_id,
+      :recipient_email,
+      :sender_email,
+      { meta: [:action]},
       { recipient_attributes: [:name,
                                :id,
                                :email,

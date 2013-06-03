@@ -40,10 +40,6 @@ class Referral < ActiveRecord::Base
 
   end
 
-  def text_mail
-
-  end
-
   def attach_incentives
     raise "wala"
   end
