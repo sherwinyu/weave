@@ -26,7 +26,7 @@ class ReferralMailer < ActionMailer::Base
     data[:subject] = mail.subject #"Hello"
     data[:text] = mail.text_part.body # "Testing some Mailgun awesomness!"
     data[:html] = mail.html_part.body # "<html>HTML version of the body</html>"
-    data['o:testmode'] = true
+    data['o:testmode'] = true if Rails.env.testing? || Rails.env.development?
     # data[:attachment] = File.new(File.join("files", "test.jpg"))
     # data[:attachment] = File.new(File.join("files", "test.txt"))
     # RestClient.post "https://api:key-3ax6xnjp29jd6fds4gc373sgvjxteol0"\
