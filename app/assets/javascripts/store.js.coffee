@@ -30,7 +30,6 @@ Weave.Serializer = DS.RESTSerializer.extend
     else @_super(type, name)
 
   extractValidationErrors: (type, json) ->
-    debugger
     json.errors = json[@rootForType(type)].errors
     @_super(type, json)
     ###

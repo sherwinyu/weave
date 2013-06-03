@@ -43,29 +43,6 @@ window.facebook =
       dfd.resolve(response)
     dfd.promise()
 
-  mutualFriends: ->
-    window.friendCounts = {}
-    window.promiseOfFriends = fb '/me/friends'
-    promiseOfFriends.then( (response)->
-      friends = response.data
-      muts = for friend in friends
-        do (friend) ->
-          expectingFriend = fb "/#{friend.id}/mutualFriends"
-          expectingFriend.then (r) ->
-            friendCounts[friend.id] = r.data.length
-      $.when.apply($, muts)
-      ).then( (args...) ->
-        debugger
-      )
-
-  initBindings: ->
-    $('#sign-in-facebook').click (e)->
-      e.preventDefault()
-      facebook.login()
-
-    $('#sign-out-facebook').click (e)->
-      facebook.logout()
-
 window.fbAsyncInit = ->
   FB.init
     appId: Weave.rails().env.FACEBOOK_APP_ID
@@ -73,5 +50,4 @@ window.fbAsyncInit = ->
     cookie: true
     oauth: true
 
-  facebook.initBindings()
   FB.getLoginStatus (response)-> console.log "FB login status " , response
