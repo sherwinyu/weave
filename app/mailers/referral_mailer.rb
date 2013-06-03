@@ -8,8 +8,8 @@ class ReferralMailer < ActionMailer::Base
     @client = "New Living"
     mail(
       to: @referral.recipient_email,
-      subject: "#{@sender.name} thought you'd be interested in NewLiving",
-      from: "#{@sender.name} <#{@referral.sender_email}>"
+      subject: "#{@sender.full_name} thought you'd be interested in NewLiving",
+      from: "#{@sender.full_name} <#{@referral.sender_email}>"
         ) do |format|
       format.text
       format.html
@@ -32,7 +32,7 @@ class ReferralMailer < ActionMailer::Base
     # RestClient.post "https://api:key-3ax6xnjp29jd6fds4gc373sgvjxteol0"\
     # "@api.mailgun.net/v2/samples.mailgun.org/messages", data
     url = "https://api:#{Figaro.env.MAILGUN_API_KEY}@api.mailgun.net/v2/#{Figaro.env.mailgun_api_domain}/messages"
-    puts url, data
+    puts url, data.inspect
     # binding.pry
     RestClient.post url, data
   end

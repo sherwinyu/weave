@@ -47,7 +47,7 @@ class Referral < ActiveRecord::Base
   def deliver
     if deliverable?
       mailgun_send
-      self.delivered_at = Time.now
+      self.update_attribute :delivered_at, Time.now
       true
     else
       false

@@ -118,6 +118,14 @@ class User < ActiveRecord::Base
   end
 
   def first_name
-    self.canonical_name.split[0]
+    self.canonical_name.split.first
+  end
+
+  def last_name
+    self.canonical_name.split.last
+  end
+
+  def full_name
+    name || "#{first_name} #{last_name}" || nil
   end
 end
