@@ -34,6 +34,7 @@ class Referral < ActiveRecord::Base
   accepts_nested_attributes_for :recipient
 
   validate :deliverable?
+  validates_presence_of :sender
 
   def self.mail_gun_test
 

@@ -40,9 +40,18 @@ class ReferralsController < ApplicationController
     else
       render json: @referral, status: 422
     end
-
-    # create_with_recipient
   end
+
+  def create_with_recipient
+    @referral = Referral.create referral_params
+    @referral.valid?
+    if @referral.save validate: false
+      render json: @referral
+    else
+      render json: @referral, status: 422
+    end
+  end
+
   def show
     @referral = Referral.find params[:id]
     render json: @referral
