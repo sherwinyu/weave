@@ -8,18 +8,21 @@ describe OmniauthCallbacksController do
 
   describe "#oauthorize" do
     before :each do
-      request.env['omniauth.auth'] = {
-        credentials: {token: "walawala" }
-      }
-
+      request.env['omniauth.auth'] = OmniAuth::AuthHash.new credentials: {token: "walawala" }
     end
 
-    context " on authorization with existing user when not signed in" do
+    context "on authorization with existing user when not signed in" do
       before :each do
         @auth = create(:authorization)
         @user = @auth.user
 
-        request.env['omniauth.auth'].merge! provider: @auth.provider, uid: @auth.uid
+        request.env['omniauth.auth'].merge! provider: @auth.provider, uid: @auth.uid,
+          info:
+            { first_name: @user.name.split.first,
+              last_name: @user.name.split.last,
+              email: @user.email,
+              extra: {}
+            }
 
         get :oauthorize
       end
@@ -39,35 +42,38 @@ describe OmniauthCallbacksController do
     end
 
 
-    context " on new (user-less) authorization when not signed in" do
+    context "on new (user-less) authorization when not signed in" do
       before :each do
         @auth_attributes = attributes_for :authorization
-        request.env['omniauth.auth'].merge! @auth_attributes.slice :provider, :uid
+        @user_attrs = attributes_for :user
+        request.env['omniauth.auth'].merge! @auth_attributes.slice(:provider, :uid)
+        request.env['omniauth.auth'].merge!(
+             info:
+              { first_name: @user_attrs[:name].split.first,
+                last_name: @user_attrs[:name].split.last,
+                email: @user_attrs[:email],
+                extra: {} }
+            )
         get :oauthorize
       end
-=begin
-      its("current_user") { should be_persisted }
-      its("current_user.authorizations.count") { should be 1 }
-      its("current_user.authorizations.first") { should be_persisted }
-      its("current_user.authorizations.first.provider") { should be @auth_attributes[:provider] }
-      its("current_user.authorizations.first.uid") { should be @auth_attributes[:uid] }
-=end
       it "creates the new user and authorization" do
         subject.current_user.should eq User.last
         subject.current_user.should be_persisted
         subject.current_user.authorizations.count.should be 1
         subject.current_user.authorizations.first.should be_persisted
-        subject.current_user.authorizations.first.provider.should be @auth_attributes[:provider]
-        subject.current_user.authorizations.first.uid.should be @auth_attributes[:uid]
+        subject.current_user.authorizations.first.provider.should eq @auth_attributes[:provider]
+        subject.current_user.authorizations.first.uid.should eq @auth_attributes[:uid]
       end
       it "sets a notice" do
         flash[:notice].should =~ /signed in through facebook/i
       end
-      it "redirects to root" do
+      it "returns the proper json" do
         raw_json = response.body
         json = JSON.parse raw_json
         raw_json.should eq controller.json_for subject.current_user
         json.should have_key "user"
+        json['user'].should have_key 'email'
+        json['user']['email'].should eq @user_attrs[:email]
       end
     end
 
@@ -81,6 +87,14 @@ describe OmniauthCallbacksController do
         before :each do
           @auth_attributes = attributes_for :authorization
           request.env['omniauth.auth'].merge! @auth_attributes.slice :provider, :uid
+          request.env['omniauth.auth'].merge!(
+          info:
+            { first_name: @user.name.split.first,
+              last_name: @user.name.split.last,
+              email: @user.email,
+              extra: {}
+            }
+          )
           get :oauthorize
         end
         it "attachs authorization to current user" do
@@ -106,6 +120,15 @@ describe OmniauthCallbacksController do
         it "sets the notice" do
           get :oauthorize
           flash.notice.should =~ /already associated/i
+        end
+        it "returns the proper json" do
+          get :oauthorize
+          raw_json = response.body
+          json = JSON.parse raw_json
+          raw_json.should eq controller.json_for subject.current_user
+          json.should have_key "user"
+          json['user'].should have_key 'email'
+          json['user']['email'].should eq @user[:email]
         end
         it "keeps the user signed in" do
           get :oauthorize
