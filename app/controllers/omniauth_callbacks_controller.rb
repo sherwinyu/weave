@@ -23,7 +23,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
         flash.alert = "An error occured"
       end
     end
-    render json: @user
+    render json: @user.reload
 
   end
   alias_method :facebook, :oauthorize
