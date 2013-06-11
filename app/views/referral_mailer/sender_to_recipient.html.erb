@@ -13,7 +13,7 @@ Your friend, <%= @sender.first_name %>, just made a values-based purchase at <%=
 
   <ul>
   <% @referral.customizations.each do |customization| %>
-    <li> <%= customization.description %></li>
+    <li> <i><%= customization.description %></i></li>
   <% end %>
 </ul>
 <p>
