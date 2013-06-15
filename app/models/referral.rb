@@ -22,11 +22,11 @@ class Referral < ActiveRecord::Base
   # attr_accessible :content, :recipient, :recipient_attributes, :customizations, :customization_ids
   include ActiveModel::ForbiddenAttributesProtection
   def self.STATUSES
-    @statuses ||= HashWithIndifferentAccess.new { |hash, key| raise "#{key} is not a valid status for Referral" }.merge!(
+    @statuses ||= HashWithIndifferentAccess.new { |hash, key| raise ".#{key}. is not a valid status for Referral" }.merge!(
       recipient_selected: "recipient_selected",
       body_updated: "body_updated",
       delivered: "delivered"
-    )
+    ).merge!({nil => "default"})
   end
 
   belongs_to :sender, class_name: "User", inverse_of: :sent_referrals
@@ -42,8 +42,9 @@ class Referral < ActiveRecord::Base
 
   # validate :deliverable?
   validate :receivable?, unless: "status.to_s == Referral.STATUSES[:recipient_selected]"
+  validates_presence_of :referral_batch
   validates_presence_of :sender
-  validates_inclusion_of :status, in: Referral.STATUSES, message: " is not a valid Referral status"
+  validates_inclusion_of :status, in: Referral.STATUSES, message: "is not a valid Referral status"
 
   def self.mail_gun_test
 

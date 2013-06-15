@@ -64,6 +64,7 @@ FactoryGirl.define do
     trait(:no_message) {message nil}
     trait(:no_sender) {sender nil}
     trait(:no_recipient) {recipient nil}
+    trait(:no_recipient_email) {recipient_email nil}
     factory :blank_referral, traits: [:no_message, :no_sender, :no_recipient]
   end
 
