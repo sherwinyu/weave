@@ -1,4 +1,58 @@
 class ReferralsController < ApplicationController
+
+  def create
+    @referral = Referral.new
+    case meta_action
+    when "create_with_recipient"
+      create_with_recipient
+    when "create_with_body"
+      create_with_body
+    end
+    @referral.attributes = @attributes
+    if @referral.save && @valid
+      render json: @referral
+    else
+      render json: @referral, status: 422
+    end
+  end
+
+  def create_with_recipient
+    @referral.status = Referral.STATUSES[:recipient_selected]
+    @attributes = referral_params.slice(:recipient_attributes,
+                                        :referral_batch_id,
+                                        :sender_id,
+                                        :sender_email)
+    @valid = true # TODO(syu)
+  end
+
+  def update
+    @referral = Referral.find(params[:id])
+
+    attributes, valid = case meta_params[:action]
+                        when "update_body_and_deliver"
+                          update_body_and_deliver
+                        when "update_message"
+                          update_message
+                        when "update_sender_email"
+                          update_sender_email
+                        end
+    if @referral.update_attributes(attributes) && valid
+      render json: @referral
+    else
+      render json: @referral, status: 422
+    end
+  end
+
+  def update_body_and_deliver
+    attributes = referral_params.slice(:message, :recipient_email, :customization_ids)
+    valid = @referral.valid? && @referral.deliver
+    [attributes, valid]
+  end
+
+  def update_body
+    @referral.attributes = referral_params.slice(:message)
+  end
+
   def update_body
     @referral = Referral.find(params[:id])
     if @referral.update_attributes referral_params
@@ -27,78 +81,19 @@ class ReferralsController < ApplicationController
     end
   end
 
-  def new
-    @referral = Referral.new
-  end
-
-  def create
-    # @sender = User.find_by_id params[:referral].delete :sender_id
-    @referral = Referral.create referral_params
-    @referral.valid?
-    if @referral.save validate: false
-      render json: @referral
-    else
-      render json: @referral, status: 422
-    end
-  end
-
-  def create_with_recipient
-    @referral = Referral.create referral_params
-    @referral.valid?
-    if @referral.save validate: false
-      render json: @referral
-    else
-      render json: @referral, status: 422
-    end
-  end
-
   def show
     @referral = Referral.find params[:id]
     render json: @referral
   end
 
-  def update
-    @referral = Referral.find(params[:id])
-    if meta_params[:action] == "update_body_and_deliver"
-      update_body_and_deliver and return
-    end
-    @referral.attributes = referral_params
-    @referral.valid?
-    if @referral.save validate: false
-      render json: @referral
-    else
-      render json: @referral, status: 422
-    end
-  end
-
-  def create_with_recipient
-    # @referral_batch = ReferralBatch.
-    # raise "create_with_recipient should be not be requested with referral message" if params[:referral][:message]
-    @referral_batch = ReferralBatch.find params.delete :referral_batch_id
-    # normal users should only be able to send recipients if they own the referal batch
-    @sender = User.find_by_id params[:referral].delete :sender_id
-    @referral = @referral_batch.referrals.create referral_params
-    @referral.sender = @sender
-    render json: @referral
-  end
-
-  def update_body_and_deliver
-    @referral = Referral.find params[:id]
-    @referral.attributes = referral_params
-    @referral.valid?
-    if @referral.save(validate: false) && @referral.deliver
-      render json: @referral
-    else
-      render json: @referral, status: 422
-    end
-  end
-
-
   def meta_params
     @meta ||= params[:referral].delete(:meta)
   end
+  def meta_action
+    meta_params[:action]
+  end
   def referral_params
-    @meta ||= params[:referral].delete(:meta)
+    meta_params
     params[:referral][:customization_ids] = params[:referral].delete(:customizations_attributes).map{|c| c[:id]} if params[:referral][:customizations_attributes]
 =begin
     if params[:referral][:recipient]
@@ -116,6 +111,6 @@ class ReferralsController < ApplicationController
                                :id,
                                :email,
                                {user_infos_attributes: [:name, :email, :provider, :uid]}]
-      }
+    }
   end
 end

@@ -1,120 +1,100 @@
 require 'spec_helper'
 
 describe ReferralsController do
-  before :each do
-    @customizations = create_list :customization, 3
-    @referral_batch = create(:referral_batch)
-  end
   let(:params) { {referral: @referral_params, format: :json} }
-  pending "#create_with_recipient" do
+  let(:referral_batch) { create :referral_batch }
+  let(:sender) { referral_batch.sender }
+  let(:recipient) { referral_batch.sender }
 
+  describe "#create" do
     before :each do
-      @referral_params = attributes_for(:blank_referral).merge(
+      @referral_params = attributes_for(:referral).merge(
+        referral_batch_id: referral_batch.id,
+        sender_id: sender.id,
+        sender_email: sender.email,
         recipient_attributes: attributes_for(:recipient).merge( user_infos_attributes: [attributes_for(:user_info)] ))
-      @sender = create :sender
-      @referral_params.merge!  sender_id: @sender.id
+      @referral_params[:recipient_email] = @referral_params[:recipient_attributes][:email]
     end
-    let(:params) { super().merge referral_batch_id: @referral_batch.id }
+    it "sets @referral.attributes to @attributes" do
 
-    context "when referral batch doesnt exist" do
-      it "raises an error" do
-        params.merge! referral_batch_id: 'nonexistent'
-        expect {get :create_with_recipient, @params}.to raise_error
+    end
+    it "saves @referral" do
+
+    end
+    it "responds with @referral" do
+
+    end
+    describe "subaction: with_recipient" do
+      before :each do
+        @referral_params.delete :recipient_email
+        @referral_params[:meta] = {action: "create_with_recipient"}
+      end
+      let(:params) { super().merge referral_batch_id: referral_batch.id }
+      context "as an independent action" do
+        before :each do
+          # subject.should_receive :create_with_recipient
+          @referral = Referral.new
+          subject.instance_variable_set "@referral", @referral
+          expect{get :create_with_recipient, params}.to raise_error ActionView::MissingTemplate
+        end
+        it "sets status to Recipient Selected" do
+          @referral.status.should eq Referral.STATUSES[:recipient_selected]
+        end
+        it "returns the necessary attributes re: referral batch, recipient, sender" do
+          assigns(:attributes).keys.should =~ [:recipient_attributes, :referral_batch_id, :sender_id, :sender_email].map(&:to_s)
+        end
+        it "returns valid as true" do
+          assigns(:valid).should eq true
+        end
+        describe "with extraneous parameters" do
+          before(:each) { @referral_params[:message] = "wagawaga" }
+          it { assigns(:attributes).keys.should_not include "message"}
+        end
+      end
+      context "as a controller action" do
+        context "with valid params" do
+          it "creates and saves a new recipient and user info if no existing recipient is found" do
+            expect{get :create, params}.to change{UserInfo.count}.by 1
+            created_referral = Referral.last
+            created_referral.message.should be_nil
+            created_referral.recipient_email.should be_nil
+            created_referral.sender_email.should eq sender.email
+          end
+          it "assigns @referral with the correct properties" do
+            get :create, params
+            assigns(:referral).referral_batch.should eq referral_batch
+            assigns(:referral).sender.should eq sender
+            assigns(:referral).recipient.should be_persisted
+            assigns(:referral).message.should be_nil
+            assigns(:referral).incentives.should be_empty
+            assigns(:referral).customizations.should be_empty
+          end
+          it "responds with @referral json" do
+            get :create, params
+            raw_json = response.body
+            json = JSON.parse raw_json
+            json.should have_key "referral"
+            json["referral"].should have_key "id"
+          end
+          pending "looks up the recipient via user info if it already exists"
+        end
+        context "with invalid params" do
+          it "doesn't call create_with_recipient when meta-action is not set" do
+            subject.stub(:meta_action).and_return "non_existent_action"
+            subject.should_not_receive :create_with_recipient
+            get :create, params
+          end
+          it "responds with errors if invalid" do
+            Referral.any_instance.stub(:save).and_return false
+            get :create, params
+            response.status.should eq 422
+          end
+        end
       end
     end
 
-    pending "raises an error if recipient.message was passed as a param" do
-      @params = params
-      @params[:referral].merge! message: "You should totally buy this!"
-      expect {get :create_with_recipient, @params}.to raise_error /create_with_recipient.*not.*request.*referral.*message/
-    end
-
-    it "creates and saves a new recipient and user info if no existing recipient is found" do
-      get :create_with_recipient, params
-      created_referral = Referral.last
-      created_referral.message.should be_nil
-    end
-
-    it "assigns @referral with the correct properties" do
-      get :create_with_recipient, params
-      assigns(:referral).referral_batch.should eq @referral_batch
-      assigns(:referral).sender.should eq @sender
-      assigns(:referral).recipient.should be_persisted
-      assigns(:referral).message.should be_nil
-      assigns(:referral).incentives.should be_empty
-      assigns(:referral).customizations.should be_empty
-    end
-    it "responds with @referral json" do
-      get :create_with_recipient, params
-      raw_json = response.body
-      json = JSON.parse raw_json
-      json.should have_key "referral"
-      json["referral"].should have_key "id"
-    end
-    pending "sets current_user.referral to @referral"
-    pending "responds with errors if invalid"
-    pending "looks up the recipient via user info if it already exists"
   end
 
-  pending "#update_body" do
-    before :each do
-      @referral = create :blank_referral
-      @referral_params = attributes_for :referral, message: "buy this!"
-      @referral_params.merge! customization_ids: @customizations.map(&:id)
-    end
-    let(:params) { super().merge id: @referral.id }
-
-    it "updates referral's customizations and message" do
-      put :update_body, params
-      @referral.reload
-      @referral.message.should eq @referral_params[:message]
-      @referral.customizations.should have(3).customizations
-      @referral.customizations.should eq @customizations
-    end
-    describe "errors" do
-      it "responds with errors if message or customizations are invalid"
-    end
-    pending "requested with referral id and customization ids"
-    pending "calls @referral.send if params send"
-  end
-
-  describe "#update" do
-  end
-
-  describe "strong referral_params" do
-    let (:params) do
-      ActionController::Parameters.new super()
-    end
-    before :each do
-      @referral_params = attributes_for(:blank_referral).merge(
-        recipient_attributes: attributes_for(:recipient).merge( user_infos_attributes: [attributes_for(:user_info)] ))
-      @sender = create :sender
-      @referral_params.merge!  sender_id: @sender.id
-      controller.stub(:params).and_return { params }
-    end
-
-    it "converts customization_attributes to customization_ids" do
-      @referral_params.merge! customizations_attributes: [{id: 1, description: 'wala'}, {id: 2, description: "wala2"}]
-      controller.referral_params.should_not have_key :customizations
-      controller.referral_params.should have_key :customization_ids
-      controller.referral_params[:customization_ids].should eq [1, 2]
-    end
-
-    it "permits message, referral batch id " do
-      @referral_params.merge! message: "walawala"
-      @referral_params.merge! referral_batch_id: 42
-      @referral_params.merge! sender_id: 24
-      @referral_params.merge! recipient_email: "wala@recip.org"
-      @referral_params.merge! sender_email: "wala@sender.org"
-      controller.referral_params[:message].should eq "walawala"
-      controller.referral_params[:referral_batch_id].should eq 42
-      controller.referral_params[:sender_id].should eq 24
-      controller.referral_params[:recipient_email].should eq "wala@recip.org"
-      controller.referral_params[:sender_email].should eq "wala@sender.org"
-    end
-    it "requires :referral"
-    it "permits recipient_attributes"
-  end
 
   pending "#update_recipient_email" do
     it "asserts that @referral.recipient exists"
@@ -184,5 +164,66 @@ describe ReferralsController do
   end
   pending "#set_active_referral_helper"
   pending "#set_active_referral_batch_helper"
+
+  pending "#update_body" do
+    before :each do
+      @referral = create :blank_referral
+      @referral_params = attributes_for :referral, message: "buy this!"
+      @referral_params.merge! customization_ids: @customizations.map(&:id)
+    end
+    let(:params) { super().merge id: @referral.id }
+
+    it "updates referral's customizations and message" do
+      put :update_body, params
+      @referral.reload
+      @referral.message.should eq @referral_params[:message]
+      @referral.customizations.should have(3).customizations
+      @referral.customizations.should eq @customizations
+    end
+    describe "errors" do
+      it "responds with errors if message or customizations are invalid"
+    end
+    pending "requested with referral id and customization ids"
+    pending "calls @referral.send if params send"
+  end
+
+  describe "#update" do
+  end
+
+  describe "strong referral_params" do
+    let (:params) do
+      ActionController::Parameters.new super()
+    end
+    before :each do
+      @referral_params = attributes_for(:blank_referral).merge(
+        recipient_attributes: attributes_for(:recipient).merge( user_infos_attributes: [attributes_for(:user_info)] ))
+      @sender = create :sender
+      @referral_params.merge!  sender_id: @sender.id
+      controller.stub(:params).and_return { params }
+    end
+
+    it "converts customization_attributes to customization_ids" do
+      @referral_params.merge! customizations_attributes: [{id: 1, description: 'wala'}, {id: 2, description: "wala2"}]
+      controller.referral_params.should_not have_key :customizations
+      controller.referral_params.should have_key :customization_ids
+      controller.referral_params[:customization_ids].should eq [1, 2]
+    end
+
+    it "permits message, referral batch id " do
+      @referral_params.merge! message: "walawala"
+      @referral_params.merge! referral_batch_id: 42
+      @referral_params.merge! sender_id: 24
+      @referral_params.merge! recipient_email: "wala@recip.org"
+      @referral_params.merge! sender_email: "wala@sender.org"
+      controller.referral_params[:message].should eq "walawala"
+      controller.referral_params[:referral_batch_id].should eq 42
+      controller.referral_params[:sender_id].should eq 24
+      controller.referral_params[:recipient_email].should eq "wala@recip.org"
+      controller.referral_params[:sender_email].should eq "wala@sender.org"
+    end
+    it "requires :referral"
+    it "permits recipient_attributes"
+  end
+
 
 end
