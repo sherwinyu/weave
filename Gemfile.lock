@@ -142,7 +142,7 @@ GEM
     haml (4.0.2)
       tilt
     handlebars-source (1.0.0.rc3)
-    hashie (2.0.4)
+    hashie (2.0.5)
     hike (1.2.2)
     http_parser.rb (0.5.3)
     httpauth (0.2.0)

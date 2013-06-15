@@ -21,6 +21,13 @@
 class Referral < ActiveRecord::Base
   # attr_accessible :content, :recipient, :recipient_attributes, :customizations, :customization_ids
   include ActiveModel::ForbiddenAttributesProtection
+  def self.STATUSES
+    @statuses ||= HashWithIndifferentAccess.new { |hash, key| raise "#{key} is not a valid status for Referral" }.merge!(
+      recipient_selected: "recipient_selected",
+      body_updated: "body_updated",
+      delivered: "delivered"
+    )
+  end
 
   belongs_to :sender, class_name: "User", inverse_of: :sent_referrals
   belongs_to :recipient, class_name: "User", inverse_of: :received_referrals
