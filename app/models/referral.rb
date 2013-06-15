@@ -40,8 +40,10 @@ class Referral < ActiveRecord::Base
 
   accepts_nested_attributes_for :recipient
 
-  validate :deliverable?
+  # validate :deliverable?
+  validate :receivable?, unless: "status.to_s == Referral.STATUSES[:recipient_selected]"
   validates_presence_of :sender
+  validates_inclusion_of :status, in: Referral.STATUSES, message: " is not a valid Referral status"
 
   def self.mail_gun_test
 
