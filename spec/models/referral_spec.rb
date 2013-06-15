@@ -11,7 +11,8 @@ describe Referral do
     context "when sendable, receivable, and not delivered yet" do
       before :each do
         @referral = referral
-        @mailgun_send = @referral.should_receive(:mailgun_send)
+        # it appears that .should_receive stubs mailgun_send
+        @referral.should_receive(:mailgun_send)
         @ret = @referral.deliver
       end
 
@@ -88,6 +89,13 @@ describe Referral do
       end
     end
     describe "receivable?" do
+      it "is skipped when status is Receipient Selected" do
+        referral.status = :recipient_selected
+        referral.recipient_email = nil
+        referral.should_not_receive :receivable?
+        referral.valid?
+        referral.errors[:recipient_email].should be_empty
+      end
       it "is adds an error if there is no receiver_email" do
         referral.update_attribute :recipient_email, nil
         referral.receivable?.should be false
