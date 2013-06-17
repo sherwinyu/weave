@@ -25,6 +25,7 @@ class Referral < ActiveRecord::Base
     @statuses ||= HashWithIndifferentAccess.new { |hash, key| raise ".#{key}. is not a valid status for Referral" }.merge!(
       recipient_selected: "recipient_selected",
       body_updated: "body_updated",
+      attempting_delivery: "attempting_delivery",
       delivered: "delivered"
     ).merge!({nil => "default"})
   end

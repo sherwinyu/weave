@@ -107,7 +107,77 @@ describe ReferralsController do
 
   end
 
+  describe "#update" do
+    before :each do
+      @referral = build_stubbed :referral
+      @referral_params = attributes_for(:referral).merge!(
+        customization_ids: @referral.product.customization_ids,
+        recipient_email: "senders_friend@example.com",
+        message: "howdy dooda!"
+      )
+      Referral.stub(:find).and_return @referral
+    end
+    it "cases on meta_action"
+    it "calls update_attributes with @attributes"
+    describe "subaction: update_body_and_deliver" do
+      before(:each) do
+        @referral_params[:meta] = {action: "update_body_and_deliver"}
+        Referral.any_instance.stub(:deliver).and_return true
+      end
+      context "as an independent action" do
+        before :each do
+          subject.instance_variable_set "@referral", @referral
+        end
+        context "when everything goes as expected" do
+          before(:each) do
+            @referral.stub(:deliver).and_return true
+            # This is necessary because we're not "actually" doing this action. this sets up referral params
+            expect{put :update_body_and_deliver, params}.to raise_error ActionView::MissingTemplate
+          end
+          it "calls @referral.deliver" do
+            @referral.should have_received :deliver
+          end
+          it "sets @referral.status to Attempting Delivery" do
+            @referral.status.should eq Referral.STATUSES[:attempting_delivery]
+          end
+          it "sets @valid to true if everything checks out" do
+            assigns(:valid).should eq true
+          end
+          it "returns the correct attributes re: message, recipient_email, customization_ids" do
+            assigns(:attributes).keys.should =~ [:recipient_email, :message, :customization_ids].map(&:to_s)
+          end
+        end
+        it "sets @valid to false when referral fails to deliver" do
+          @referral.stub(:deliver).and_return false
+          expect{put :update_body_and_deliver, params}.to raise_error ActionView::MissingTemplate
+          assigns(:valid).should eq false
+        end
+        it "sets @valid to false when params is missing a required attribute" do
+          @referral_params.delete :message
+          expect{put :update_body_and_deliver, params}.to raise_error ActionView::MissingTemplate
+          assigns(:valid).should eq false
+        end
+      end
+      context "as an integrated controller action" do
+        before(:each) do
+          @referral.stub(:save).and_return true
+        end
+        it "assigns @referral with the correct properties" do
+          put :update, params
+          assigns(:referral).should be @referral
+          @referral.message.should eq @referral_params[:message]
+          @referral.customization_ids.should eq @referral_params[:customization_ids]
+          @referral.recipient_email.should eq @referral_params[:recipient_email]
+        end
+        it "does not create a referral" do
+          put :update, params
+          expect{post :create, params}.not_to change{ Referral.count }
+        end
 
+      end
+
+    end
+  end
   pending "#update_recipient_email" do
     it "asserts that @referral.recipient exists"
     it "asserts that @referral.recipient.email does not exist"
@@ -209,9 +279,9 @@ describe ReferralsController do
     before :each do
       @referral_params = attributes_for(:blank_referral).merge(
         recipient_attributes: attributes_for(:recipient).merge( user_infos_attributes: [attributes_for(:user_info)] ))
-      @sender = create :sender
-      @referral_params.merge!  sender_id: @sender.id
-      controller.stub(:params).and_return { params }
+        @sender = create :sender
+        @referral_params.merge!  sender_id: @sender.id
+        controller.stub(:params).and_return { params }
     end
 
     it "converts customization_attributes to customization_ids" do

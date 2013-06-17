@@ -7,6 +7,8 @@ class ReferralsController < ApplicationController
       create_with_recipient
     when "create_with_body"
       create_with_body
+    else
+
     end
     @referral.attributes = @attributes
     if @referral.save && @valid
@@ -28,15 +30,16 @@ class ReferralsController < ApplicationController
   def update
     @referral = Referral.find(params[:id])
 
-    attributes, valid = case meta_params[:action]
-                        when "update_body_and_deliver"
-                          update_body_and_deliver
-                        when "update_message"
-                          update_message
-                        when "update_sender_email"
-                          update_sender_email
-                        end
-    if @referral.update_attributes(attributes) && valid
+    case meta_action
+    when "update_body_and_deliver"
+      update_body_and_deliver
+    when "update_message"
+      update_message
+    when "update_sender_email"
+      update_sender_email
+    end
+    @referral.attributes = @attributes
+    if @referral.save && @valid
       render json: @referral
     else
       render json: @referral, status: 422
@@ -44,13 +47,10 @@ class ReferralsController < ApplicationController
   end
 
   def update_body_and_deliver
-    attributes = referral_params.slice(:message, :recipient_email, :customization_ids)
-    valid = @referral.valid? && @referral.deliver
-    [attributes, valid]
-  end
-
-  def update_body
-    @referral.attributes = referral_params.slice(:message)
+    @referral.status = Referral.STATUSES[:attempting_delivery]
+    required_attributes = [:message, :recipient_email, :customization_ids]
+    @attributes = referral_params.slice(*required_attributes)
+    @valid = (required_attributes.map(&:to_s) - @attributes.keys).empty? && @referral.deliver
   end
 
   def update_body
