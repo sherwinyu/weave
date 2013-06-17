@@ -58,8 +58,18 @@ FactoryGirl.define do
     sender
     recipient
     referral_batch
-    sender_email "some_sender_email@example.com"
-    recipient_email "some_recipient_email@example.com"
+    sender_email { sender.try(:email) }
+    recipient_email { recipient.try(:email) }
+    association :product, :with_customizations
+    after :build do |referral|
+
+    end
+    callback(:unify_sender_recipent_emails) do |referral|
+      referral.sender_email = referral.sender.email
+      referral.recipient_email = referral.recipient.email
+    end
+
+
     trait(:not_delivered) {delivered_at nil}
     trait(:no_message) {message nil}
     trait(:no_sender) {sender nil}

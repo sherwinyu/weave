@@ -42,6 +42,7 @@ class Referral < ActiveRecord::Base
 
   # validate :deliverable?
   validate :receivable?, unless: "status.to_s == Referral.STATUSES[:recipient_selected]"
+  validates_presence_of :recipient, message: "needs to be present"
   validates_presence_of :referral_batch
   validates_presence_of :sender
   validates_inclusion_of :status, in: Referral.STATUSES, message: "is not a valid Referral status"

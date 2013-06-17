@@ -13,16 +13,21 @@ describe ReferralsController do
         sender_id: sender.id,
         sender_email: sender.email,
         recipient_attributes: attributes_for(:recipient).merge( user_infos_attributes: [attributes_for(:user_info)] ))
-      @referral_params[:recipient_email] = @referral_params[:recipient_attributes][:email]
+        @referral_params[:recipient_email] = @referral_params[:recipient_attributes][:email]
     end
-    it "sets @referral.attributes to @attributes" do
+    pending "sets @referral.attributes to @attributes" do
+    end
+    pending "saves @referral" do
+    end
+    pending "responds with @referral" do
+    end
+    pending "responds with 422 when fails to save" do
 
     end
-    it "saves @referral" do
-
-    end
-    it "responds with @referral" do
-
+    pending "responds with 422 when not @valid" do
+      Referral.any_instance.stub(:save).and_return false
+      post :create, params
+      response.status.should eq 422
     end
     describe "subaction: with_recipient" do
       before :each do
@@ -32,16 +37,16 @@ describe ReferralsController do
       let(:params) { super().merge referral_batch_id: referral_batch.id }
       context "as an independent action" do
         before :each do
-          # subject.should_receive :create_with_recipient
           @referral = Referral.new
           subject.instance_variable_set "@referral", @referral
-          expect{get :create_with_recipient, params}.to raise_error ActionView::MissingTemplate
+          # This is necessary because we're not "actually" doing this action. this sets up referral params
+          expect{post :create_with_recipient, params}.to raise_error ActionView::MissingTemplate
         end
         it "sets status to Recipient Selected" do
           @referral.status.should eq Referral.STATUSES[:recipient_selected]
         end
         it "returns the necessary attributes re: referral batch, recipient, sender" do
-          assigns(:attributes).keys.should =~ [:recipient_attributes, :referral_batch_id, :sender_id, :sender_email].map(&:to_s)
+          assigns(:attributes).keys.should =~ [:recipient_attributes, :referral_batch_id, :sender_id, :sender_email].map(& :to_s)
         end
         it "returns valid as true" do
           assigns(:valid).should eq true
@@ -54,14 +59,15 @@ describe ReferralsController do
       context "as a controller action" do
         context "with valid params" do
           it "creates and saves a new recipient and user info if no existing recipient is found" do
-            expect{get :create, params}.to change{UserInfo.count}.by 1
+            expect{post :create, params}.to change{UserInfo.count}.by 1
             created_referral = Referral.last
+            created_referral.status.should eq Referral.STATUSES[:recipient_selected]
             created_referral.message.should be_nil
             created_referral.recipient_email.should be_nil
             created_referral.sender_email.should eq sender.email
           end
           it "assigns @referral with the correct properties" do
-            get :create, params
+            post :create, params
             assigns(:referral).referral_batch.should eq referral_batch
             assigns(:referral).sender.should eq sender
             assigns(:referral).recipient.should be_persisted
@@ -70,11 +76,15 @@ describe ReferralsController do
             assigns(:referral).customizations.should be_empty
           end
           it "responds with @referral json" do
-            get :create, params
+            post :create, params
             raw_json = response.body
             json = JSON.parse raw_json
             json.should have_key "referral"
             json["referral"].should have_key "id"
+          end
+          it "does not validate @referral.receivable?" do
+            Referral.any_instance.should_not_receive :receivable?
+            post :create, params
           end
           pending "looks up the recipient via user info if it already exists"
         end
@@ -82,12 +92,14 @@ describe ReferralsController do
           it "doesn't call create_with_recipient when meta-action is not set" do
             subject.stub(:meta_action).and_return "non_existent_action"
             subject.should_not_receive :create_with_recipient
-            get :create, params
+            post :create, params
           end
-          it "responds with errors if invalid" do
-            Referral.any_instance.stub(:save).and_return false
-            get :create, params
+          it "responds with errors if invalid: no recipient" do
+            @referral_params.delete :recipient_attributes
+            post :create, params
             response.status.should eq 422
+            json = JSON.parse response.body
+            json["referral"]["errors"].to_s.should =~ /Recipient.*present/i
           end
         end
       end
@@ -159,7 +171,7 @@ describe ReferralsController do
       @referral.reload.recipient.email.should eq @recipient_email
     end
     it "should not create a new recipient" do
-      expect{get :add_recipient_email, params}.to_not change{User.count}
+      expect{put :add_recipient_email, params}.to_not change{User.count}
     end
   end
   pending "#set_active_referral_helper"
