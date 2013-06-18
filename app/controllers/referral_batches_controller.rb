@@ -1,4 +1,37 @@
 class ReferralBatchesController < ApplicationController
+  def create
+    @referral_batch = ReferralBatch.new
+    case meta_action
+    when "create_fresh"
+      create_fresh
+    else
+      @attributes = referral_batch_params
+      @valid = true
+    end
+    @referral_batch.attributes = @attributes
+    if @referral_batch.save && @valid
+      render json: @referral_batch
+    else
+      render json: @referral_batch, status: 422
+    end
+  end
+
+  def update
+    @referral_batch = ReferralBatch.new
+    case meta_action
+    when 'waga'
+    else
+      @attributes = referral_batch_params
+      @valid = true
+    end
+    @referral_batch.attributes = @attributes
+    if @referral_batch.save && @valid
+      render json: @referral_batch
+    else
+      render json: @referral_batch, status: 422
+    end
+  end
+
   def show
     @referral_batch = ReferralBatch.find params[:id]
     respond_to do |format|
@@ -41,22 +74,6 @@ class ReferralBatchesController < ApplicationController
     end
   end
 
-  def create
-    @referral_batch = ReferralBatch.new referral_batch_params
-    if @referral_batch.save
-      render json: @referral_batch
-    else
-      render json: @referral_batch, status: 422
-    end
-  end
-
-  def new
-    @referral_batch = ReferralBatch.new
-  end
-
-  def edit
-    @referral_batch = ReferralBatch.find(params[:id])
-  end
   # TODO(syu): don't be such a hack
   def update_sender_email
     @user = User.find(params[:id])
@@ -64,14 +81,12 @@ class ReferralBatchesController < ApplicationController
     @user.save
     render json: @user
   end
-
-  def update
-    @referral_batch = ReferralBatch.find(params[:id])
-    if @referral_batch.update_attributes referral_batch_params
-      render json: @referral_batch
-    else
-      render json: @referral_batch, status: 422
-    end
+=end
+  def meta_params
+    @meta ||= params[:referral_batch].delete(:meta) || {}
+  end
+  def meta_action
+    meta_params[:action]
   end
   private
   def referral_batch_params

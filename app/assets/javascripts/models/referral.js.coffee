@@ -36,12 +36,4 @@ Weave.Referral = Weave.Model.extend
         Weave.ReferralCustomization.create(customization: customization, referral: @)
     ).property('referralBatch')
 
-  becameError: (args) ->
-    @controllerFor('application').pushNotification "there was an error! #{errors}"
-    console.log "Unknown error #{args}"
-
-  becameInvalid: (args) ->
-    @controllerFor('application').pushNotification "there was an error! #{errors}"
-    console.log "Unknown error #{args}"
-
   didCreate: ->

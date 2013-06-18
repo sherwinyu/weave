@@ -23,6 +23,5 @@ Weave.register('friendFilter:main', Weave.FriendFilter)
 Weave.inject('controller:referral', 'friendFilter', 'friendFilter:main')
 
 Weave.register('controller:authentication', Weave.AuthenticationController)
-# Weave.register('controller:authentication', Weave.AuthenticationController)
 Weave.inject('friendFilter', 'auth', 'controller:authentication')
 Weave.inject('model', 'applicationController', 'controller:application')

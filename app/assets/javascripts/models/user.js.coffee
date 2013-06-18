@@ -3,3 +3,5 @@ Weave.User = DS.Model.extend
   email: DS.attr 'string'
   canonical_email: DS.attr 'string'
   email_provided: DS.attr 'boolean'
+
+  meta: DS.attr 'json', defaultValue: {}

@@ -1,9 +1,11 @@
 Weave.Model = DS.Model.extend
   becameError: (args) ->
-    @controllerFor('application').pushNotification "there was an error! #{errors}"
+    app = ctrl('application')
+    app.pushNotification "There was an error! #{args}"
     console.log "Unknown error #{args}"
 
   becameInvalid: (args) ->
-    @controllerFor('application').pushNotification "there was an error! #{errors}"
+    app = ctrl('application')
+    app.pushNotification "There was an error! #{args}"
     console.log "Unknown error #{args}"
 
