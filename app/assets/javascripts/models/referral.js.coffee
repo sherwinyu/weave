@@ -13,7 +13,7 @@ Weave.ReferralCustomization = Ember.Object.extend
 
   ).observes 'selected'
 
-Weave.Referral = DS.Model.extend
+Weave.Referral = Weave.Model.extend
   message: DS.attr 'string'
   customizations: DS.hasMany 'Weave.Customization'
   referralBatch: DS.belongsTo 'Weave.ReferralBatch'

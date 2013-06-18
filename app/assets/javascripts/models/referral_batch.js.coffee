@@ -1,4 +1,4 @@
-Weave.ReferralBatch = DS.Model.extend
+Weave.ReferralBatch = Weave.Model.extend
   url_code: DS.attr 'string'
   senderPageVisited_at: DS.attr 'date'
   senderPagePersonalized: DS.attr 'boolean'
