@@ -49,7 +49,9 @@ describe Referral do
     end
   end
   describe "validations" do
-
+    pending "can't modify sent messages"
+    pending "validates incentives"
+    pending "validates customizations"
     describe "deliverable?" do
       it "is valid if sendable and receivable and message is not already delivered" do
         referral.deliverable?.should be true
@@ -110,9 +112,6 @@ describe Referral do
 
   end
   pending "validations" do
-    it "can't modify sent messages"
-    it "validates incentives"
-    it "validates customizations"
     it "adds an error if missing sender" do
       referral.update_attribute :sender, nil
       referral.deliver.should be false
