@@ -121,10 +121,9 @@ Weave.ReferralSelectRecipientRoute = Ember.Route.extend
   model: (params)->
     sender = @controllerFor('authentication').get('user')
     model = Weave.Referral.createRecord referralBatch: @modelFor('referralBatch'), sender: sender, sender_email: sender.get('email')
+
   setupController: (controller, model) ->
     @controllerFor('referral').set('content', model)
-    @controllerFor('referral').set 'message', "I just shopped at New Living, a mission-driven Certified Benefit Corporation that has made a commitment to measure success on a social, environmental and economic level. I know you care a lot about where you shop, so I thought I'd let you know about New Living."
-    # @controllerFor('referral').set('selectingRecipient', true)
 
   renderTemplate: ->
     if @controllerFor('referral').get('firstReferralSent')
@@ -159,6 +158,7 @@ Weave.ReferralEditBodyRoute = Ember.Route.extend
 
   setupController: (controller, model) ->
     @controllerFor('referral').set('content', model)
+    @controllerFor('referral').set 'message', "I just shopped at New Living, a mission-driven Certified Benefit Corporation that has made a commitment to measure success on a social, environmental and economic level. I know you care a lot about where you shop, so I thought I'd let you know about New Living."
     @controllerFor('referral').set('editingBody', true)
   renderTemplate: ->
 

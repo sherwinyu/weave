@@ -11,7 +11,7 @@ class ReferralsController < ApplicationController
 
     end
     @referral.attributes = @attributes
-    if @referral.save && @valid
+    if @valid && @referral.save
       render json: @referral
     else
       render json: @referral, status: 422
@@ -39,7 +39,7 @@ class ReferralsController < ApplicationController
       update_sender_email
     end
     @referral.attributes = @attributes
-    if @referral.save && @valid
+    if @valid && @referral.save
       render json: @referral
     else
       render json: @referral, status: 422
@@ -50,6 +50,7 @@ class ReferralsController < ApplicationController
     @referral.status = Referral.STATUSES[:attempting_delivery]
     required_attributes = [:message, :recipient_email, :customization_ids]
     @attributes = referral_params.slice(*required_attributes)
+    @referral.recipient_email =  @attributes[:recipient_email]
     @valid = (required_attributes.map(&:to_s) - @attributes.keys).empty? && @referral.deliver
   end
 

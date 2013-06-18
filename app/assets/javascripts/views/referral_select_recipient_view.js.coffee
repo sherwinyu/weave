@@ -9,6 +9,7 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
 
   friendClicked: (friend)->
     recipient = Weave.User.createRecord friend.user
+    recipient.set('meta.role', 'recipient')
     @get('context').set('recipient', recipient)
 
     # Fill in the input fields

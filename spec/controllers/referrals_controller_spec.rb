@@ -109,7 +109,7 @@ describe ReferralsController do
 
   describe "#update" do
     before :each do
-      @referral = build_stubbed :referral
+      @referral = build_stubbed :referral, :no_recipient_email
       @referral_params = attributes_for(:referral).merge!(
         customization_ids: @referral.product.customization_ids,
         recipient_email: "senders_friend@example.com",
@@ -133,6 +133,9 @@ describe ReferralsController do
             @referral.stub(:deliver).and_return true
             # This is necessary because we're not "actually" doing this action. this sets up referral params
             expect{put :update_body_and_deliver, params}.to raise_error ActionView::MissingTemplate
+          end
+          it "updates the recipient_email attribute" do
+            @referral.recipient_email.should eq @referral_params[:recipient_email]
           end
           it "calls @referral.deliver" do
             @referral.should have_received :deliver

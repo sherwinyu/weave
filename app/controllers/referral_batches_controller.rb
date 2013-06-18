@@ -39,9 +39,9 @@ class ReferralBatchesController < ApplicationController
       format.json { render json: @referral_batch }
     end
   end
-
+=begin
   # for cases when you're deserializing from url)
-  # ASSUMPTIONS:
+  #   ASSUMPTIONS:
   #   the referral_batch.sender user is the canonical user for this referral.
   #   we might be missing the case of:: previous materialized user can be identified via cookie and is actually a new outreach'd user
   def outreach_show
