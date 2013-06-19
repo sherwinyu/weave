@@ -33,4 +33,7 @@ class ReferralBatch < ActiveRecord::Base
     # TODO(syu): look at association extensions //
     # http://stackoverflow.com/questions/2890761/rails-overriding-activerecord-association-method
   end
+  ### validations
+  # validates_presence_of :sender #TODO(syu): conditionalize this
+  validates_presence_of :campaign
 end

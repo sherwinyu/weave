@@ -5,15 +5,23 @@ class ReferralBatchesController < ApplicationController
     when "create_fresh"
       create_fresh
     else
-      @attributes = referral_batch_params
-      @valid = true
+      create_fresh
     end
     @referral_batch.attributes = @attributes
-    if @referral_batch.save && @valid
+    if @valid && @referral_batch.save
       render json: @referral_batch
     else
       render json: @referral_batch, status: 422
     end
+  end
+
+  def create_fresh
+    @attributes = referral_batch_params.slice(
+      :campaign_id,
+      :sender_page_personalized,
+      :sender_page_visited
+    )
+    @valid = true # TODO(syu)
   end
 
   def update
@@ -91,7 +99,9 @@ class ReferralBatchesController < ApplicationController
   private
   def referral_batch_params
     params[:referral_batch][:sender_id] = params[:referral_batch].delete(:sender_attributes)[:id] if params[:referral_batch][:sender_attributes]
-    params.require(:referral_batch).permit :campaign_id, :sender_page_visited, :sender_page_personalized, :sender_id
+    params.require(:referral_batch).permit :campaign_id, :sender_page_visited, :sender_page_personalized, :sender_id,
+      { meta: [:action]}
+
 
 
   end
