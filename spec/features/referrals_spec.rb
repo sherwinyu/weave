@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "Referrals" do
-  describe "create new referral with recipient" do
+  pending "create new referral with recipient" do
     before(:each) do
       create :referral_batch
     end
@@ -18,7 +18,7 @@ describe "Referrals" do
       uri.fragment.split("/").last.should eq "edit_body"
     end
   end
-  describe "update existing referral with body + customizations" do
+  pending "update existing referral with body + customizations" do
     before(:each) do
       @referral = create :referral
     end

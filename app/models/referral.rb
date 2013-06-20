@@ -16,6 +16,9 @@
 #  converted           :boolean
 #  referral_batch_id   :integer
 #  url_code            :string(255)
+#  recipient_email     :string(255)
+#  sender_email        :string(255)
+#  status              :string(255)
 #
 
 class Referral < ActiveRecord::Base

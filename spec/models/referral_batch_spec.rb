@@ -1,15 +1,12 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe ReferralBatch do
-  it "should be valid" do
-    ReferralBatch.new.should be_valid
-  end
+  let(:referral_batch) { build_stubbed :referral_batch}
   describe "visit_sender_page" do
     before (:each) do
       @time = Time.now
       Time.stub(:now).and_return @time
     end
-    let(:referral_batch) { build_stubbed :referral_batch }
     it "sets sender_page_visited_at to current time" do
       referral_batch.visit_sender_page
       referral_batch.sender_page_visited_at.should eq @time
@@ -25,8 +22,9 @@ describe ReferralBatch do
     pending "sets referral_page_visited_at to current time"
     pending "raises an error if no referral batch url is found"
   end
-  pending "validations" do
-    it "included referrals must share customizations"
+  describe "validations" do
+    pending "requires a sender" #TODO: make this dependant on the campaign type (online / client / precoded)
+    pending "requires a campaign"
   end
   pending "#attach_sender_incentive_instances"
 end
