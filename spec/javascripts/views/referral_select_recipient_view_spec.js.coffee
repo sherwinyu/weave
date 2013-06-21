@@ -14,17 +14,22 @@ describe "ReferralSelectRecipientView", ->
           provider: ""
           other_info: null
     @view = Weave.ReferralSelectRecipientView.create
-      recipient: @context
+      controller: @referralContext
+
     Ember.run => @view.append()
 
   afterEach ->
     Ember.run =>
-      @view.remove()
-      @view.destroy()
+      # @view.remove()
+      # @view.destroy()
 
   describe "structure", ->
     it "contains an input for name or email", ->
       expect(@view.$()).toContain 'input.recipient-name-or-email'
+  describe  "bindAutocompletion", ->
+    expect(false).toBe true
+
+
   xit 'binds input#value to recipient.email', ->
     Ember.run =>
       @view.$('input.recipient-name-or-email').val "new@email.org"
