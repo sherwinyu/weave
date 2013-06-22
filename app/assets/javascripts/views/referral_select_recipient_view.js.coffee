@@ -3,7 +3,6 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
   # dependencies: 'referalView'
   listedFriends: null
   displayedFriends: (->
-    console.log 'change!'
     @get('listedFriends')
   ).property 'listedFriends', 'listedFriends.@each'
 

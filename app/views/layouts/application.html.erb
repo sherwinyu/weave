@@ -7,7 +7,7 @@
       window._rails = <%=raw  @rails.to_json if @rails %>;
     <% end %>
     <%= javascript_include_tag "application" %>
-    <%= javascript_include_tag "testing_stubs" if Rails.env.test? # for integration testing %>
+    <%= javascript_include_tag "testing_stubs" if Rails.env.test? %>
     <%= csrf_meta_tag %>
     <%= yield(:head) %>
   </head>
