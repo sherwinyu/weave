@@ -1,6 +1,40 @@
 describe "FriendFilter", ->
   beforeEach ->
     @friendFilter = Weave.FriendFilter.create()
+    fbData = [
+      name: "Yan Zhang"
+      location:
+        id: "108056275889020"
+        name: "Cambridge, Massachusetts"
+
+      id: "4549"
+      picture:
+        data:
+          url: "https://profile-a.xx.fbcdn.net/hprofile-prn1/49133_4549_9454_q.jpg"
+          is_silhouette: false
+    ,
+      name: "Seth A. Bannon"
+      id: "15976"
+      picture:
+        data:
+          url: "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-prn2/187292_15976_1750647127_q.jpg"
+          is_silhouette: false
+    ,
+      name: "Greg Poulos"
+      id: "20495"
+      picture:
+        data:
+          url: "https://profile-b.xx.fbcdn.net/hprofile-prn1/70901_20495_660540220_q.jpg"
+          is_silhouette: false
+    ,
+      name: "Menyoung Lee"
+      id: "30608"
+      picture:
+        data:
+          url: "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash4/369081_30608_167074525_q.jpg"
+          is_silhouette: false
+    ]
+
     @fbFriendResult1 =
       id: "4549"
       name: "Yan Zhang"

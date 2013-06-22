@@ -4,7 +4,7 @@
   </div>
   <div {{bindAttr class="XXselectingRecipient:XXvisible:XXinvisible :accordion-body" }} >
     <h4 class="step-subheader">Enter a friend's name or email</h4>
-    {{view Ember.TextField class="recipient-name-or-email" valueBinding="view.recipient.email" id="name-or-email"}}
+    {{view Ember.TextField class="recipient-name-or-email" id="name-or-email"}}
   </div>
 
   {{#if view.displayedFriends.length}}

@@ -23,9 +23,17 @@ describe "ReferralSelectRecipientView", ->
       # @view.remove()
       # @view.destroy()
 
-  describe "structure", ->
-    it "contains an input for name or email", ->
+  describe "template", ->
+    it "contains an input for recipient-name-or-email", ->
       expect(@view.$()).toContain 'input.recipient-name-or-email'
+    it "shows a friend-suggestions div if there are displayedFriends", ->
+    it "shows a friend-suggestion div for each displayedFriend", ->
+    it "shows an image for the friend's picture", ->
+    it "shows the friend's name", ->
+    it "shows the friend's location", ->
+
+
+  # We're not stubbing this because it's a third party library; need to make sure it works as expected
   describe  "bindAutocompletion", ->
     expect(false).toBe true
 

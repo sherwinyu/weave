@@ -19,4 +19,6 @@
 class UserInfo < ActiveRecord::Base
   attr_accessible :name, :email, :user_id, :uid, :provider, :other_info, :email, :first_name, :last_name, :location
   belongs_to :user, inverse_of: :user_infos
+
+  # validates_presence_of :provider
 end
