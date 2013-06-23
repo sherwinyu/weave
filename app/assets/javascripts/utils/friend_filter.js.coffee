@@ -64,7 +64,20 @@ Weave.FriendFilter = Ember.Object.extend
       d.resolve []
       d.promise()
 
-  # filterAndRank -- filters against
+  # filterAndRank -- takes a list of friends and a scoring function, and ranks them
+  # param pfriends: a promise of a list of friendStructs
+  # param score: a function(::friendStruct -> integer) that scores a friendResult against a search term
+  # Context:
+  #   Called behind the scenes by FriendFilter's public filterAndRankAgainst(term),
+  #   which basically wraps the term and then calls this method.
+  # Behavior:
+  #   1) it resolves pFriends with
+  #   2) it ranks friends based on the scoring function
+  #   3) it only returns friends that have positive score
+  #   4) it returns the top 6 matches
+  # Returns:
+  #   a promise of a list of friends, ranked by the scoring function
+  #
   # TODO(syu): Refactor this bad boy
   _filterAndRank: (pfriends, score) ->
     pfriends.then (friends) =>
@@ -88,16 +101,26 @@ Weave.FriendFilter = Ember.Object.extend
   # Returns:
   #   a promise of a list of ranked friend structs
   filterAndRankAgainst: (term)->
-    @_filterAndRank( @friendSource(), @scoreAgainstTerm(term))
+    @_filterAndRank( @friendSource(), @_scoreAgainstTerm(term))
 
-  # scoringFunction --
+  # _score: scores a friendStruct against a search term.
+  # param term: a string representing the search term
+  # param friendStruct: a friendStruct to be scored
+  #
+  # _score matches the friendStruct's name against the term by regex.
+  #
+  # Behavior:
+  #   1 if
   # term -- string -- the search term
   # friendStruct -- a friendStruct
   # returns -- integer -- rank
   _score: (term, friendStruct) ->
     terms = term.trim().split(/\s+/)
+    # regexs is an array of regular expressions matching for the beginning of
     regexs = (new RegExp "\\b#{term}", "i" for term in terms)
+    # check to see how many of the regexs match
     filtered = regexs.filter (regex)-> regex.test friendStruct.user.name
+    # return that as the score
     filtered.length
 
   # scoreAgainstTerm - curries the _score function to a term
