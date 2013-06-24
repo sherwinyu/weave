@@ -1,8 +1,7 @@
 describe "ReferralEditBodyView", ->
   beforeEach ->
-    Weave.MockReferralCustomizationsView = Ember.View.extend()
-    @weaveViewCreateStub = sinon.stub Weave.ReferralCustomizationsSelectView, 'create', (args)->
-      Weave.MockReferralCustomizationsView.create args
+    @oldWeaveView = Weave.ReferralCustomizationsSelectView
+    Weave.ReferralCustomizationsSelectView = Ember.View.extend()
 
     @context = Ember.Object.create
       message: "referral message"
@@ -19,8 +18,7 @@ describe "ReferralEditBodyView", ->
     Ember.run =>
       @view.remove()
       @view.destroy()
-    @weaveViewCreateStub.restore()
-    Weave.MockReferralCustomizationsView = null
+    Weave.ReferralCustomizationsSelectView = @oldWeaveView
 
   describe "template: ", ->
     describe "instructions for personalizing your referral", ->
@@ -72,8 +70,8 @@ describe "ReferralEditBodyView", ->
 
   describe "child view: ReferralCustomizationsSelectView", ->
     beforeEach ->
-      @customizationsSelectView = @view.get('childViews')[1]
-      #  .findProperty('constructor', Weave.ReferralCustomizationsSelectView)
+      @customizationsSelectView = @view.get('childViews')
+        .findProperty('constructor', Weave.ReferralCustomizationsSelectView)
     afterEach ->
       @customizationsSelectView = null
 
