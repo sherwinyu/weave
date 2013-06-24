@@ -9,6 +9,7 @@ describe "ReferralEditBodyView", ->
       customizations: ['customization1' ]
       availableCustomizations: ['customization1', 'customization2', 'customization3']
       recipientFirstName: "Sherwin"
+      recipient_email: ''
     @view = Weave.ReferralEditBodyView.create
       controller: @context
     Ember.run =>
@@ -45,17 +46,17 @@ describe "ReferralEditBodyView", ->
       it "has instructions for customizations", ->
         expect(@view.$('.step-subheader')).toHaveText /Select a few of the following.*Sherwin.*/
     describe "recipient email address area", ->
-      xit "contains textarea.referral-message", ->
-        expect(@view.$()).toContain 'textarea.referral-message'
-      xit "binds input.value -> referral.message", ->
+      it "contains textarea.referral-message", ->
+        expect(@view.$()).toContain 'input.recipient-email-address'
+      it "binds input.value -> recipient_email", ->
         Ember.run =>
-          @view.$('textarea.referral-message').val('new referral message')
-          @view.$('textarea.referral-message').blur()
-        expect(@context.get 'message').toBe 'new referral message'
-      xit "binds referral.message -> input.value", ->
+          @view.$('input.recipient-email-address').val('sherwin@gmail.com')
+          @view.$('input.recipient-email-address').blur()
+        expect(@context.get 'recipient_email').toBe 'sherwin@gmail.com'
+      it "binds recipient_email -> input.value", ->
         Ember.run =>
-          @context.set('message', 'new message')
-        expect(@view.$('textarea.referral-message')).toHaveValue 'new message'
+          @context.set('recipient_email', 'janet@gmail.com')
+        expect(@view.$('input.recipient-email-address')).toHaveValue 'janet@gmail.com'
     describe "send button", ->
       it "has css a#deliver-button.deliver-button", ->
         expect(@view.$()).toContain '#deliver-button.deliver-button'
