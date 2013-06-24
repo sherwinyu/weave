@@ -1,9 +1,15 @@
 describe "ReferralEditBodyView", ->
   beforeEach ->
+    Weave.MockReferralCustomizationsView = Ember.View.extend()
+    @weaveViewCreateStub = sinon.stub Weave.ReferralCustomizationsSelectView, 'create', (args)->
+      Weave.MockReferralCustomizationsView.create args
+
     @context = Ember.Object.create
       message: "referral message"
       recipient: null
-      customizations: []
+      customizations: ['customization1' ]
+      availableCustomizations: ['customization1', 'customization2', 'customization3']
+      recipientFirstName: "Sherwin"
     @view = Weave.ReferralEditBodyView.create
       controller: @context
     Ember.run =>
@@ -13,29 +19,66 @@ describe "ReferralEditBodyView", ->
     Ember.run =>
       @view.remove()
       @view.destroy()
+    @weaveViewCreateStub.restore()
+    Weave.MockReferralCustomizationsView = null
 
-  describe "structure", ->
-    it "contains a referral-message input", ->
-      expect(@view.$()).toContain 'textarea.referral-message'
-    it "contains a referral-customizations div", ->
-      expect(@view.$()).toContain '.referral-customizations'
-    it "contains a primary deliver button", ->
-      expect(@view.$()).toContain '.btn.btn-primary#deliver-button'
+  describe "template: ", ->
+    describe "instructions for personalizing your referral", ->
+      it "contains a h4.step-subheader", ->
+        expect(@view.$()).toContain 'h4.step-subheader'
+      it "binds to recipientFirstName", ->
+        expect(@view.$('h4.step-subheader')).toHaveText /Personalize your referral by adding a short message.*Sherwin/
+        Ember.run =>
+          @context.set 'recipientFirstName', 'Hannah'
+        expect(@view.$('h4.step-subheader')).toHaveText /Personalize your referral by adding a short message.*Hannah/
+    describe "referral message area", ->
+      it "contains textarea.referral-message", ->
+        expect(@view.$()).toContain 'textarea.referral-message'
+      it "binds input.value -> referral.message", ->
+        Ember.run =>
+          @view.$('textarea.referral-message').val('new referral message')
+          @view.$('textarea.referral-message').blur()
+        expect(@context.get 'message').toBe 'new referral message'
+      it "binds referral.message -> input.value", ->
+        Ember.run =>
+          @context.set('message', 'new message')
+        expect(@view.$('textarea.referral-message')).toHaveValue 'new message'
+    describe "customizations area", ->
+      it "has instructions for customizations", ->
+        expect(@view.$('.step-subheader')).toHaveText /Select a few of the following.*Sherwin.*/
+    describe "recipient email address area", ->
+      xit "contains textarea.referral-message", ->
+        expect(@view.$()).toContain 'textarea.referral-message'
+      xit "binds input.value -> referral.message", ->
+        Ember.run =>
+          @view.$('textarea.referral-message').val('new referral message')
+          @view.$('textarea.referral-message').blur()
+        expect(@context.get 'message').toBe 'new referral message'
+      xit "binds referral.message -> input.value", ->
+        Ember.run =>
+          @context.set('message', 'new message')
+        expect(@view.$('textarea.referral-message')).toHaveValue 'new message'
+    describe "send button", ->
+      it "has css a#deliver-button.deliver-button", ->
+        expect(@view.$()).toContain '#deliver-button.deliver-button'
+      it "has text SEND!", ->
+        expect(@view.$('#deliver-button.deliver-button')).toHaveText /SEND!/
+      it "sends deliverClicked event with context as argument when clicked", ->
+        deliverClicked = sinon.spy()
+        @context.set('deliverClicked', deliverClicked)
+        @view.$('#deliver-button.deliver-button').click()
+        expect(deliverClicked).toHaveBeenCalledOnce()
+        expect(deliverClicked).toHaveBeenCalledWith(@context)
 
-  it "prepopulates referral.message", ->
-    expect(@view.$('textarea.referral-message')).toHaveValue @context.message
+  describe "child view: ReferralCustomizationsSelectView", ->
+    beforeEach ->
+      @customizationsSelectView = @view.get('childViews')[1]
+      #  .findProperty('constructor', Weave.ReferralCustomizationsSelectView)
+    afterEach ->
+      @customizationsSelectView = null
 
-  it "binds input.value -> referral.message", ->
-    Ember.run =>
-      @view.$('textarea.referral-message').val('new referral message')
-      @view.$('textarea.referral-message').blur()
-    expect(@context.get 'message').toBe 'new referral message'
-  it "binds referral.message -> input.value", ->
-    Ember.run =>
-      @context.set('message', 'new message')
-    expect(@view.$('textarea.referral-message')).toHaveValue 'new message'
-  it "binds referral.customizations", ->
-    customizations_select_view = @view.get('childViews')
-      .findProperty('constructor', Weave.ReferralCustomizationsSelectView)
-    expect(customizations_select_view.get 'customizations').toBe @context.customizations
+    it "binds context.customizations", ->
+      expect(@customizationsSelectView.get 'customizations').toBe @context.get 'customizations'
 
+    it "binds context.availableCustomizations", ->
+      expect(@customizationsSelectView.get 'availableCustomizations').toBe @context.get 'availableCustomizations'

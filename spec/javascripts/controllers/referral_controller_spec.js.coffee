@@ -19,6 +19,11 @@ describe "ReferralController", ->
         customizations: []
         referralBatch: @referralBatch
       @referralController = Weave.ReferralController.create content: @referral, container: Weave.__container__
+
+  describe "recipientFirstName", ->
+    it "binds recipient.name", ->
+    it "presents the first name of the recipient", ->
+
   describe "ceateWithRecipient model", ->
     beforeEach ->
       Ember.testing = false

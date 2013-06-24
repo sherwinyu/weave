@@ -35,5 +35,3 @@ Weave.Referral = Weave.Model.extend
       ?.map (customization) =>
         Weave.ReferralCustomization.create(customization: customization, referral: @)
     ).property('referralBatch')
-
-  didCreate: ->

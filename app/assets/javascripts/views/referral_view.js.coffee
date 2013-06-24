@@ -9,11 +9,6 @@ Weave.ReferralView = Ember.View.extend
   willDestroyElement: ->
     @set 'context.myView', null
 
-Weave.ReferralEditBodyView = Ember.View.extend
-# context: referral
-  classNames: ['edit-body']
-  templateName: "referral_edit_body"
-
 Weave.ReferralConfirmSenderView = Ember.View.extend
   classNames: ['confirm-sender']
   templateName: "referral_confirm_sender"
