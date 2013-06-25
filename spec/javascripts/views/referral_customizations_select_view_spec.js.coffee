@@ -33,26 +33,8 @@ describe "ReferralCustomizationsSelectView", ->
           expect(@view.$('div.customization ')[0]).not.toContain 'span.customization-selection-indicator.selected'
           Ember.run => @availableCustomizations[0].set('selected', true)
           expect(@view.$('div.customization ')[0]).toContain 'span.customization-selection-indicator.selected'
-      it "responds to click events", ->
+      it "responds to click events #THIS PASSES IN CHROME", ->
         expect(@availableCustomizations.get('0.selected')).toBeFalsy()
         Ember.run =>
-          @view.$("label.checkbox.customization").first().click()
+          @view.$("label.checkbox.customization")[0].click()
         expect(@availableCustomizations.get('0.selected')).toBeTruthy()
-
-
-  xit "displays customizations based on context.customizations", ->
-    debugger
-    expect(@view.$('div.customization').length).toEqual 3
-    expect(@view.$('.customization')[0]).toHaveText 'wala1'
-    expect(@view.$('.customization')[1]).toHaveText 'wala2'
-    expect(@view.$('.customization')[2]).toHaveText 'wala3'
-
-  it "responds to click events", ->
-
-recipient =
-  name: "sherwin yu"
-  email: "abc@beg.com"
-  meta:
-    provider: ["FACEBOOK", "GMAIL", "EMAIL"]
-    suggested: true
-    other_info: "json"
