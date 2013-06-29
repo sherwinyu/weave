@@ -7,17 +7,18 @@ Weave.Router.map (match)->
     @resource "referralBatches", path: "/stories", ->
        @route "new"
 
-  @resource "referralBatch", path: "/stories/:story_id", ->
-    @route "show"
-    @route "done"
+  @resource "inStore", path: "/inStore", ->
+    @resource "referralBatch", path: "/stories/:story_id", ->
+      @route "show"
+      @route "done"
 
-    @resource "referral", path: "/referrals", ->
-      @route "select_recipient"
-      @route "edit_body", path: "/:referral_id/edit_body"
+      @resource "referral", path: "/referrals", ->
+        @route "select_recipient"
+        @route "edit_body", path: "/:referral_id/edit_body"
 
-    @resource "firstReferral", path: "/referrals/first/:referral_id", ->
-      @route "select_recipient"
-      @route "edit_body"
+      @resource "firstReferral", path: "/referrals/first/:referral_id", ->
+        @route "select_recipient"
+        @route "edit_body"
 
   @route 'index', path: '*:'
 
@@ -37,8 +38,6 @@ Weave.CampaignRoute = Ember.Route.extend()
 
 Weave.ReferralBatchesRoute = Ember.Route.extend()
 Weave.ReferralBatchesNewRoute = Ember.Route.extend
-  model: ->
-
   #TODO(syu): TEST ME
   setupController: (controller, model) ->
     @campaign = @modelFor('campaign')
