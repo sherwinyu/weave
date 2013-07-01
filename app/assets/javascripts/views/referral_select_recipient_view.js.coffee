@@ -26,7 +26,7 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
   templateName: "referral_select_recipient"
 
   didInsertElement: ->
-    @bindAutocompletion @$('input')
+    @initAutocompletion @$('input')
     @set 'friendFilter', @get('context.friendFilter')
     if @get('controller.selectingRecipient')
       @$('#wala')?.val ''
@@ -35,7 +35,7 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
     @set('listedFriends', [])
     @_super()
 
-  bindAutocompletion: ($el) ->
+  initAutocompletion: ($el) ->
     $el.autocomplete
       select: (event, ui) =>
         Em.assert "jquery-autocomplete-select event should not happen because we are custom rolling a solution"

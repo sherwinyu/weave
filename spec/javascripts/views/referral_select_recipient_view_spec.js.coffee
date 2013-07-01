@@ -20,8 +20,8 @@ describe "ReferralSelectRecipientView", ->
 
   afterEach ->
     Ember.run =>
-      # @view.remove()
-      # @view.destroy()
+      @view.remove()
+      @view.destroy()
 
   describe "template", ->
     it "contains an input for recipient-name-or-email", ->
@@ -31,6 +31,21 @@ describe "ReferralSelectRecipientView", ->
     it "shows an image for the friend's picture", ->
     it "shows the friend's name", ->
     it "shows the friend's location", ->
+
+  describe "didInsertElement", ->
+    it "sets friendFilter to the controller's friendFilter", ->
+      get = sinon.spy @view, 'get'
+      friendFilter = Ember.Object.create()
+      get.calledWith('context.friendFilter').returns friendFilter
+      @view.didInsertElement()
+      expect(get).toHaveBeenCalledWith('context.friendFilter')
+      expect(@view.get('friendFilter')).toBe friendFilter
+      get.restore()
+
+    it "calls initAutocompletion ", ->
+      initAutocompletion = sinon.stub @view, 'initAutocompletion'
+      @view.didInsertElement()
+      expect(initAutocompletion).toHaveBeenCalledOnce()
 
 
   # We're not stubbing this because it's a third party library; need to make sure it works as expected
