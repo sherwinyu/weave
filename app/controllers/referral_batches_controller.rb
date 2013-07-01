@@ -41,10 +41,27 @@ class ReferralBatchesController < ApplicationController
   end
 
   def show
-    @referral_batch = ReferralBatch.find params[:id]
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @referral_batch }
+    if params[:id].to_i  == 0
+      @referral_batch = ReferralBatch.last
+    else
+      @referral_batch = ReferralBatch.find params[:id]
+    end
+    binding.pry
+    render json: @referral_batch
+  end
+
+  def index
+    case meta_action
+    when "lookup_by_email"
+      @referral_batches = ReferralBatch.last 1
+    else
+      nil
+    end
+    binding.pry
+    if @referral_batches
+      render json: @referral_batches
+    else
+      render json: nil
     end
   end
 =begin

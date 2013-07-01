@@ -27,8 +27,4 @@ describe ApplicationController do
 
   end
 
-  describe "#normalize_params: filter" do
-
-  end
-
 end

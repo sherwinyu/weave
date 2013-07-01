@@ -3,6 +3,21 @@ Weave.ReferralBatchesNewRoute = Ember.Route.extend
   #TODO(syu): TEST ME
   setupController: (controller, model) ->
     @campaign = @modelFor('campaign')
+    params =
+      landing_email: Weave.rails().landing_email,
+      referral_batch:
+        meta:
+          action: "lookup_by_email"
+    referralBatches = Weave.ReferralBatch.find params
+    referralBatches.then(
+      ((rBs) =>
+        @transitionTo 'referralBatch.show', rBs.get('firstObject')
+      ),
+      (error) -> console.log('Error occured', error)
+      )
+
+
+    ###
     @referralBatch = Weave.ReferralBatch.createRecord(campaign: @campaign)
     @referralBatch.save().then(
       ((result) =>
@@ -10,6 +25,7 @@ Weave.ReferralBatchesNewRoute = Ember.Route.extend
       ),
       (error) -> console.log('Error occured')
       )
+    ###
 
 Weave.ReferralBatchRoute = Ember.Route.extend
   model: (params)->
@@ -81,6 +97,9 @@ Weave.ReferralSelectRecipientRoute = Ember.Route.extend
 
   model: (params)->
     sender = @controllerFor('authentication').get('user')
+    console.log('sender email from facebook', sender.get 'email')
+    console.log('sender email from rails params', Weave.rails().landing_email)
+
     model = Weave.Referral.createRecord referralBatch: @modelFor('referralBatch'), sender: sender, sender_email: sender.get('email')
 
   setupController: (controller, model) ->
