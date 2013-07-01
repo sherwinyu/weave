@@ -25,4 +25,55 @@ class Campaign < ActiveRecord::Base
   has_many :senders, through: :referral_batches
   has_many :recipients, through: :referral_batches
   belongs_to :product, inverse_of: :campaigns
+
+  def self.mailchimp
+    @gb ||= Gibbon.new Figaro.env.mailchimp_client_api_key
+  end
+  def self.create_new_campaign
+    opts = Hashie::Mash.new
+    opts.list_id = 'a0fa181d00'
+    opts.from_email = "whatever@weaveenergy.com"
+    opts.from_name = "NewLiving"
+    opts.to_name = 'i guess your name is *|FNAME|*'
+    opts.subject = "Win $$ for hoodwinking your 'friends'!"
+    content = Hashie::Mash.new
+    content.text = "walawala bitchass"
+    content.html = "<h1>walawala</h1> sup *|FNAME|*, here are some more merge tags <br><br> *|LNAME|* *|EMAIL|* <br> Here are some links to be tracked <a href='http://weaveenergy.com'>click me</a>."
+    mailchimp.campaignCreate type: "regular", options: opts, content: content
+  end
+  def self.campaign_analytics cid
+    mailchimp.campaignClickDetailAIM cid: "00ab1b1e39", url: "http://weaveenergy.com"
+# => {"total"=>2, "data"=>[{"email"=>"sherwin@communificiency.com", "clicks"=>2}, {"email"=>"sherwin@weaveenergy.com", "clicks"=>1}]}
+
+    mailchimp.campaignEmailStatsAIMAll cid: cid
+=begin
+{"total"=>4,
+ "data"=>
+  {"sherwin@communificiency.com"=>
+    [{"action"=>"open",
+      "timestamp"=>"2013-06-26 21:34:37",
+      "url"=>nil,
+      "ip"=>"216.80.147.191"},
+     {"action"=>"click",
+      "timestamp"=>"2013-06-26 21:34:37",
+      "url"=>"http://weaveenergy.com",
+      "ip"=>"216.80.147.191"},
+     {"action"=>"click",
+      "timestamp"=>"2013-06-26 21:35:04",
+      "url"=>"http://weaveenergy.com",
+      "ip"=>"216.80.147.191"}],
+   "max@communificiency.com"=>[],
+   "sherwin@weaveenergy.com"=>
+    [{"action"=>"open",
+      "timestamp"=>"2013-06-26 21:36:24",
+      "url"=>nil,
+      "ip"=>"216.80.147.191"},
+     {"action"=>"click",
+      "timestamp"=>"2013-06-26 21:42:01",
+      "url"=>"http://weaveenergy.com",
+      "ip"=>"216.80.147.191"}],
+   "max@weaveenergy.com"=>[]}}
+=end
+  end
+
 end
