@@ -320,6 +320,11 @@ li.ui-menu-item {
   label.customization{
     padding-left: 24px;
   }
+  /*
+   * This works by completley hiding the input and instead, showing our own custom span indicator via JS bindings.
+   * We use `pointer-events: none` on the customization-selection-indicator to make clicks pass through
+   * to the underlying label.
+   */
   input.hidden-checkbox {
     display: none;
     position: absolute;

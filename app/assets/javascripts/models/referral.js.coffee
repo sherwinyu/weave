@@ -1,3 +1,12 @@
+# ReferralCustomization
+# This is basically a Customization Instance. It represents the relationship between an abstract
+# customization and a referral model.
+# Think of it like a join model.
+# Attributes
+#   customization -- the customization of this relationship
+#   referral -- the referral of this relationship
+#   seleccted -- indicates whether `customization` has been included for `referral`
+# It carries the 'selected' attribute, which indicates whether
 Weave.ReferralCustomization = Ember.Object.extend
   selected: false
   customization: null
@@ -35,5 +44,3 @@ Weave.Referral = Weave.Model.extend
       ?.map (customization) =>
         Weave.ReferralCustomization.create(customization: customization, referral: @)
     ).property('referralBatch')
-
-  didCreate: ->
