@@ -18,11 +18,6 @@ Weave::Application.routes.draw do
   resources :campaigns, only: [:show, :create, :update]
   resources :products, only: [:show, :index]
 
-  # resources :referrers
-  # match 'auth/:provider/callback', to: 'sessions#create'
-  # match 'signout', to: 'sessions#destroy', as: 'signout'
-
-  # match 'af', to: redirect("/auth/facebook")
   match 'welcome', to: 'referrers#welcome'
 
   match 'THISSHOULDNTEVERHAPPEN/BUTITNEEDSTOBEHERE', to: redirect('/WALAWALWAWALAK')

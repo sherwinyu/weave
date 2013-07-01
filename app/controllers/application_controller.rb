@@ -38,7 +38,8 @@ class ApplicationController < ActionController::Base
       current_user: current_user && current_user.active_model_serializer.new(current_user).to_json,
       env: {
         FACEBOOK_APP_ID: Figaro.env.FACEBOOK_APP_ID
-      }
+      },
+      landing_email: params[:landing_email]
     }
   end
 
