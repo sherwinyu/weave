@@ -8,6 +8,23 @@ describe ReferralBatchesController do
   let(:sender) { referral_batch.sender }
   let(:campaign) { referral_batch.campaign }
   # let(:recipient) { referral_batch.sender }
+  describe "referral_batch_params" do
+    let(:params) do
+      ActionController::Parameters.new super()
+    end
+    before :each do
+      @referral_batch_params = attributes_for(:referral_batch).merge(
+        sender_attributes: attributes_for(:sender).merge(id: sender.id),
+        campaign_id: campaign.id)
+      @referral_batch_params[:sender_email] = @referral_batch_params[:sender_attributes][:email]
+      controller.stub(:params).and_return {params}
+    end
+    it "converts sender_attribute to sender_id" do
+      controller.referral_batch_params.should_not have_key :sender
+      controller.referral_batch_params.should have_key :sender_id
+      controller.referral_batch_params[:sender_id].should eq sender.id
+    end
+  end
 
   describe "#create" do
     before :each do
@@ -65,6 +82,28 @@ describe ReferralBatchesController do
 
         end
       end
+    end
+  end
+  describe "#update" do
+    let(:params) {super().merge id: @referral_batch.id }
+    before :each do
+      @referral_batch = referral_batch
+      @referral_batch_params = { campaign_id: campaign.id, sender: { } }
+=begin
+          authorizations: [{uid:1572450142, provider:facebook}]
+          canonical_email: "sherwin.x.yu@gmail.com"
+          canonical_name: "Sherwin Yu"
+          email: "sherwin.x.yu@gmail.com"
+          email_provided: true
+          id: 1
+          name: null
+=end
+      @referral_batch.stub(:save).and_return true
+      ReferralBatch.stub(:find).with(@referral_batch.id.to_s).and_return(@referral_batch)
+    end
+    it "finds the correct ReferralBatch" do
+      put :update, params
+      ReferralBatch.should have_received(:find).with(@referral_batch.id.to_s)
     end
   end
 

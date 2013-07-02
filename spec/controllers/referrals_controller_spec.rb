@@ -108,14 +108,20 @@ describe ReferralsController do
   end
 
   describe "#update" do
+    let(:params) { super().merge id: @referral.id }
     before :each do
       @referral = build_stubbed :referral, :no_recipient_email
       @referral_params = attributes_for(:referral).merge!(
         customization_ids: @referral.product.customization_ids,
         recipient_email: "senders_friend@example.com",
-        message: "howdy dooda!"
+        message: "howdy dooda!",
       )
-      Referral.stub(:find).and_return @referral
+      @referral.stub(:save).and_return true
+      Referral.stub!(:find).with(@referral.id.to_s).and_return @referral
+    end
+    it "finds the correct referral" do
+      put :update, params
+      Referral.should have_received(:find).with(@referral.id.to_s)
     end
     it "cases on meta_action"
     it "calls update_attributes with @attributes"

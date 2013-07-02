@@ -25,7 +25,7 @@ class ReferralBatchesController < ApplicationController
   end
 
   def update
-    @referral_batch = ReferralBatch.new
+    @referral_batch = ReferralBatch.find params[:id]
     case meta_action
     when 'waga'
     else
@@ -113,7 +113,7 @@ class ReferralBatchesController < ApplicationController
   def meta_action
     meta_params[:action]
   end
-  private
+
   def referral_batch_params
     params[:referral_batch][:sender_id] = params[:referral_batch].delete(:sender_attributes)[:id] if params[:referral_batch][:sender_attributes]
     params.require(:referral_batch).permit :campaign_id, :sender_page_visited, :sender_page_personalized, :sender_id,

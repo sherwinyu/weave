@@ -88,7 +88,7 @@ class ReferralsController < ApplicationController
   end
 
   def meta_params
-    @meta ||= params[:referral].delete(:meta)
+    @meta ||= (params[:referral].delete(:meta) || {} )
   end
   def meta_action
     meta_params[:action]
