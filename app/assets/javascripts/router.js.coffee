@@ -8,7 +8,6 @@ Weave.Router.map (match)->
        @route "new"
        @route "lookup"
 
-
   @resource "referralBatch", path: "/stories/:story_id", ->
     @route "show"
     @route "done"

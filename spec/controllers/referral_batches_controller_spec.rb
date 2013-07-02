@@ -107,13 +107,41 @@ describe ReferralBatchesController do
       ReferralBatch.should have_received(:find).with(@referral_batch.id.to_s)
     end
   end
-  describe "#index" do
-    let(:params) { {} }
-    before :each do
 
+  describe "#index" do
+    let(:params) { super().merge (@query_params || {}) }
+    before :each do
     end
     describe "subaction: lookup_by_email" do
-
+      before(:each) do
+        @referral_batch_params = { meta: {action: "lookup_by_email"} }
+        @referral_batch = create :referral_batch
+        @query_params = { landing_email: @referral_batch.sender_email }
+      end
+      it "looks up the proper ReferralBatch" do
+        get :index, params
+        assigns(:referral_batch).should eq @referral_batch
+      end
+      it "renders a list of a single referral_batch" do
+        get :index, params
+        json = JSON.parse response.body
+        json.should have_key "referral_batches"
+        json["referral_batches"].should have(1).referral_batch
+      end
+      context "when no such referral_batch exists" do
+        it "should 404" do
+          @query_params = { landing_email: "nonexistent_email" }
+          get :index, params
+          response.status.should eq 404
+          assigns(:referral_batch).should be_nil
+        end
+      end
+    end
+    describe "no subaction" do
+      it "should render nil" do
+        get :index, params
+        response.status.should eq 404
+      end
     end
 
   end

@@ -62,7 +62,7 @@ class ReferralBatchesController < ApplicationController
     if @referral_batch
       render json: [@referral_batch]
     else
-      render json: nil
+      render json: nil, status: 404
     end
   end
 =begin
