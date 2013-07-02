@@ -39,7 +39,8 @@ class ApplicationController < ActionController::Base
       env: {
         FACEBOOK_APP_ID: Figaro.env.FACEBOOK_APP_ID
       },
-      landing_email: params[:landing_email]
+      landing_email: params[:landing_email],
+      campaign_id: params[:campaign_id]
     }
   end
 

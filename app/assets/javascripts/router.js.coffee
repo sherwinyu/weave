@@ -34,9 +34,14 @@ Weave.Router.map (match)->
         @route "select_recipient"
         @route "edit_body"
 
-  @route 'index', path: '*:'
+  @route 'index', path: '/'
+  @route 'otherIndex', path: '*:'
 
 Weave.IndexRoute = Ember.Route.extend
+  redirect: ->
+    @transitionTo "products.selectProduct"
+
+Weave.OtherIndex = Ember.Route.extend
   redirect: ->
     @transitionTo "products.selectProduct"
 
@@ -46,7 +51,7 @@ Weave.ProductsSelectProductRoute = Ember.Route.extend
     Weave.Product.find()
   events:
     startCampaignForProduct: (product)->
-      if Weave.rails.vars.isOnlineCampaign()
+      if Weave.rails.isOnlineCampaign()
         ## TODO(syu): figure out actual implementation here
         @transitionTo 'referralBatches.new', Weave.Campaign.find Weave.rails.vars.campaign_id
       else

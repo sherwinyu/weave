@@ -16,7 +16,11 @@ describe "Application" do
         ev("Weave.rails.vars.campaign_id").should eq "314one5"
       end
     end
+    describe "visiting a different path: " do
+      it 'redirects to the corret ember.js route'
+    end
   end
+
   pending "create new referral with recipient" do
     before(:each) do
       create :referral_batch

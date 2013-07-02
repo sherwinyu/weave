@@ -1,7 +1,7 @@
 #= require sinon
 # Only create stubs if we're NOT in unit testing mode (aka, we're doing feature specs)
+# TODO(syu): VCR // puffing billy??
 unless jasmine?
-  console.log "TESTING STUBS WALAWALA"
   @stubs =
     facebook: ->
       fbFriendResult1 =
