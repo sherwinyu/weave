@@ -24,6 +24,7 @@ module JsHelper
     ex "JSON.stringify(#{script}}"
   end
 end
+
 RSpec.configure do |config|
   config.include JsHelper, type: :feature
 end
