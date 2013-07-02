@@ -118,8 +118,5 @@ class ReferralBatchesController < ApplicationController
     params[:referral_batch][:sender_id] = params[:referral_batch].delete(:sender_attributes)[:id] if params[:referral_batch][:sender_attributes]
     params.require(:referral_batch).permit :campaign_id, :sender_page_visited, :sender_page_personalized, :sender_id,
       { meta: [:action]}
-
-
-
   end
 end

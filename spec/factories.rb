@@ -48,9 +48,16 @@ FactoryGirl.define do
   end
 
   factory :referral_batch do |referral_batch|
+    url_code ""
+    sender_page_visited_at nil
+    sender_page_personalized false
+    outreach_email_sent false
     association :sender, factory: :sender
     association :campaign, :with_customizations
+    sender_email { sender.try(:email) }
     trait(:no_sender){ sender nil }
+    trait(:outreach_email_sent){ outreach_email_sent true }
+    trait(:sender_page_personalized){ sender_page_personalized true}
   end
 
   factory :referral do |referral|
