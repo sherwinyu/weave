@@ -84,6 +84,7 @@ describe ReferralBatchesController do
       end
     end
   end
+
   describe "#update" do
     let(:params) {super().merge id: @referral_batch.id }
     before :each do
@@ -106,6 +107,17 @@ describe ReferralBatchesController do
       ReferralBatch.should have_received(:find).with(@referral_batch.id.to_s)
     end
   end
+  describe "#index" do
+    let(:params) { {} }
+    before :each do
+
+    end
+    describe "subaction: lookup_by_email" do
+
+    end
+
+  end
+
 
   pending "#outreach_show" do
     before :each do

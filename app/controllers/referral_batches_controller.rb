@@ -11,6 +11,7 @@ class ReferralBatchesController < ApplicationController
     if @valid && @referral_batch.save
       render json: @referral_batch
     else
+      logger.debug "validation error: #{@referral_batch.errors.to_a}"
       render json: @referral_batch, status: 422
     end
   end
@@ -36,6 +37,7 @@ class ReferralBatchesController < ApplicationController
     if @referral_batch.save && @valid
       render json: @referral_batch
     else
+      logger.debug "validation error: #{@referral_batch.errors.to_a}"
       render json: @referral_batch, status: 422
     end
   end
@@ -53,13 +55,12 @@ class ReferralBatchesController < ApplicationController
   def index
     case meta_action
     when "lookup_by_email"
-      @referral_batches = ReferralBatch.last 1
+      @referral_batch = ReferralBatch.find_by_sender_email params[:landing_email]
     else
-      nil
+      logger.warn "ReferralBatches#index hit, meta_action was NOT lookup_by_email, params: #{params}"
     end
-    binding.pry
-    if @referral_batches
-      render json: @referral_batches
+    if @referral_batch
+      render json: [@referral_batch]
     else
       render json: nil
     end
