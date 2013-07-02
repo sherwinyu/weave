@@ -31,7 +31,7 @@ Weave.AuthenticationController = Ember.ObjectController.extend
 
   _ajaxOmniauth: (provider)->
     Em.assert 'only supporting facebook right now', provider == 'facebook'
-    $.ajax url: Weave.rails().pathHelpers.userOmniauthCallbackPathFacebook
+    $.ajax url: Weave.rails.vars.pathHelpers.userOmniauthCallbackPathFacebook
 
   userAuthenticated: (payload) ->
     Ember.assert "User shouldnt already exist", !@get('user')?
@@ -47,7 +47,7 @@ Weave.AuthenticationController = Ember.ObjectController.extend
   logout: ->
     FB.logout()
     @controllerFor('application').pushSuccessNotification "Successfully logged out of Facebook"
-    p = utils.delete url: Weave.rails().pathHelpers.destroyUserSessionPath
+    p = utils.delete url: Weave.rails.vars.pathHelpers.destroyUserSessionPath
     @get('controllers.referral.friendFilter').clearCache()
     @set 'user', null
     @set 'auths.facebook', null

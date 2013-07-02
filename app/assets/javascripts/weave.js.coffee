@@ -10,11 +10,16 @@
 #= require ./router
 #= require_self
 
+do (Weave.initRails = ->
+  Weave.rails =
+    vars: window._rails
+    isOnlineCampaign: ->
+      Weave.rails.vars.landing_email?
+)
 
-Weave.rails = -> window._rails
 # Initialize Ember routing
-if Weave.rails()?.path? && !window.location.hash
-  window.location.hash = Weave.rails.path || "products/selectProduct"
+if Weave.rails.vars.path? && !window.location.hash
+  window.location.hash = Weave.rails.vars.path || "products/selectProduct"
 
 Weave.register('friendFilter:main', Weave.FriendFilter)
 

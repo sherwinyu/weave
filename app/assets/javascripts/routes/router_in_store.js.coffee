@@ -1,9 +1,9 @@
 Weave.ReferralBatchesRoute = Ember.Route.extend()
-Weave.ReferralBatchesLookupRoute = Ember.route.extend
+Weave.ReferralBatchesLookupRoute = Ember.Route.extend
   setupController: (controller, model) ->
     @campaign = @modelFor('campaign')
     params =
-      landing_email: Weave.rails().landing_email,
+      landing_email: Weave.rails.vars.landing_email,
       referral_batch:
         meta:
           action: "lookup_by_email"
@@ -99,7 +99,7 @@ Weave.ReferralSelectRecipientRoute = Ember.Route.extend
   model: (params)->
     sender = @controllerFor('authentication').get('user')
     console.log('sender email from facebook', sender.get 'email')
-    console.log('sender email from rails params', Weave.rails().landing_email)
+    console.log('sender email from rails params', Weave.rails.vars.landing_email)
 
     model = Weave.Referral.createRecord referralBatch: @modelFor('referralBatch'), sender: sender, sender_email: sender.get('email')
 

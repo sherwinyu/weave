@@ -46,9 +46,9 @@ Weave.ProductsSelectProductRoute = Ember.Route.extend
     Weave.Product.find()
   events:
     startCampaignForProduct: (product)->
-      if Weave.rails().isOnlineCampaign()
+      if Weave.rails.vars.isOnlineCampaign()
         ## TODO(syu): figure out actual implementation here
-        @transitionTo 'referralBatches.new', Weave.Campaign.find Weave.rails().campaign_id
+        @transitionTo 'referralBatches.new', Weave.Campaign.find Weave.rails.vars.campaign_id
       else
         @transitionTo 'referralBatches.new', Weave.Campaign.find product.get('campaign_ids.0')
 
