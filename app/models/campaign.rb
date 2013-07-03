@@ -15,7 +15,7 @@
 #
 
 class Campaign < ActiveRecord::Base
-  attr_accessible :name, :description, :outreach_email_content, :sender_page_content, :recipient_page_content, :live, :product
+  # attr_accessible :name, :description, :outreach_email_content, :sender_page_content, :recipient_page_content, :live, :product
 
   has_and_belongs_to_many :sender_incentives, class_name: "Incentive", join_table: "campaigns_sender_incentives"
   has_and_belongs_to_many :recipient_incentives, class_name: "Incentive", join_table: "campaigns_recipient_incentives"
@@ -26,8 +26,56 @@ class Campaign < ActiveRecord::Base
   has_many :recipients, through: :referral_batches
   belongs_to :product, inverse_of: :campaigns
 
-  def self.mailchimp
-    @gb ||= Gibbon.new Figaro.env.mailchimp_client_api_key
+  # mailchimp_campaign_id
+  # mailchimp_list_id
+
+  # creates
+  def mailchimp_campaign_recipients
+    if mailing_campaign? && mailchimp_list
+      Campaign.mailchimp.listMembers id: self.mailchimp_list
+    end
+  end
+
+  MailChimpProxy = Class.new do
+    def initialize(gibbon)
+      @gibbon = gibbon
+    end
+
+    def method_missing method_name, *args, &block
+      Hashie::Mash.new @gibbon.send method_name, *args, &block
+    end
+  end
+
+  def self.mailchimp override_api_key
+    @gb ||= MailChimpProxy.new(Gibbon.new Figaro.env.mailchimp_client_api_key)
+  end
+
+  def self.mailchimp2
+    @gb ||= MailChimpProxy.new(Gibbon.new Figaro.env.NEW_LIVING_API_KEY)
+  end
+
+  def mailchimp_write_emails_from_campaign
+    data = Campaign.mailchimp2.campaignContent cid: mailchimp_campaign_id, for_archive: false
+    f = File.open '/home/syu/projects/weave/app/views/campaign_mailer/outreach.html.erb', 'w'
+    f.write data.html
+    f.close
+    f = File.open '/home/syu/projects/weave/app/views/campaign_mailer/outreach.text.erb', 'w'
+    f.write data.text
+    f.close
+  end
+  def mailchimp_upsert_campaign
+  end
+
+  def mailchimp_create_campaign
+    opts = Hashie::Mash.new
+    opts.subject = "Help NewLiving spread values-based shopping in Houston"
+    opts.from_name = "New Living Team"
+    opts.from_email = "getgreen@#{Figaro.env.NEWLIVING_DOMAIN}"
+    opts.to_name = '*|FNAME|* *|LNAME|*'
+    content = Hashie::Mash.new
+    content.text = CampaignMailer.outreach_text_part
+    content.html = CampaignMailer.outreach_html_part
+    self.mailchimp_campaign_id = Campaign.mailchimp.createCampaign type: "regular", options: opts, content: content
   end
 
   def self.create_new_campaign
