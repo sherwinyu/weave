@@ -1,14 +1,15 @@
 class CampaignMailer < ActionMailer::Base
-  def outreach
+  def outreach(campaign)
+    @referral_url = "http://localhost:4000/?campaign_id=#{campaign.id}&landing_email=*|EMAIL|*"
     mail do |format|
       format.text
       format.html
     end
   end
-  def self.outreach_text_part
-    outreach.text_part.body
+  def self.outreach_text_part(campaign)
+    outreach(campaign).text_part.body
   end
-  def self.outreach_html_part
-    outreach.html_part.body
+  def self.outreach_html_part(campaign)
+    outreach(campaign).html_part.body
   end
 end

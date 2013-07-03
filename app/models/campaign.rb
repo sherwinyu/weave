@@ -31,9 +31,14 @@ class Campaign < ActiveRecord::Base
 
   # creates
   def mailchimp_campaign_recipients
-    if mailing_campaign? && mailchimp_list
-      Campaign.mailchimp.listMembers id: self.mailchimp_list
-    end
+    raise "Campaign is not a online mailchimp campaign" unless mailing_campaign?
+    cpgs = Campaign.mailchimp.campaigns filters: [:campaign_id, :list_id]
+    cpg = cpgs.data.find{|c| c.id == mailchimp_campaign_id}
+    raise "No found campaign with id #{mailchimp_campaign_id}" unless cpg
+    list_id = cpg.try :list_id
+    raise "No list belonging to campaign #{mailchimp_campaign_id}" unless list_id
+    members = Campaign.mailchimp.listMembers id: list_id
+    members.data.map(&:email)
   end
 
   MailChimpProxy = Class.new do
@@ -55,9 +60,11 @@ class Campaign < ActiveRecord::Base
     @gb ||= MailChimpProxy.new(Gibbon.new Figaro.env.mailchimp_client_api_key)
   end
 
+=begin
   def self.mailchimp2
     @gb ||= MailChimpProxy.new(Gibbon.new Figaro.env.NEW_LIVING_API_KEY)
   end
+=end
 
   def mailchimp_write_emails_from_campaign
     data = Campaign.mailchimp2.campaignContent cid: mailchimp_campaign_id, for_archive: false
@@ -68,6 +75,25 @@ class Campaign < ActiveRecord::Base
     f.write data.text
     f.close
   end
+
+  # this is a dangerous call!
+  def generate_referral_batches!
+    # TODO do an API call to see if campaign has already been delivered
+    emails = mailchimp_campaign_recipients
+    logger.info "generating referral batches for campaign id: #{id} with mailchimp id #{mailchimp_campaign_id}"
+    logger.info "emails: #{emails}"
+    self.referral_batches.each do |rb|
+      if rb.sender_page_visited || rb.referrals.present?
+        logger.warn "attempted to destroy referral batch #{rb.id} that has already been used"
+        raise "attempted to destroy referral batch #{rb.id} that has already been used"
+      end
+      rb.destroy
+    end
+    emails.each do |email|
+      self.referral_batches.create sender_email: email
+    end
+  end
+
   def mailchimp_upsert_campaign
   end
 
@@ -79,9 +105,11 @@ class Campaign < ActiveRecord::Base
     opts.to_name = '*|FNAME|* *|LNAME|*'
     opts.list_id = 'a0fa181d00' # TODO(syu) DON'T HARD CODE THIS
     content = Hashie::Mash.new
-    content.text = CampaignMailer.outreach_text_part.to_s
-    content.html = CampaignMailer.outreach_html_part.to_s
-    self.mailchimp_campaign_id = Campaign.mailchimp.campaignCreate type: "regular", options: opts, content: content
+    content.text = CampaignMailer.outreach_text_part(self).to_s
+    content.html = CampaignMailer.outreach_html_part(self).to_s
+    id = Campaign.mailchimp.campaignCreate type: "regular", options: opts, content: content
+    self.update_attribute :mailchimp_campaign_id, id
+
   end
 
   def mailchimp_list_id
