@@ -28,10 +28,11 @@ class ReferralBatchesController < ApplicationController
   def update
     @referral_batch = ReferralBatch.find params[:id]
     case meta_action
-    when 'waga'
+    when 'update_add_sender'
+      update_add_sender
     else
-      @attributes = referral_batch_params
-      @valid = true
+      @attributes = {} #referral_batch_params
+      @valid = false
     end
     @referral_batch.attributes = @attributes
     if @referral_batch.save && @valid
@@ -42,13 +43,18 @@ class ReferralBatchesController < ApplicationController
     end
   end
 
+  def update_add_sender
+    required_attributes = [:sender_id]
+    @attributes = referral_batch_params.slice(*required_attributes)
+    @valid = true
+  end
+
   def show
     if params[:id].to_i  == 0
       @referral_batch = ReferralBatch.last
     else
       @referral_batch = ReferralBatch.find params[:id]
     end
-    binding.pry
     render json: @referral_batch
   end
 
