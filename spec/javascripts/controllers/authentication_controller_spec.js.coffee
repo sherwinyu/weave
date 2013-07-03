@@ -1,4 +1,4 @@
-describe "AuthenticationController", ->
+xdescribe "AuthenticationController", ->
   beforeEach ->
     @authenticationController = Weave.AuthenticationController.create()
 

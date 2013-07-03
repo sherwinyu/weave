@@ -77,7 +77,7 @@ describe "ReferralEditBodyView", ->
       @customizationsSelectView = null
 
     it "binds context.customizations", ->
-      expect(@customizationsSelectView.get 'customizations').toBe @context.get 'customizations'
+      expect(@customizationsSelectView.get 'context.customizations').toBe @context.get 'customizations'
 
     it "binds context.availableCustomizations", ->
       expect(@customizationsSelectView.get 'availableCustomizations').toBe @context.get 'availableCustomizations'
