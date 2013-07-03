@@ -57,6 +57,7 @@ FactoryGirl.define do
     sender_email { sender.try(:email) }
     association :product, :with_customizations
     trait(:no_sender){ sender nil }
+    trait(:no_product){ product nil }
     trait(:outreach_email_sent){ outreach_email_sent true }
     trait(:sender_page_personalized){ sender_page_personalized true}
   end

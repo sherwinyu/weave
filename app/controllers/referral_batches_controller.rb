@@ -20,7 +20,8 @@ class ReferralBatchesController < ApplicationController
     @attributes = referral_batch_params.slice(
       :campaign_id,
       :sender_page_personalized,
-      :sender_page_visited
+      :sender_page_visited,
+      :product_id
     )
     @valid = true # TODO(syu)
   end
@@ -29,7 +30,7 @@ class ReferralBatchesController < ApplicationController
     @referral_batch = ReferralBatch.find params[:id]
     case meta_action
     when 'update_add_sender'
-      update_add_sender
+      update_add_sender_and_product
     else
       @attributes = {} #referral_batch_params
       @valid = false
@@ -43,8 +44,8 @@ class ReferralBatchesController < ApplicationController
     end
   end
 
-  def update_add_sender
-    required_attributes = [:sender_id]
+  def update_add_sender_and_product
+    required_attributes = [:sender_id, :product_id]
     @attributes = referral_batch_params.slice(*required_attributes)
     @valid = true
   end
@@ -123,7 +124,11 @@ class ReferralBatchesController < ApplicationController
 
   def referral_batch_params
     params[:referral_batch][:sender_id] = params[:referral_batch].delete(:sender_attributes)[:id] if params[:referral_batch][:sender_attributes]
-    params.require(:referral_batch).permit :campaign_id, :sender_page_visited, :sender_page_personalized, :sender_id,
+    params.require(:referral_batch).permit :campaign_id,
+      :sender_page_visited,
+      :sender_page_personalized,
+      :product_id,
+      :sender_id,
       { meta: [:action]}
   end
 end
