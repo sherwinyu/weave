@@ -109,7 +109,7 @@ describe ReferralBatchesController do
   end
 
   describe "#index" do
-    let(:params) { super().merge (@query_params || {}) }
+    let(:params) { super().merge(@query_params || {}) }
     before :each do
     end
     describe "subaction: lookup_by_email" do
@@ -139,6 +139,7 @@ describe ReferralBatchesController do
     end
     describe "no subaction" do
       it "should render nil" do
+        @referral_batch_params = {meta: {}}
         get :index, params
         response.status.should eq 404
       end

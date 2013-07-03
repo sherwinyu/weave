@@ -29,16 +29,20 @@ class Campaign < ActiveRecord::Base
   def self.mailchimp
     @gb ||= Gibbon.new Figaro.env.mailchimp_client_api_key
   end
+
   def self.create_new_campaign
     opts = Hashie::Mash.new
     opts.list_id = 'a0fa181d00'
     opts.from_email = "whatever@weaveenergy.com"
     opts.from_name = "NewLiving"
     opts.to_name = 'i guess your name is *|FNAME|*'
-    opts.subject = "Win $$ for hoodwinking your 'friends'!"
+    opts.subject = "WeaveOutreachOnlineQueryStringParamsTrackingPart2"
     content = Hashie::Mash.new
     content.text = "walawala bitchass"
-    content.html = "<h1>walawala</h1> sup *|FNAME|*, here are some more merge tags <br><br> *|LNAME|* *|EMAIL|* <br> Here are some links to be tracked <a href='http://weaveenergy.com'>click me</a>."
+    content.html = '
+    <h1>walawala</h1> sup *|FNAME|*, here are some more merge tags <br><br> *|LNAME|* *|EMAIL|* <br> Here are some links to be tracked <a href="http://weaveenergy.com">click me</a><br>
+    Here s another link with query string params: <a href="http://localhost:4000/?campaign_id=7&landing_email=*|EMAIL|*"> params!! </a>.
+    '
     mailchimp.campaignCreate type: "regular", options: opts, content: content
   end
   def self.campaign_analytics cid
