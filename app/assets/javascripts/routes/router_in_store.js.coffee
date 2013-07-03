@@ -17,10 +17,7 @@ Weave.ReferralBatchesLookupRoute = Ember.Route.extend
         rB.set('product', @product)
         @transitionTo 'referralBatch.show', rB
       ),
-      ((error) =>
-        debugger
-        console.log('Error occured', error)
-      )
+      (error) -> console.log('Error occured', error)
       )
 
 Weave.ReferralBatchesNewRoute = Ember.Route.extend
