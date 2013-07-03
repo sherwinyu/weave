@@ -22,8 +22,20 @@ ActiveRecord::Schema.define(:version => 20130703011520) do
     t.datetime "updated_at",  :null => false
   end
 
-# Could not dump table "campaigns" because of following StandardError
-#   Unknown type 'bool' for column 'mailing_campaign'
+  create_table "campaigns", :force => true do |t|
+    t.string   "name"
+    t.text     "description",            :limit => 255
+    t.text     "outreach_email_content", :limit => 255
+    t.text     "sender_page_content",    :limit => 255
+    t.text     "recipient_page_content", :limit => 255
+    t.boolean  "live"
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
+    t.integer  "product_id"
+    t.string   "mailchimp_campaign_id"
+    t.string   "mailchimp_list_id"
+    t.boolean  "mailing_campaign"
+  end
 
   create_table "campaigns_recipient_incentives", :id => false, :force => true do |t|
     t.integer "campaign_id"
