@@ -14,7 +14,7 @@ class ReferralsController < ApplicationController
     if @valid && @referral.save
       render json: @referral
     else
-      logger.debug "validation error: #{@referral.errors.to_a}"
+      logger.debug "validation error: #{@referral.try(:errors).to_a}"
       render json: @referral, status: 422
     end
   end
@@ -43,7 +43,7 @@ class ReferralsController < ApplicationController
     if @valid && @referral.save
       render json: @referral
     else
-      logger.debug "validation error: #{@referral.errors.to_a}"
+      logger.debug "validation error: #{@referral.try(:errors).to_a}"
       render json: @referral, status: 422
     end
   end

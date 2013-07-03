@@ -101,6 +101,7 @@ product.customizations.create description: "An organic mattress also uses substa
 product.customizations.create description: "All of New Living's mattresses are produced by hand in the United States."
 c5 = Campaign.create product: product, name: "#{product.name} sender:no-incentives recipient:noncontingent-plant"
 
+c6 = Campaign.create product: product, mailing_campaign: true, name: "#{product.name} online sender:no-incentives recipient:nocontingent-plant"
   end
 
 ##################################################
