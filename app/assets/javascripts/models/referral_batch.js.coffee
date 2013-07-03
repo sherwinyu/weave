@@ -3,6 +3,7 @@ Weave.ReferralBatch = Weave.Model.extend
   senderPageVisited_at: DS.attr 'date'
   senderPagePersonalized: DS.attr 'boolean'
   campaign: DS.belongsTo 'Weave.Campaign'
+  product: DS.belongsTo 'Weave.Product'
   sender: DS.belongsTo 'Weave.User'
   meta: DS.attr 'json', defaultValue: {}
 
