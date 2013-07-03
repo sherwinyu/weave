@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130702142614) do
+ActiveRecord::Schema.define(:version => 20130703011520) do
 
   create_table "authorizations", :force => true do |t|
     t.string   "uid"
@@ -22,17 +22,8 @@ ActiveRecord::Schema.define(:version => 20130702142614) do
     t.datetime "updated_at",  :null => false
   end
 
-  create_table "campaigns", :force => true do |t|
-    t.string   "name"
-    t.text     "description",            :limit => 255
-    t.text     "outreach_email_content", :limit => 255
-    t.text     "sender_page_content",    :limit => 255
-    t.text     "recipient_page_content", :limit => 255
-    t.boolean  "live"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
-    t.integer  "product_id"
-  end
+# Could not dump table "campaigns" because of following StandardError
+#   Unknown type 'bool' for column 'mailing_campaign'
 
   create_table "campaigns_recipient_incentives", :id => false, :force => true do |t|
     t.integer "campaign_id"
@@ -172,10 +163,5 @@ ActiveRecord::Schema.define(:version => 20130702142614) do
   end
 
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
-
-  create_table "walas", :force => true do |t|
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
 
 end
