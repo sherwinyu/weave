@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130703011520) do
+ActiveRecord::Schema.define(:version => 20130703164100) do
 
   create_table "authorizations", :force => true do |t|
     t.string   "uid"
@@ -31,7 +31,6 @@ ActiveRecord::Schema.define(:version => 20130703011520) do
     t.boolean  "live"
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
-    t.integer  "product_id"
     t.string   "mailchimp_campaign_id"
     t.string   "mailchimp_list_id"
     t.boolean  "mailing_campaign"
@@ -113,6 +112,7 @@ ActiveRecord::Schema.define(:version => 20130703011520) do
     t.string   "url_code"
     t.datetime "sender_page_visited_at"
     t.string   "sender_email"
+    t.integer  "product_id"
   end
 
   create_table "referrals", :force => true do |t|
