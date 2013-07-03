@@ -39,14 +39,19 @@ class Campaign < ActiveRecord::Base
   MailChimpProxy = Class.new do
     def initialize(gibbon)
       @gibbon = gibbon
+      @exclude_list = [:campaignCreate]
     end
 
     def method_missing method_name, *args, &block
-      Hashie::Mash.new @gibbon.send method_name, *args, &block
+      if @exclude_list.include? method_name
+        @gibbon.send method_name, *args, &block
+      else
+        Hashie::Mash.new @gibbon.send method_name, *args, &block
+      end
     end
   end
 
-  def self.mailchimp override_api_key
+  def self.mailchimp
     @gb ||= MailChimpProxy.new(Gibbon.new Figaro.env.mailchimp_client_api_key)
   end
 
@@ -70,17 +75,22 @@ class Campaign < ActiveRecord::Base
     opts = Hashie::Mash.new
     opts.subject = "Help NewLiving spread values-based shopping in Houston"
     opts.from_name = "New Living Team"
-    opts.from_email = "getgreen@#{Figaro.env.NEWLIVING_DOMAIN}"
+    opts.from_email = "getgreen@#{Figaro.env.MAILCHIMP_CLIENT_DOMAIN}"
     opts.to_name = '*|FNAME|* *|LNAME|*'
+    opts.list_id = 'a0fa181d00' # TODO(syu) DON'T HARD CODE THIS
     content = Hashie::Mash.new
-    content.text = CampaignMailer.outreach_text_part
-    content.html = CampaignMailer.outreach_html_part
-    self.mailchimp_campaign_id = Campaign.mailchimp.createCampaign type: "regular", options: opts, content: content
+    content.text = CampaignMailer.outreach_text_part.to_s
+    content.html = CampaignMailer.outreach_html_part.to_s
+    self.mailchimp_campaign_id = Campaign.mailchimp.campaignCreate type: "regular", options: opts, content: content
+  end
+
+  def mailchimp_list_id
+    Campaign.mailchimp # TODO...
   end
 
   def self.create_new_campaign
     opts = Hashie::Mash.new
-    opts.list_id = 'a0fa181d00'
+    opts.list_id = 'a0fa181d00' # TODO(syu) DON'T HARD CODE THIS
     opts.from_email = "whatever@weaveenergy.com"
     opts.from_name = "NewLiving"
     opts.to_name = 'i guess your name is *|FNAME|*'
@@ -93,6 +103,7 @@ class Campaign < ActiveRecord::Base
     '
     mailchimp.campaignCreate type: "regular", options: opts, content: content
   end
+
   def self.campaign_analytics cid
     mailchimp.campaignClickDetailAIM cid: "00ab1b1e39", url: "http://weaveenergy.com"
 # => {"total"=>2, "data"=>[{"email"=>"sherwin@communificiency.com", "clicks"=>2}, {"email"=>"sherwin@weaveenergy.com", "clicks"=>1}]}
