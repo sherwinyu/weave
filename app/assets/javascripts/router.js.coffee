@@ -54,7 +54,7 @@ Weave.ProductsSelectProductRoute = Ember.Route.extend
         ## TODO(syu): figure out actual implementation here
         @transitionTo 'referralBatches.lookup', Weave.Campaign.find Weave.rails.vars.campaign_id
       else
-        @transitionTo 'referralBatches.new', Weave.Campaign.find product.get('campaign_ids.0')
+        @transitionTo 'referralBatches.new', Weave.Campaign.find 6
 
 Weave.CampaignRoute = Ember.Route.extend()
 
