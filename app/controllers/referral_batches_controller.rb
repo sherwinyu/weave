@@ -61,7 +61,7 @@ class ReferralBatchesController < ApplicationController
   def index
     case meta_action
     when "lookup_by_email"
-      @referral_batch = ReferralBatch.find_by_sender_email params[:landing_email]
+      @referral_batch = ReferralBatch.find_by_sender_email_and_campaign_id params[:landing_email], params[:campaign_id]
     else
       logger.warn "ReferralBatches#index hit, meta_action was NOT lookup_by_email, params: #{params}"
     end

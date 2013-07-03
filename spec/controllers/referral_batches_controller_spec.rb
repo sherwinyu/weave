@@ -143,12 +143,15 @@ describe ReferralBatchesController do
     describe "subaction: lookup_by_email" do
       before(:each) do
         @referral_batch_params = { meta: {action: "lookup_by_email"} }
-        @referral_batch = create :referral_batch
-        @query_params = { landing_email: @referral_batch.sender_email }
+
+        @first_referral_batch = create :referral_batch
+        @second_referral_batch = create :referral_batch, sender_email: @first_referral_batch.sender_email
+
+        @query_params = { landing_email: @second_referral_batch.sender_email, campaign_id: @second_referral_batch.campaign.id }
       end
-      it "looks up the proper ReferralBatch" do
+      it "looks up the proper ReferralBatch by both campaign and email" do
         get :index, params
-        assigns(:referral_batch).should eq @referral_batch
+        assigns(:referral_batch).should eq @second_referral_batch
       end
       it "renders a list of a single referral_batch" do
         get :index, params
