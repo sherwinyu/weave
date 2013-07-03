@@ -2,11 +2,12 @@ Weave.Router.map (match)->
   @resource "products", path: "/products", ->
     @route "selectProduct"
 
-  @resource "campaign", path: "/campaigns/:campaign_id", ->
+  @resource "product", path: "/products/:product_id", ->
+    @resource "campaign", path: "/campaigns/:campaign_id", ->
 
-    @resource "referralBatches", path: "/stories", ->
-       @route "new"
-       @route "lookup"
+      @resource "referralBatches", path: "/stories", ->
+         @route "new"
+         @route "lookup"
 
   @resource "referralBatch", path: "/stories/:story_id", ->
     @route "show"
@@ -52,9 +53,9 @@ Weave.ProductsSelectProductRoute = Ember.Route.extend
     startCampaignForProduct: (product)->
       if Weave.rails.isOnlineCampaign()
         ## TODO(syu): figure out actual implementation here
-        @transitionTo 'referralBatches.lookup', Weave.Campaign.find Weave.rails.vars.campaign_id
+        @transitionTo 'referralBatches.lookup', product, Product.Weave.Campaign.find Weave.rails.vars.campaign_id
       else
-        @transitionTo 'referralBatches.new', Weave.Campaign.find 6
+        @transitionTo 'referralBatches.new', product, Weave.Campaign.find 6
 
 Weave.CampaignRoute = Ember.Route.extend()
 
