@@ -11,6 +11,8 @@ Weave.ReferralController = Ember.ObjectController.extend
     # recip.user_infos_attributes = [recip.info]
     # delete recip.info
     @get('content').set('meta.action', 'create_with_recipient')
+    # TODO(syu): currently doing this to set the meta action -- should use its own transaction.
+    ctrl('referralBatch').set('meta.action', 'update_add_sender')
     @get('content.transaction').commit()
 
     # @get('content').save()

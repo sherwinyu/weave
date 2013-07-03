@@ -4,6 +4,8 @@ Weave.ReferralBatch = Weave.Model.extend
   senderPagePersonalized: DS.attr 'boolean'
   campaign: DS.belongsTo 'Weave.Campaign'
   sender: DS.belongsTo 'Weave.User'
+  meta: DS.attr 'json', defaultValue: {}
+
   # TODO(syu): HACKY
   referrals: null
   init: ->
