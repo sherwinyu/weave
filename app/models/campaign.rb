@@ -60,12 +60,6 @@ class Campaign < ActiveRecord::Base
     @gb ||= MailChimpProxy.new(Gibbon.new Figaro.env.mailchimp_client_api_key)
   end
 
-=begin
-  def self.mailchimp2
-    @gb ||= MailChimpProxy.new(Gibbon.new Figaro.env.NEW_LIVING_API_KEY)
-  end
-=end
-
   def mailchimp_write_emails_from_campaign
     data = Campaign.mailchimp2.campaignContent cid: mailchimp_campaign_id, for_archive: false
     f = File.open '/home/syu/projects/weave/app/views/campaign_mailer/outreach.html.erb', 'w'
@@ -97,19 +91,21 @@ class Campaign < ActiveRecord::Base
   def mailchimp_upsert_campaign
   end
 
-  def mailchimp_create_campaign
+  def mailchimp_create_campaign(args={})
     opts = Hashie::Mash.new
     opts.subject = "Help NewLiving spread values-based shopping in Houston"
     opts.from_name = "New Living Team"
     opts.from_email = "getgreen@#{Figaro.env.MAILCHIMP_CLIENT_DOMAIN}"
     opts.to_name = '*|FNAME|* *|LNAME|*'
-    opts.list_id = 'a0fa181d00' # TODO(syu) DON'T HARD CODE THIS
+    opts.list_id = (args[:list_id] || Figaro.env.MAILCHIMP_CLIENT_LIST_ID) or raise "list_id required"
+
     content = Hashie::Mash.new
     content.text = CampaignMailer.outreach_text_part(self).to_s
     content.html = CampaignMailer.outreach_html_part(self).to_s
+
+    logger.info "creating campaign with list id: #{opts.lis_id}"
     id = Campaign.mailchimp.campaignCreate type: "regular", options: opts, content: content
     self.update_attribute :mailchimp_campaign_id, id
-
   end
 
   def mailchimp_list_id

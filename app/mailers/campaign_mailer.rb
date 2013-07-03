@@ -1,6 +1,6 @@
 class CampaignMailer < ActionMailer::Base
   def outreach(campaign)
-    @referral_url = "http://localhost:4000/?campaign_id=#{campaign.id}&landing_email=*|EMAIL|*"
+    @referral_url = "http://#{Figaro.env.DOMAIN}/?campaign_id=#{campaign.id}&landing_email=*|EMAIL|*"
     mail do |format|
       format.text
       format.html
