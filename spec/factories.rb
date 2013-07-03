@@ -53,8 +53,9 @@ FactoryGirl.define do
     sender_page_personalized false
     outreach_email_sent false
     association :sender, factory: :sender
-    association :campaign, :with_customizations
+    association :campaign
     sender_email { sender.try(:email) }
+    association :product, :with_customizations
     trait(:no_sender){ sender nil }
     trait(:outreach_email_sent){ outreach_email_sent true }
     trait(:sender_page_personalized){ sender_page_personalized true}
@@ -67,9 +68,9 @@ FactoryGirl.define do
     referral_batch
     sender_email { sender.try(:email) }
     recipient_email { recipient.try(:email) }
-    association :product, :with_customizations
-    after :build do |referral|
-
+    # association :product, :with_customizations
+    after :stub do |referral|
+      referral.product = referral.referral_batch.product
     end
     callback(:unify_sender_recipent_emails) do |referral|
       referral.sender_email = referral.sender.email
@@ -91,9 +92,6 @@ FactoryGirl.define do
     outreach_email_content ""
     sender_page_content ""
     recipient_page_content ""
-    trait :with_customizations do
-      association :product, :with_customizations
-    end
     trait :with_incentives do
     end
 

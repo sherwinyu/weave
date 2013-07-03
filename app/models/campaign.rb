@@ -24,7 +24,7 @@ class Campaign < ActiveRecord::Base
   has_many :referrals, through: :referral_batches, inverse_of: :campaign
   has_many :senders, through: :referral_batches
   has_many :recipients, through: :referral_batches
-  belongs_to :product, inverse_of: :campaigns
+  # belongs_to :product, inverse_of: :campaigns
 
   # mailchimp_campaign_id
   # mailchimp_list_id

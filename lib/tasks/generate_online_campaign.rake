@@ -16,7 +16,6 @@ namespace :weave do
         return
       end
     end
-    binding.pry
     cpg = Campaign.create product: product, mailing_campaign: true, name: "#{product.name} online sender:no-incentives recipient:nocontingent-plant"
     cpg.mailchimp_create_campaign list_id: args.list_id
     cpg.generate_referral_batches!
