@@ -1,4 +1,4 @@
-describe "ReferralSelectRecipientView", ->
+xdescribe "ReferralSelectRecipientView", ->
   beforeEach ->
     # TODO(syu): this should be a referral controller
     @referralContext = Ember.Object.create
