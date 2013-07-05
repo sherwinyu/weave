@@ -4,6 +4,27 @@ describe Campaign do
   it "should be valid" do
     Campaign.new.should be_valid
   end
+  describe "Campaign.mailchimp" do
+    let(:mail_chimp_proxy) { double "mail_chimp_proxy" }
+    let (:api_key) {"31415abcd"}
+    before :each do
+      Campaign::MailChimpProxy.stub(:new).and_return mail_chimp_proxy
+      Gibbon.stub(:new).and_call_original
+      # Figaro.env.stub(:[]).with("MAILCHIMP_CLIENT_API_KEY").and_return api_key
+    end
+    it "creates a new Gibbon instance with the api_key" do
+      Figaro.stub(env: Figaro::Env.from("MAILCHIMP_CLIENT_API_KEY" => api_key))
+      ret = Campaign.mailchimp
+      expect(Gibbon).to have_received(:new).with api_key
+      Gibbon.should have_received(:new).with api_key
+    end
+    it "memoizes the return call" do
+      Figaro.stub(env: Figaro::Env.from("MAILCHIMP_CLIENT_API_KEY" => api_key))
+      ret1 = Campaign.mailchimp
+      ret2 = Campaign.mailchimp
+      ret1.should be ret2
+    end
+  end
 end
 
 describe Campaign::MailChimpProxy do

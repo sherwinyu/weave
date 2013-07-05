@@ -15,31 +15,6 @@
 #
 
 class Campaign < ActiveRecord::Base
-  # attr_accessible :name, :description, :outreach_email_content, :sender_page_content, :recipient_page_content, :live, :product
-
-  has_and_belongs_to_many :sender_incentives, class_name: "Incentive", join_table: "campaigns_sender_incentives"
-  has_and_belongs_to_many :recipient_incentives, class_name: "Incentive", join_table: "campaigns_recipient_incentives"
-
-  has_many :referral_batches
-  has_many :referrals, through: :referral_batches, inverse_of: :campaign
-  has_many :senders, through: :referral_batches
-  has_many :recipients, through: :referral_batches
-  # belongs_to :product, inverse_of: :campaigns
-
-  # mailchimp_campaign_id
-  # mailchimp_list_id
-
-  # creates
-  def mailchimp_campaign_recipients
-    raise "Campaign is not a online mailchimp campaign" unless mailing_campaign?
-    cpgs = Campaign.mailchimp.campaigns filters: [:campaign_id, :list_id]
-    cpg = cpgs.data.find{|c| c.id == mailchimp_campaign_id}
-    raise "No found campaign with id #{mailchimp_campaign_id}" unless cpg
-    list_id = cpg.try :list_id
-    raise "No list belonging to campaign #{mailchimp_campaign_id}" unless list_id
-    members = Campaign.mailchimp.listMembers id: list_id
-    members.data.map(&:email)
-  end
 
   MailChimpProxy = Class.new do
     def initialize(gibbon)
@@ -58,8 +33,34 @@ class Campaign < ActiveRecord::Base
     end
   end
 
+  has_and_belongs_to_many :sender_incentives, class_name: "Incentive", join_table: "campaigns_sender_incentives"
+  has_and_belongs_to_many :recipient_incentives, class_name: "Incentive", join_table: "campaigns_recipient_incentives"
+
+  has_many :referral_batches
+  has_many :referrals, through: :referral_batches, inverse_of: :campaign
+  has_many :senders, through: :referral_batches
+  has_many :recipients, through: :referral_batches
+
+
+  def mailchimp_campaign_recipients
+    raise "Campaign is not a online mailchimp campaign" unless mailing_campaign?
+    cpgs = Campaign.mailchimp.campaigns filters: [:campaign_id, :list_id]
+    cpg = cpgs.data.find{|c| c.id == mailchimp_campaign_id}
+    raise "No found campaign with id #{mailchimp_campaign_id}" unless cpg
+    list_id = cpg.try :list_id
+    raise "No list belonging to campaign #{mailchimp_campaign_id}" unless list_id
+    members = Campaign.mailchimp.listMembers id: list_id
+    members.data.map(&:email)
+  end
+
+
   def self.mailchimp
-    @gb ||= MailChimpProxy.new(Gibbon.new Figaro.env.mailchimp_client_api_key)
+    gibbon = Gibbon.new Figaro.env["MAILCHIMP_CLIENT_API_KEY"]
+    @gb ||= MailChimpProxy.new(gibbon)
+  end
+
+  def self.mailchimp2
+    @gb ||= MailChimpProxy.new(Gibbon.new Figaro.env.NEWLIVING_MAILCHIMP_API_KEY)
   end
 
   def mailchimp_write_emails_from_campaign
