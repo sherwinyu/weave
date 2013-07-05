@@ -16,6 +16,7 @@ window.Weave = Ember.Application.create
   LOG_TRANSITIONS: true
 
 DS.Model.reopenClass
+  # TODO(syu): this is used by AuthenticationController to load the user returned by the callback
   loadFromJson: (json) ->
     key = @toString().split('.')[1].toLowerCase()
     id = json[key].id

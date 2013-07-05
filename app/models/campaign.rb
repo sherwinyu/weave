@@ -103,7 +103,7 @@ class Campaign < ActiveRecord::Base
     content.text = CampaignMailer.outreach_text_part(self).to_s
     content.html = CampaignMailer.outreach_html_part(self).to_s
 
-    logger.info "creating campaign with list id: #{opts.lis_id}"
+    logger.info "creating campaign with list id: #{opts.list_id}"
     id = Campaign.mailchimp.campaignCreate type: "regular", options: opts, content: content
     self.update_attribute :mailchimp_campaign_id, id
   end
