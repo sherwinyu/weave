@@ -5,3 +5,47 @@ describe Campaign do
     Campaign.new.should be_valid
   end
 end
+
+describe Campaign::MailChimpProxy do
+  let(:mail_chimp_proxy) { Campaign::MailChimpProxy.new @gibbon}
+  before :each do
+    @gibbon = double "gibbon"
+    @args = {id: 55, data: [1,2,3,4]}
+  end
+  it "forwards missing method calls to the gibbon object" do
+    @gibbon.stub :wagawaga
+    mail_chimp_proxy.wagawaga(@args)
+    @gibbon.should have_received(:wagawaga).with(@args)
+  end
+  describe "method response" do
+    it "wraps the repsonse in a Hashie::Mash" do
+      @response = {total: 5, data: [3,1,4,1,5]}
+      @args = {id: 55, data: [1,2,3,4]}
+      @gibbon.stub(:generic_api_call).and_return @response
+
+      Hashie::Mash.stub(:new).and_call_original
+      result = mail_chimp_proxy.generic_api_call @args
+
+      Hashie::Mash.should have_received(:new).with @response
+      result.should be_an_instance_of Hashie::Mash
+      result.total.should be 5
+    end
+    context 'when api method is on the exclude list (because it doesnt return a hash' do
+      it "does not wrap the response in a hashie::Mash" do
+        @response = "123"
+
+        method = mail_chimp_proxy.exclude_list.first
+        @args = {id: 55, data: [1,2,3,4]}
+        @gibbon.stub(method).and_return @response
+
+        Hashie::Mash.stub(:new).and_call_original
+        result = mail_chimp_proxy.send method, @args
+
+        Hashie::Mash.should_not have_received(:new)
+        result.should_not be_an_instance_of Hashie::Mash
+        result.should be @response
+      end
+    end
+
+  end
+end

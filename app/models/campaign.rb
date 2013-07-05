@@ -44,11 +44,13 @@ class Campaign < ActiveRecord::Base
   MailChimpProxy = Class.new do
     def initialize(gibbon)
       @gibbon = gibbon
-      @exclude_list = [:campaignCreate]
+    end
+    def exclude_list
+      [:campaignCreate]
     end
 
     def method_missing method_name, *args, &block
-      if @exclude_list.include? method_name
+      if exclude_list.include? method_name
         @gibbon.send method_name, *args, &block
       else
         Hashie::Mash.new @gibbon.send method_name, *args, &block
