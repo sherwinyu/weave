@@ -32,6 +32,13 @@ describe ApplicationController do
       get :index, params
       response.should redirect_to "http://www.weaveenergy.com/friends"
     end
+
+    it "redirects if the uri is http://friends.weaveenergy.com" do
+      request.host = "staging.weaveenergy.com"
+      get :index, params
+      response.should redirect_to "http://www.weaveenergy.com/friends"
+    end
+
     it "does not redirect for localhost" do
       request.host = "http://localhost:4000"
       get :index, params
