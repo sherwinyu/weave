@@ -75,6 +75,7 @@ class Campaign < ActiveRecord::Base
 
   # this is a dangerous call!
   def generate_referral_batches!
+    raise "Campaign is not a online mailchimp campaign" unless mailing_campaign?
     # TODO do an API call to see if campaign has already been delivered
     emails = mailchimp_campaign_recipients
     logger.info "generating referral batches for campaign id: #{id} with mailchimp id #{mailchimp_campaign_id}"

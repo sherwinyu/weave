@@ -3,10 +3,9 @@ namespace :weave do
 
 ##################################################
 
-  task :generate_online_campaign, [:list_id, :deliver, :solo_online_campaign] => [:environment] do |t, args|
-    product = Product.first
+  task :generate_online_campaign, [:solo_online_campaign, :list_id, :deliver] => [:environment] do |t, args|
     online_cpgs = Campaign.where(mailing_campaign: true)
-    if online_cpgs.present? && args.solo_onlin_campaign
+    if online_cpgs.present? && args.solo_online_campaign == "force_solo"
       puts "Forcing one online campaign..."
       if online_cpgs.length == 1
         puts "One online campaign #{online_cpgs.first} found -- destroying"
