@@ -18,7 +18,7 @@ do (Weave.initRails = ->
 )
 
 # Initialize Ember routing
-if Weave.rails.vars.path? && !window.location.hash
+if Weave.rails?.vars?.path? && !window.location.hash
   window.location.hash = Weave.rails.vars.path || "products/selectProduct"
 
 Weave.register('friendFilter:main', Weave.FriendFilter)
