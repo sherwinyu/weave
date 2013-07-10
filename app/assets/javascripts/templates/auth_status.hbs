@@ -1,0 +1,10 @@
+{{#if auths.facebook}}
+  <a {{action login "facebook"}}>Facebook: Logout</a>
+{{else}}
+  <a {{action logout "facebook"}}>Facebook: Login</a>
+{{/if}}
+{{#if auths.google}}
+  <a {{action login "gmail"}}>Google: login</a>
+{{else}}
+  <a {{action logout "gmail"}}>Google: logout</a>
+{{/if}}
