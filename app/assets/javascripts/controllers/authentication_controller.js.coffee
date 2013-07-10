@@ -56,10 +56,6 @@ Weave.AuthenticationController = Ember.ObjectController.extend
       utils.delayed 2000, ->
         window.location.href = "/"
 
-
-
-
-
   init: ->
     @_super()
     @set 'auths', Ember.Object.create
