@@ -20,22 +20,21 @@ describe "AuthStatusView", ->
       @view.destroy()
 
   describe "template", ->
-    describe "facebook: logged in", ->
+    describe "facebook: already logged in", ->
       beforeEach ->
         Ember.run =>
           @context.set('auths.facebook', "true")
       it "shows Facebook: logout link", ->
         expect(@view.$()).toContainText "Facebook: Logout"
-
       it "shows hides Facebook: login link", ->
         expect(@view.$()).not.toContainText "Facebook: Login"
       it "sends login event with 'facebook' as argument", ->
-        @view.$('#login-facebook').click()
-        expect(@loginClickedSpy).toHaveBeenCalledOnce()
-        expect(@loginClickedSpy).toHaveBeenCalledWith "facebook"
+        @view.$('#logout-facebook').click()
+        expect(@logoutClickedSpy).toHaveBeenCalledOnce()
+        expect(@logoutClickedSpy).toHaveBeenCalledWith "facebook"
 
 
-    describe "facebook: logged out", ->
+    describe "facebook: already logged out", ->
       beforeEach ->
         Ember.run =>
           @context.set('auths.facebook', false)
@@ -43,7 +42,7 @@ describe "AuthStatusView", ->
         expect(@view.$()).toContainText "Facebook: Login"
       it "hides Facebook: logout link", ->
         expect(@view.$()).not.toContainText "Facebook: Logout"
-      it "sends logoutClicked event with 'facebook' as argument", ->
-        @view.$('#logout-facebook').click()
-        expect(@logoutClickedSpy).toHaveBeenCalledOnce()
-        expect(@logoutClickedSpy).toHaveBeenCalledWith "facebook"
+      it "sends loginClicked event with 'facebook' as argument", ->
+        @view.$('#login-facebook').click()
+        expect(@loginClickedSpy).toHaveBeenCalledOnce()
+        expect(@loginClickedSpy).toHaveBeenCalledWith "facebook"

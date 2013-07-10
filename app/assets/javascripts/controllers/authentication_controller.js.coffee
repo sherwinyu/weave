@@ -21,6 +21,10 @@ Weave.AuthenticationController = Ember.ObjectController.extend
       (error) => console.log(error)
     )
     @_handleOmniauthResponse(promise)
+
+  logoutClicked: (service) ->
+    if service == "facebook"
+      @logout()
 ############
 
   _handleOmniauthResponse: (ajax) ->

@@ -1,7 +1,7 @@
 {{#if auths.facebook}}
-  <a id="login-facebook" {{action loginClicked "facebook"}}>Facebook: Logout</a>
+  <a id="logout-facebook" {{action logoutClicked "facebook"}}>Facebook: Logout</a>
 {{else}}
-  <a id="logout-facebook" {{action logoutClicked "facebook"}}>Facebook: Login</a>
+  <a id="login-facebook" {{action loginClicked "facebook"}}>Facebook: Login</a>
 {{/if}}
 {{#if auths.google}}
   <a {{action login "gmail"}}>Google: login</a>
