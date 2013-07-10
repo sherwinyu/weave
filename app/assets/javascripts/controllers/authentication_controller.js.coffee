@@ -48,7 +48,7 @@ Weave.AuthenticationController = Ember.ObjectController.extend
     FB.logout()
     @controllerFor('application').pushSuccessNotification "Successfully logged out of Facebook"
     p = utils.delete url: Weave.rails.vars.pathHelpers.destroyUserSessionPath
-    @get('controllers.referral.friendFilter').clearCache()
+    @get('controllers.referral.friendFilter').clearCache() # convert this to a SEND EVENT
     @set 'user', null
     @set 'auths.facebook', null
     @set 'auths.google', null
