@@ -32,7 +32,8 @@ class ReferralMailer < ActionMailer::Base
 
     domain = Figaro.env.mailgun_api_domain
     url = "https://api:#{Figaro.env.MAILGUN_API_KEY}@api.mailgun.net/v2/#{domain}/messages"
-    logger.info url, data.inspect
+    logger.info url
+    logger.info data.inspect
     logger.info RestClient.post url, data
   end
 
