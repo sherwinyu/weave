@@ -48,14 +48,9 @@ group :development, :test do
 
   gem 'rb-inotify', require: false
 
-  # gem 'jasmine-headless-webkit', '0.8.4'
-  # gem 'guard-jasmine-headless-webkit'
   gem 'factory_girl_rails', '4.2.1'
-  # gem 'guard-spork', '1.5.0'
-  # gem 'guard-spring'
   gem 'guard-zeus'
   gem 'guard-rspec', '3.0.0'
-  # gem 'jasmine-rails', '0.4.2'
   gem 'guard-jasmine', '1.15.1'
   gem "jasminerice", '0.0.10'
   gem 'jasmine-sinon-rails', '1.3.4'

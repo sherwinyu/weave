@@ -54,7 +54,7 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
         @get('friendFilter').filterAndRankAgainst(request.term).then (friends) =>
           @set('listedFriends', friends.copy())
           @notifyPropertyChange('listedFriends')
-          response(friends)
+          # response(friends)
 
   selectingRecipientDidChange: ( ->
     unless @get('controller.selectingRecipient')
