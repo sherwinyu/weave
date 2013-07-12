@@ -40,7 +40,7 @@ Weave.Referral = Weave.Model.extend
 
   availableCustomizations: (->
     @get('stateManager')
-    @get('referralBatch.campaign.product.customizations')
+    @get('referralBatch.product.customizations')
       ?.map (customization) =>
         Weave.ReferralCustomization.create(customization: customization, referral: @)
     ).property('referralBatch')

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130702142614) do
+ActiveRecord::Schema.define(:version => 20130703164100) do
 
   create_table "authorizations", :force => true do |t|
     t.string   "uid"
@@ -31,7 +31,9 @@ ActiveRecord::Schema.define(:version => 20130702142614) do
     t.boolean  "live"
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
-    t.integer  "product_id"
+    t.string   "mailchimp_campaign_id"
+    t.string   "mailchimp_list_id"
+    t.boolean  "mailing_campaign"
   end
 
   create_table "campaigns_recipient_incentives", :id => false, :force => true do |t|
@@ -110,6 +112,7 @@ ActiveRecord::Schema.define(:version => 20130702142614) do
     t.string   "url_code"
     t.datetime "sender_page_visited_at"
     t.string   "sender_email"
+    t.integer  "product_id"
   end
 
   create_table "referrals", :force => true do |t|
@@ -172,10 +175,5 @@ ActiveRecord::Schema.define(:version => 20130702142614) do
   end
 
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
-
-  create_table "walas", :force => true do |t|
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
 
 end

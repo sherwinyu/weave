@@ -6,8 +6,10 @@ describe ReferralBatchesController do
   let(:params) { {referral_batch: @referral_batch_params, format: :json} }
   let(:referral_batch) { build_stubbed :referral_batch }
   let(:sender) { referral_batch.sender }
+  let(:product) { referral_batch.product }
   let(:campaign) { referral_batch.campaign }
-  # let(:recipient) { referral_batch.sender }
+
+
   describe "referral_batch_params" do
     let(:params) do
       ActionController::Parameters.new super()
@@ -15,20 +17,26 @@ describe ReferralBatchesController do
     before :each do
       @referral_batch_params = attributes_for(:referral_batch).merge(
         sender_attributes: attributes_for(:sender).merge(id: sender.id),
-        campaign_id: campaign.id)
-      @referral_batch_params[:sender_email] = @referral_batch_params[:sender_attributes][:email]
-      controller.stub(:params).and_return {params}
+        campaign_id: campaign.id,
+        product_id: product.id)
+        @referral_batch_params[:sender_email] = @referral_batch_params[:sender_attributes][:email]
+        controller.stub(:params).and_return {params}
     end
     it "converts sender_attribute to sender_id" do
       controller.referral_batch_params.should_not have_key :sender
       controller.referral_batch_params.should have_key :sender_id
       controller.referral_batch_params[:sender_id].should eq sender.id
     end
+    it "permits product_id" do
+      controller.referral_batch_params.should have_key :product_id
+    end
   end
+
+
 
   describe "#create" do
     before :each do
-      @referral_batch_params = { campaign_id: campaign.id }
+      @referral_batch_params = { campaign_id: campaign.id, product_id: 55 }
     end
     describe "subaction: fresh_create" do
       before :each do
@@ -43,9 +51,9 @@ describe ReferralBatchesController do
           # This is necessary because we're not "actually" doing this action. this sets up referral_batch params
           expect{post :create_fresh, params}.to raise_error ActionView::MissingTemplate
         end
-        it "sets the necessary @attributes re: campaign, sender" do
-          assigns(:attributes).keys.should =~ [:campaign_id,
-                                               ].map(& :to_s)
+        it "sets the necessary @attributes re: campaign, sender, product" do
+          assigns(:attributes).keys.should =~ [:campaign_id, :product_id
+          ].map(& :to_s)
         end
         it "sets valid to .... true" do
           assigns(:valid).should eq true
@@ -89,16 +97,7 @@ describe ReferralBatchesController do
     let(:params) {super().merge id: @referral_batch.id }
     before :each do
       @referral_batch = referral_batch
-      @referral_batch_params = { campaign_id: campaign.id, sender: { } }
-=begin
-          authorizations: [{uid:1572450142, provider:facebook}]
-          canonical_email: "sherwin.x.yu@gmail.com"
-          canonical_name: "Sherwin Yu"
-          email: "sherwin.x.yu@gmail.com"
-          email_provided: true
-          id: 1
-          name: null
-=end
+      @referral_batch_params = { campaign_id: campaign.id, sender: { }}
       @referral_batch.stub(:save).and_return true
       ReferralBatch.stub(:find).with(@referral_batch.id.to_s).and_return(@referral_batch)
     end
@@ -106,21 +105,69 @@ describe ReferralBatchesController do
       put :update, params
       ReferralBatch.should have_received(:find).with(@referral_batch.id.to_s)
     end
+    describe "subaction: add_sender" do
+      let(:referral_batch) {build_stubbed :referral_batch, :no_sender, :no_product }
+      let(:sender) {build_stubbed :sender}
+      before :each do
+        @referral_batch_params = { sender: {id: sender.id, email: sender.email, email_provided: true }, product_id: 55}
+        @referral_batch_params[:meta] = {action: "update_add_sender"}
+      end
+      context "as an independent action" do
+        before :each do
+          subject.instance_variable_set "@referral_batch", @referral_batch
+        end
+        before(:each) do
+          expect{put :update_add_sender_and_product, params}.to raise_error ActionView::MissingTemplate
+        end
+        it "sets @attributes to sender_id and product_id" do
+          assigns(:attributes).keys.should =~ ["sender_id", "product_id"]
+        end
+        context "with other parameters (campaign_id)" do
+          before(:each) {@referral_batch_params.merge campaign_id: 5}
+          it "filters out campaign_id" do
+            assigns(:attributes).should_not have_key "campaign_id"
+          end
+        end
+        it "sets valid to true" do
+          assigns(:valid).should eq true
+        end
+      end
+      context "as a controller action" do
+        it "returns 200" do
+          put :update, params
+          response.status.should eq 200
+        end
+        it "assigns @referral_batch with the correct sender" do
+          put :update, params
+          assigns(:referral_batch).sender_id.should eq sender.id
+        end
+        it "assigns @referral_batch with the correct sender" do
+          put :update, params
+          assigns(:referral_batch).product_id.should eq 55
+        end
+        it "does not create a referral batch" do
+          expect{put :update, params}.not_to change {ReferralBatch.count}
+        end
+      end
+    end
   end
 
   describe "#index" do
-    let(:params) { super().merge (@query_params || {}) }
+    let(:params) { super().merge(@query_params || {}) }
     before :each do
     end
     describe "subaction: lookup_by_email" do
       before(:each) do
         @referral_batch_params = { meta: {action: "lookup_by_email"} }
-        @referral_batch = create :referral_batch
-        @query_params = { landing_email: @referral_batch.sender_email }
+
+        @first_referral_batch = create :referral_batch
+        @second_referral_batch = create :referral_batch, sender_email: @first_referral_batch.sender_email
+
+        @query_params = { landing_email: @second_referral_batch.sender_email, campaign_id: @second_referral_batch.campaign.id }
       end
-      it "looks up the proper ReferralBatch" do
+      it "looks up the proper ReferralBatch by both campaign and email" do
         get :index, params
-        assigns(:referral_batch).should eq @referral_batch
+        assigns(:referral_batch).should eq @second_referral_batch
       end
       it "renders a list of a single referral_batch" do
         get :index, params
@@ -139,6 +186,7 @@ describe ReferralBatchesController do
     end
     describe "no subaction" do
       it "should render nil" do
+        @referral_batch_params = {meta: {}}
         get :index, params
         response.status.should eq 404
       end

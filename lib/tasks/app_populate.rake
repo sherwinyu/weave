@@ -59,7 +59,7 @@ product.customizations.create description: "With a note from a medical Doctor ad
 product.customizations.create description: "Compared to the size of their bodies, children take in more air than adults do and are therefore at a higher risk of being affected by polluted air."
 product.customizations.create description: "New Living air filters removes benzene, wood smoke, formaldehyde, other VOCs, bacteria, and viruses from the air."
 product.customizations.create description: "New Living's Air Filtration machines are great for the nursery as they remove dust, pollen, and harmful gases from the air. They also reduce nighttime asthma, allergies, runny nose, congestion, dry mouth, coughing and wheezing."
-c1 = Campaign.create product: product, name: "#{product.name} sender:no-incentives recipient:noncontingent-plant"
+# c1 = Campaign.create product: product, name: "#{product.name} sender:no-incentives recipient:noncontingent-plant"
 
 
 ### Water Filter:
@@ -68,7 +68,7 @@ product.customizations.create description: "Traditional filters don't cut it. Ou
 product.customizations.create description: "With a note from a medical Doctor advising a water filtration system, no sales tax is charged. You can also use a discretionary spending account with your insurance provider to pay for your filter."
 product.customizations.create description: "Houston's water supply contains high concentrations of 18 contaminants ranging from arsenic to chlorine, making it the 6th most contaminated water in the country (EWG Study)"
 product.customizations.create description: "You will not have to purchase bottled water again once you have a whole home filtration system."
-c2 = Campaign.create product: product, name: "#{product.name} sender:no-incentives recipient:noncontingent-plant"
+# c2 = Campaign.create product: product, name: "#{product.name} sender:no-incentives recipient:noncontingent-plant"
 
 
 ### Green Painter
@@ -77,7 +77,7 @@ product.customizations.create description: "The average lifespan of a painter is
 product.customizations.create description: "Painted surfaces, like homes and buildings, give off 25% more toxins per day than gas stations and oil refineries."
 product.customizations.create description: "Kids who sleep in a rooms with water-based paint containing VOCs can be 2-4 times more likely to suffer from asthma (get source)"
 product.customizations.create description: "Green Painter offers non-toxic paint that is similar in price to other paints that are toxic.Green Painter's mission is make healthy homes affordable and accessible for EVERYONE."
-c3 = Campaign.create product: product, name: "#{product.name} sender:no-incentives recipient:noncontingent-plant"
+# c3 = Campaign.create product: product, name: "#{product.name} sender:no-incentives recipient:noncontingent-plant"
 
 
 ### Furniture
@@ -89,7 +89,7 @@ product.customizations.create description: "Every piece is hand-made and has a s
 product.customizations.create description: "By creating a direct relationship with a community of local artisan, New Living is able to offer beautiful, well-designed, hand-made pieces at a price competitive or less than other stores."
 product.customizations.create description: "For the same reason we choose to eat healthier, organic food, it makes sense to bring into our homes furniture made without harmful chemicals."
 product.customizations.create description: "Made at New Living is like a kosher factory for healthy furniture: every single chemical used in the process is the safest, least toxic option available."
-c4 = Campaign.create product: product, name: "#{product.name} sender:no-incentives recipient:noncontingent-plant"
+# c4 = Campaign.create product: product, name: "#{product.name} sender:no-incentives recipient:noncontingent-plant"
 
 
 ### Mattress
@@ -99,8 +99,8 @@ product.customizations.create description: "Did you know that a popular memory f
 product.customizations.create description: "With a note from a medical Doctor advising an air filtration system, no sales tax is charged. You can also use a discretionary spending account with your insurance provider to pay for an air filter."
 product.customizations.create description: "An organic mattress also uses substantially fewer chemicals and volatile organic compounds to produce, meaning it contributes less overall pollution to the environment."
 product.customizations.create description: "All of New Living's mattresses are produced by hand in the United States."
-c5 = Campaign.create product: product, name: "#{product.name} sender:no-incentives recipient:noncontingent-plant"
-
+# c5 = Campaign.create product: product, name: "#{product.name} sender:no-incentives recipient:noncontingent-plant"
+c1 = Campaign.create name: "in-store-version sender:no-incentives recipient:noncontingnet-plant"
   end
 
 ##################################################

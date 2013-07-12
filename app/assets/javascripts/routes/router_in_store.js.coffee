@@ -2,8 +2,10 @@ Weave.ReferralBatchesRoute = Ember.Route.extend()
 Weave.ReferralBatchesLookupRoute = Ember.Route.extend
   setupController: (controller, model) ->
     @campaign = @modelFor('campaign')
+    @product = @modelFor('product')
     params =
       landing_email: Weave.rails.vars.landing_email,
+      campaign_id: @campaign.get('id')
       referral_batch:
         meta:
           action: "lookup_by_email"
@@ -11,7 +13,9 @@ Weave.ReferralBatchesLookupRoute = Ember.Route.extend
     #TODO(syu): TEST ME
     referralBatches.then(
       ((rBs) =>
-        @transitionTo 'referralBatch.show', rBs.get('firstObject')
+        rB = rBs.get('firstObject')
+        rB.set('product', @product)
+        @transitionTo 'referralBatch.show', rB
       ),
       (error) -> console.log('Error occured', error)
       )
@@ -20,7 +24,8 @@ Weave.ReferralBatchesNewRoute = Ember.Route.extend
   #TODO(syu): TEST ME
   setupController: (controller, model) ->
     @campaign = @modelFor('campaign')
-    @referralBatch = Weave.ReferralBatch.createRecord(campaign: @campaign)
+    @product = @modelFor('product')
+    @referralBatch = Weave.ReferralBatch.createRecord(campaign: @campaign, product: @product)
     @referralBatch.save().then(
       ((result) =>
         @transitionTo('referralBatch.show', result)

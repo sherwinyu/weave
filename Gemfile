@@ -66,7 +66,6 @@ group :test do
   gem 'bourne', '1.4.0'
   gem 'zeus'
 end
-# gem 'thin'
 
 gem 'puffing-billy'
 
@@ -79,18 +78,3 @@ gem 'multimap'
 gem "active_model_serializers", "~> 0.7.0"
 gem "gibbon"
 
-
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'debugger'

@@ -1,5 +1,5 @@
 class CreateCampaigns < ActiveRecord::Migration
-  def self.up
+  def change
     create_table :campaigns do |t|
       t.string :name
       t.string :description
@@ -13,7 +13,4 @@ class CreateCampaigns < ActiveRecord::Migration
     end
   end
 
-  def self.down
-    drop_table :campaigns
-  end
 end

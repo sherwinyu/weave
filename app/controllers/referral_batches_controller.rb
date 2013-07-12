@@ -20,7 +20,8 @@ class ReferralBatchesController < ApplicationController
     @attributes = referral_batch_params.slice(
       :campaign_id,
       :sender_page_personalized,
-      :sender_page_visited
+      :sender_page_visited,
+      :product_id
     )
     @valid = true # TODO(syu)
   end
@@ -28,10 +29,11 @@ class ReferralBatchesController < ApplicationController
   def update
     @referral_batch = ReferralBatch.find params[:id]
     case meta_action
-    when 'waga'
+    when 'update_add_sender'
+      update_add_sender_and_product
     else
-      @attributes = referral_batch_params
-      @valid = true
+      @attributes = {} #referral_batch_params
+      @valid = false
     end
     @referral_batch.attributes = @attributes
     if @referral_batch.save && @valid
@@ -42,24 +44,30 @@ class ReferralBatchesController < ApplicationController
     end
   end
 
+  def update_add_sender_and_product
+    required_attributes = [:sender_id, :product_id]
+    @attributes = referral_batch_params.slice(*required_attributes)
+    @valid = true
+  end
+
   def show
     if params[:id].to_i  == 0
       @referral_batch = ReferralBatch.last
     else
       @referral_batch = ReferralBatch.find params[:id]
     end
-    binding.pry
     render json: @referral_batch
   end
 
   def index
     case meta_action
     when "lookup_by_email"
-      @referral_batch = ReferralBatch.find_by_sender_email params[:landing_email]
+      @referral_batch = ReferralBatch.find_by_sender_email_and_campaign_id params[:landing_email], params[:campaign_id]
     else
       logger.warn "ReferralBatches#index hit, meta_action was NOT lookup_by_email, params: #{params}"
     end
     if @referral_batch
+      logger.info "is this cached? #{json_for(@referral_batch)} "
       render json: [@referral_batch]
     else
       render json: nil, status: 404
@@ -117,7 +125,11 @@ class ReferralBatchesController < ApplicationController
 
   def referral_batch_params
     params[:referral_batch][:sender_id] = params[:referral_batch].delete(:sender_attributes)[:id] if params[:referral_batch][:sender_attributes]
-    params.require(:referral_batch).permit :campaign_id, :sender_page_visited, :sender_page_personalized, :sender_id,
+    params.require(:referral_batch).permit :campaign_id,
+      :sender_page_visited,
+      :sender_page_personalized,
+      :product_id,
+      :sender_id,
       { meta: [:action]}
   end
 end

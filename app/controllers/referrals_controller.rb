@@ -14,7 +14,7 @@ class ReferralsController < ApplicationController
     if @valid && @referral.save
       render json: @referral
     else
-      logger.debug "validation error: #{@referral.errors.to_a}"
+      logger.debug "validation error: #{@referral.try(:errors).to_a}"
       render json: @referral, status: 422
     end
   end
@@ -43,7 +43,7 @@ class ReferralsController < ApplicationController
     if @valid && @referral.save
       render json: @referral
     else
-      logger.debug "validation error: #{@referral.errors.to_a}"
+      logger.debug "validation error: #{@referral.try(:errors).to_a}"
       render json: @referral, status: 422
     end
   end
@@ -52,7 +52,12 @@ class ReferralsController < ApplicationController
     @referral.status = Referral.STATUSES[:attempting_delivery]
     required_attributes = [:message, :recipient_email, :customization_ids]
     @attributes = referral_params.slice(*required_attributes)
+
+    # We need to set recipient_email explicitly to pass the .deliverable? validation in @referral.deliver
+    # TODO(syu): test this
     @referral.recipient_email =  @attributes[:recipient_email]
+    @referral.customization_ids =  @attributes[:customization_ids]
+    @referral.message =  @attributes[:message]
     @valid = (required_attributes.map(&:to_s) - @attributes.keys).empty? && @referral.deliver
   end
 

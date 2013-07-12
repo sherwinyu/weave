@@ -23,6 +23,7 @@ class ReferralBatch < ActiveRecord::Base
   has_many :referrals, inverse_of: :referral_batch
   belongs_to :campaign, inverse_of: :referral_batches
   has_many :sender_incentives, class_name: "IncentiveInstance", inverse_of: :referral_batch
+  belongs_to :product, inverse_of: :referral_batches
 
   def visit_sender_page
     self.sender.visit!
