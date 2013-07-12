@@ -24,17 +24,21 @@ describe "AuthStatusView", ->
       beforeEach ->
         Ember.run =>
           @context.set('auths.facebook', "true")
-      it "shows Facebook: logout link", ->
-        expect(@view.$()).toContainText "Facebook: Logout"
-      it "shows hides Facebook: login link", ->
+      it "shows logout link", ->
+        expect(@view.$()).toContainText "Logout"
+      it "hides Facebook: login link", ->
         expect(@view.$()).not.toContainText "Facebook: Login"
-      it "sends login event with 'facebook' as argument", ->
+      it "shows the user's canonical_name", ->
+        Ember.run =>
+          @context.set('user', canonical_name: "Sherwin Yu")
+        expect(@view.$()).toContainText "Sherwin Yu"
+      it "sends logout event with 'facebook' as argument", ->
         @view.$('#logout-facebook').click()
         expect(@logoutClickedSpy).toHaveBeenCalledOnce()
         expect(@logoutClickedSpy).toHaveBeenCalledWith "facebook"
 
 
-    describe "facebook: already logged out", ->
+    xdescribe "facebook: already logged out", ->
       beforeEach ->
         Ember.run =>
           @context.set('auths.facebook', false)
