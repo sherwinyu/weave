@@ -19,7 +19,7 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
     @get('controller.recipient.name')
   ).property('controller.recipient')
 
-  friendFilterBinding: null
+  friendFilterBinding: "controller.friendFilter"
 
   classNames: ['select-recipient']
 
@@ -27,7 +27,6 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
 
   didInsertElement: ->
     @initAutocompletion @$('input')
-    @set 'friendFilter', @get('context.friendFilter')
     if @get('controller.selectingRecipient')
       @$('#wala')?.val ''
 
@@ -39,12 +38,6 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
     $el.autocomplete
       select: (event, ui) =>
         Em.assert "jquery-autocomplete-select event should not happen because we are custom rolling a solution"
-        recipient = Weave.User.createRecord ui.item.user
-        @get('context').set('recipient', recipient)
-
-        # Fill in the input fields
-        @$("#name-or-email").val ui.item.label
-        @get('controller').send 'recipientSelected'
 
       focus: (event, ui) =>
         @$(".recipient-name-or-email").val ui.item.label
@@ -54,9 +47,5 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
         @get('friendFilter').filterAndRankAgainst(request.term).then (friends) =>
           @set('listedFriends', friends.copy())
           @notifyPropertyChange('listedFriends')
-          # response(friends)
 
-  selectingRecipientDidChange: ( ->
-    unless @get('controller.selectingRecipient')
-      @$('input')?.autocomplete('zug')
-  ).observes('controller.selectingRecipient')
+
