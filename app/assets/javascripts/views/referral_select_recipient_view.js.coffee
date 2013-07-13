@@ -1,10 +1,10 @@
 # Binds against referral controller
 Weave.ReferralSelectRecipientView = Ember.View.extend
   # dependencies: 'referalView'
-  listedFriends: null
+  _rankedFriends: null
   displayedFriends: (->
-    @get('listedFriends')
-  ).property 'listedFriends', 'listedFriends.@each'
+    @get('_rankedFriends')
+  ).property '_rankedFriends', '_rankedFriends.@each'
 
   friendClicked: (friend)->
     recipient = Weave.User.createRecord friend.user
@@ -31,7 +31,7 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
       @$('#wala')?.val ''
 
   init: ->
-    @set('listedFriends', [])
+    @set('_rankedFriends', [])
     @_super()
 
   initAutocompletion: ($el) ->
@@ -45,7 +45,17 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
 
       source: (request, response) =>
         @get('friendFilter').filterAndRankAgainst(request.term).then (friends) =>
-          @set('listedFriends', friends.copy())
-          @notifyPropertyChange('listedFriends')
+          @updateDisplayedFriends(friends)
+
+  # updateDisplayedFriends
+  # Context: called by autocomplete#source with the result of
+  # `friendFilter.rankAgainstTerm`.
+  # param friends: a list of friendStructs
+  # Behavior
+  #   1) it sets the view's _rankedFriends to a copy of the friends
+  #   2) it notifiesPropertyChange of _rankedFriends
+  updateDisplayedFriends: (friends) ->
+    @set('_rankedFriends', friends.copy())
+    @notifyPropertyChange('_rankedFriends')
 
 
