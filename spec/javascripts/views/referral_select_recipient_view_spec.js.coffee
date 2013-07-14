@@ -4,7 +4,6 @@ describe "ReferralSelectRecipientView", ->
     @friendFilter = Ember.Object.create
       filterAndRankAgainst: Em.K
 
-
     @context = Ember.Object.create
       referralBatch: Ember.Object.create()
       content: "walawala"
@@ -34,6 +33,10 @@ describe "ReferralSelectRecipientView", ->
       expect(@view.$()).toContain 'input.recipient-name-or-email'
     it "shows a friend-suggestions div if there are displayedFriends", ->
     it "shows a friend-suggestion div for each displayedFriend", ->
+    it "shows a friend-suggestion friend-new div with the query name", ->
+      expect(@view.$()).toContain '.friend-suggestion.friend-new'
+      expect(@view.$('.friend-suggestion.friend-new')).toContainText "Add a friend"
+
     it "shows an image for the friend's picture", ->
     it "shows the friend's name", ->
     it "shows the friend's location", ->
@@ -47,7 +50,6 @@ describe "ReferralSelectRecipientView", ->
         @view.$('input.recipient-name-or-email').val "firstname last"
         @view.$('input.recipient-name-or-email').blur()
       expect(@view.get 'query').toBe "firstname last"
-
 
   describe "bindings", ->
     it "has friendFilter bound to context.friendFilter", ->
@@ -123,4 +125,3 @@ describe "ReferralSelectRecipientView", ->
       expect(@view.$('.friend-suggestion')).toHaveLength 3
       expect(@view.$('.friend-suggestion')).toContainText "Janet Chien"
       expect(@view.$('.friend-suggestion')).toContainText "Yan Zhang"
-

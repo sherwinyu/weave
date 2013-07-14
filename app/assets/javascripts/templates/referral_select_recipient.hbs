@@ -12,12 +12,12 @@
     {{#if view.lookupByEmail}}
     {{else}}
       <div class='friend-suggestion friend-new' {{action friendClicked friend target="view"}}>
-          <img class="friend-picture" {{bindAttr src='friend.pictureUrl'}}></img>
-          <div class="friend-info">
-            <span class="friend-name">Add a friend {{view.query}}</span> <br>
-            <span class="friend-location"> {{friend.user.info.other_info.location.name}} </span>
-          </div>
+        <img class="friend-picture" {{bindAttr src='friend.pictureUrl'}}></img>
+        <div class="friend-info">
+          <span class="friend-name">Add a friend {{view.query}}</span> <br>
+          <span class="friend-location"> {{friend.user.info.other_info.location.name}} </span>
         </div>
+      </div>
       {{#each friend in view.displayedFriends}}
       <div class='friend-suggestion' {{action friendClicked friend target="view"}}>
           <img class="friend-picture" {{bindAttr src='friend.pictureUrl'}}></img>
