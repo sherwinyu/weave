@@ -19,6 +19,7 @@ Weave.ReferralController = Ember.ObjectController.extend
     # .then (referral) -> @send 'editBody', referral
     # @send 'editBody', @get('content')
   updateAndDeliver: ->
+    @get('content.recipient').set('email', @get 'content.recipient_email')
     @get('content').set('meta.action', 'update_body_and_deliver')
     @get('content').one 'didUpdate', =>
       @get('controllers.referralBatch.referrals').pushObject @get('content')

@@ -58,6 +58,8 @@ class ReferralsController < ApplicationController
     @referral.recipient_email =  @attributes[:recipient_email]
     @referral.customization_ids =  @attributes[:customization_ids]
     @referral.message =  @attributes[:message]
+    @referral.recipient.email = referral_params["recipient_attributes"][:email]
+    logger.warn "referral.recipient_email (#{@referral.recipient_email}) and referral.recipient.email (#{@referral.recipient.email}) mismatch!" if @referral.recipient.email != @referral.recipient_email
     @valid = (required_attributes.map(&:to_s) - @attributes.keys).empty? && @referral.deliver
   end
 

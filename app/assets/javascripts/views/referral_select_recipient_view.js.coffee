@@ -6,6 +6,13 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
     @get('_rankedFriends')
   ).property '_rankedFriends', '_rankedFriends.@each'
 
+  newFriendClicked: (friendName) ->
+    recipient = Weave.User.createRecord
+      name: friendName
+    recipient.set('meta.role', 'recipient-new')
+    @get('context').set('recipient', recipient)
+    @get('controller').send 'recipientSelected'
+
   friendClicked: (friend)->
     recipient = Weave.User.createRecord friend.user
     recipient.set('meta.role', 'recipient')

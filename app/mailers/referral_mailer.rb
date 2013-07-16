@@ -28,7 +28,7 @@ class ReferralMailer < ActionMailer::Base
     data[:text] = mail.text_part.body # "Testing some Mailgun awesomness!"
     data[:html] = mail.html_part.body # "<html>HTML version of the body</html>"
     data['o:campaign']='newliving'
-    # data['o:testmode'] = true if Rails.env.testing? || Rails.env.development?
+    data['o:testmode'] = true if Rails.env.testing? || Rails.env.development?
 
     domain = Figaro.env.mailgun_api_domain
     url = "https://api:#{Figaro.env.MAILGUN_API_KEY}@api.mailgun.net/v2/#{domain}/messages"

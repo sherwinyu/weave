@@ -120,6 +120,7 @@ describe ReferralsController do
         customization_ids: @referral.product.customization_ids,
         recipient_email: "senders_friend@example.com",
         message: "howdy dooda!",
+        recipient_attributes: recipient.attributes.slice( "email", "name" )
       )
       @referral.stub(:save).and_return true
       Referral.stub!(:find).with(@referral.id.to_s).and_return @referral
@@ -147,6 +148,12 @@ describe ReferralsController do
           end
           it "updates the recipient_email attribute" do
             @referral.recipient_email.should eq @referral_params[:recipient_email]
+          end
+          it "updates referral.recipient.email" do
+            @referral.recipient.email.should eq @referral_params[:recipient_attributes]["email"]
+          end
+          it "does not override name" do
+            @referral.recipient.name.should eq attributes_for(:recipient)[:name]
           end
           it "calls @referral.deliver" do
             @referral.should have_received :deliver
