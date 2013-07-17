@@ -7,26 +7,23 @@
     {{view Ember.TextField class="recipient-name-or-email" id="name-or-email" valueBinding="view.query"}}
   </div>
 
-  {{#if view.displayedFriends.length}}
   <div class="friend-suggestions">
-    {{#if view.lookupByEmail}}
-    {{else}}
-      <div class='friend-suggestion friend-new' {{action newFriendClicked view.query target="view"}}>
-          <img class="friend-picture"> </img>
-          <div class="friend-info">
-            <span class="friend-name">Add a friend {{view.query}}</span> <br>
-          </div>
-        </div>
-      {{#each friend in view.displayedFriends}}
-      <div class='friend-suggestion' {{action friendClicked friend target="view"}}>
-          <img class="friend-picture" {{bindAttr src='friend.pictureUrl'}}></img>
-          <div class="friend-info">
-            <span class="friend-name"> {{friend.user.name}} </span> <br>
-            <span class="friend-location"> {{friend.user.info.other_info.location.name}} </span>
-          </div>
-        </div>
-      {{/each}}
+    <div class='friend-suggestion friend-new' {{action newFriendClicked view.query target="view"}}>
+      <img class="friend-picture"> </img>
+      <div class="friend-info">
+        <span class="friend-name">Add a friend {{view.query}}</span> <br>
+      </div>
+    </div>
+    {{#if view.displayedFriends.length}}
+    {{#each friend in view.displayedFriends}}
+    <div class='friend-suggestion' {{action friendClicked friend target="view"}}>
+      <img class="friend-picture" {{bindAttr src='friend.pictureUrl'}}></img>
+      <div class="friend-info">
+        <span class="friend-name"> {{friend.user.name}} </span> <br>
+        <span class="friend-location"> {{friend.user.info.other_info.location.name}} </span>
+      </div>
+    </div>
+    {{/each}}
     {{/if}}
   </div>
-  {{/if}}
 </div>

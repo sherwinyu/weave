@@ -38,28 +38,7 @@ Weave.ReferralBatchRoute = Ember.Route.extend
     Weave.ReferralBatch.find params.story_id
   events:
     facebookAuthenticated: ->
-      @modelFor('referralBatch').set 'sender', @controllerFor('authentication').get 'user'
-    updateEmail: (email)->
-      # TODO (syu) validate me!!!!
-      ###
-
-      user_id = @controllerFor('authentication').get('user.id')
-      email = @controllerFor('authentication').get('user.canonical_email')
-      sender = @controllerFor('authentication').get('user')
-
-      # TODO (syu): convert this to correctly
-      p = utils.post
-        url: "/users/#{user_id}"
-        data:
-          user_email: email
-
-          # user.
-      ###
-      p = @controllerFor('authentication').get('user').save()
-      p.then(
-        (success) => @controllerFor('application').pushSuccessNotification "Email confirmed!",
-        (error) => @controllerFor('application').pushNotification "Invalid email."
-      )
+      # @modelFor('referralBatch').set 'sender', @controllerFor('authentication').get 'user'
 
     # attemptAuthAndRefer event
     # triggers authenticationController.facebookLogin
@@ -82,9 +61,34 @@ Weave.ReferralBatchRoute = Ember.Route.extend
       user.one 'becameInvalid', =>
         @controllerFor('application').pushNotification ("Sorry, you aren't cool enough.")
       user.one 'didCreate', =>
+        # @modelFor('referralBatch').set 'sender', @controllerFor('authentication').get 'user'
         @send 'startReferring'
 
+    updateEmail: (email)->
+      # TODO (syu) validate me!!!!
+      ###
+
+      user_id = @controllerFor('authentication').get('user.id')
+      email = @controllerFor('authentication').get('user.canonical_email')
+      sender = @controllerFor('authentication').get('user')
+
+      # TODO (syu): convert this to correctly
+      p = utils.post
+        url: "/users/#{user_id}"
+        data:
+          user_email: email
+
+          # user.
+      ###
+      p = @controllerFor('authentication').get('user').save()
+      p.then(
+        (success) => @controllerFor('application').pushSuccessNotification "Email confirmed!",
+        (error) => @controllerFor('application').pushNotification "Invalid email."
+      )
+
+
     startReferring: ->
+      @modelFor('referralBatch').set 'sender', @controllerFor('authentication').get 'user'
       @controllerFor('referral').set 'firstReferralSent', false
       @transitionTo 'referral.select_recipient',
 

@@ -6,7 +6,9 @@
 <br>
 OR
 </br>
-log in with ur name
-
-
+Whats your name? {{view Ember.TextField valueBinding="view._senderName"}}
+And your email? {{view Ember.TextField valueBinding="view._senderEmail"}}
+<a {{action attemptAuthNoFacebook view._senderName view._senderEmail}} >
+  Auth without facebook
+</a>
 </div>
