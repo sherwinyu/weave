@@ -1,6 +1,102 @@
 require 'spec_helper'
 
 describe "Referrals" do
+  describe "non faceboko auth, new recipient" do
+    before(:each) do
+      @campaign = create :campaign
+      @product = create :product, :with_customizations
+    end
+    it "works", js: true do
+      visit '#'
+      # The route redirects to ProductsSelectProduct
+      URI.parse(current_url).fragment.should eq '/products/selectProduct'
+
+      # click the product link for the nest thermostat
+      product_link = find('li.product a')
+      product_link.should have_text "Nest Thermostat"
+
+      # it creates a referral batch
+      expect{product_link.click; sleep 2}.to change{ReferralBatch.count}.by 1
+      @referral_batch = ReferralBatch.last
+
+      # it has the referral batch show url
+      URI.parse(current_url).fragment.should eq '/inStore/stories/1/show'
+
+      page.should have_text "Login via Facebook"
+
+      fill_in "sender-name", with: "sherwin yu"
+      fill_in "sender-email", with: "xyn.xhuwin@gmail.com"
+      # it should set the values properly
+      peek("$('input#sender-name').val()").should eq "sherwin yu"
+      peek("$('input#sender-email').val()").should eq "xyn.xhuwin@gmail.com"
+
+      # should have the authenticate link
+      auth_link = find('a', text: 'Auth without facebook')
+      auth_link.should have_text "Auth without facebook"
+
+      # click the link
+      expect{auth_link.click; sleep 2}.to change{User.count}.by 1
+      @sender = User.last
+
+      # it should create a user
+      User.last.name.should eq "sherwin yu"
+      User.last.email.should eq "xyn.xhuwin@gmail.com"
+
+      URI.parse(current_url).fragment.should eq '/inStore/stories/1/referrals/select_recipient'
+      page.should have_text "Select a friend"
+      page.should have_field "name-or-email"
+      find('.friend-new').should have_text /^Add a friend$/
+
+      # fill in the name with a new name
+      fill_in 'name-or-email', with: "janet chien"
+      find('.friend-new').should have_text /^Add a friend janet chien$/
+
+      # click the link
+      expect{find('.friend-new').click; sleep 2}.to change{Referral.count}.by 1
+      # it sets the sender on the referral_batch
+      @referral_batch.reload.sender.should eq @sender.reload
+      @referral = Referral.last
+      @referral.sender.should eq @sender
+      @referral.sender_email.should eq "xyn.xhuwin@gmail.com"
+      @referral.recipient_email.should be_nil
+      @referral.recipient.name.should eq "janet chien"
+      @referral.recipient.email.should be_nil
+      URI.parse(current_url).fragment.should eq '/inStore/stories/1/referrals/1/edit_body'
+
+      page.should have_text "2. Finish your message"
+      page.should have_text "Select a few of the following highlights"
+
+      # 3 customziations
+      all('label.customization').count.should eq @product.customizations.count
+      # nothing is selected
+      all('.customization.selected').should be_empty
+
+      # customziatinos match text
+      find('label.customization', text: @product.customizations.first.description)
+      find('label.customization', text: @product.customizations.second.description)
+      # click the last one
+      find('label.customization', text: @product.customizations.third.description).click
+
+      all('.customization.selected').count.should be 1
+      find('.customization.selected').should have_text @product.customizations.third.description
+
+      # fill in the message
+      # fill_in
+      find('input.recipient-email-address').set "janet@example.com"
+
+      # click send
+      find('a', text: "SEND!").click
+      sleep 2
+
+      @referral.reload.should be_delivered
+      @referral.recipient_email.should eq "janet@example.com"
+      @referral.recipient.email.should eq "janet@example.com"
+
+      URI.parse(current_url).fragment.should eq '/inStore/stories/1/referrals/select_recipient'
+      page.should have_text "You've sent 1 referral."
+    end
+  end
+
   pending "create new referral with recipient" do
     before(:each) do
       create :referral_batch
@@ -18,6 +114,7 @@ describe "Referrals" do
       uri.fragment.split("/").last.should eq "edit_body"
     end
   end
+
   pending "update existing referral with body + customizations" do
     before(:each) do
       @referral = create :referral
