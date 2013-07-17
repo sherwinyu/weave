@@ -44,15 +44,6 @@ Weave.ApplicationRoute = Ember.Route.extend
       controller: 'authentication'
       outlet: "auth_status"
       into: "application"
-Weave.AllRoute = Ember.Route.extend
-  setupController: ->
-  renderTemplate: ->
-    @_super()
-    ###
-    @render 'auth_status',
-      controller: 'authentication'
-      ###
-
 
 Weave.IndexRoute = Ember.Route.extend
   redirect: ->

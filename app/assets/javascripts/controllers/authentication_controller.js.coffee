@@ -6,6 +6,9 @@ Weave.AuthenticationController = Ember.ObjectController.extend
   omniauthed: (->
     !!@get('auths.facebook')
   ).property( 'auths.facebook', 'auths.gmail')
+  authenticated :(->
+    !!@get 'user'
+  ).property('user')
 
 # public events:
   facebookLogin: ->
@@ -65,3 +68,16 @@ Weave.AuthenticationController = Ember.ObjectController.extend
     @set 'auths', Ember.Object.create
       facebook: null
       google: null
+
+  createAndAuthenticateUser: (name, email) ->
+    transaction = lu('store:main').transaction()
+    user = transaction.createRecord Weave.User,
+      name: name
+      email: email
+      meta:
+        action: 'create_sender'
+    transaction.commit()
+    @set 'user', user
+    user
+
+

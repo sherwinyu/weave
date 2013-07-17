@@ -61,12 +61,29 @@ Weave.ReferralBatchRoute = Ember.Route.extend
         (error) => @controllerFor('application').pushNotification "Invalid email."
       )
 
+    # attemptAuthAndRefer event
+    # triggers authenticationController.facebookLogin
+    #   which returns a promise
+    # if the promise is successful, send 'startReferring'
+    # else
+    #   give an error notification
+    # Context:
+    #   sent by referral
     attemptAuthAndRefer: ->
       p = @controllerFor('authentication').facebookLogin()
       p.then(
         (success) => @send 'startReferring',
         (failure) => @controllerFor('application').pushNotification ("Sorry, you need to login via Facebook to refer friends")
       )
+    attemptAuthNoFacebook: (name, email) ->
+      user = @controllerFor('authentication').createAndAuthenticateUser(name, email)
+      user.one 'becameError', =>
+        @controllerFor('application').pushNotification ("Sorry, you aren't cool enough.")
+      user.one 'becameInvalid', =>
+        @controllerFor('application').pushNotification ("Sorry, you aren't cool enough.")
+      user.one 'didCreate', =>
+        @send 'startReferring'
+
     startReferring: ->
       @controllerFor('referral').set 'firstReferralSent', false
       @transitionTo 'referral.select_recipient',
@@ -97,7 +114,7 @@ Weave.ReferralRoute = Ember.Route.extend
 
 Weave.ReferralSelectRecipientRoute = Ember.Route.extend
   redirect: (model) ->
-    unless @controllerFor('authentication').get('omniauthed')
+    unless @controllerFor('authentication').get('authenticated')
       @controllerFor('application').pushNotification ("Sorry, you need to login via Facebook to refer friends")
       @transitionTo "referralBatch.show", @modelFor('referralBatch')
 
