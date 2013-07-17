@@ -60,8 +60,10 @@ Weave.ReferralBatchRoute = Ember.Route.extend
         @controllerFor('application').pushNotification ("Sorry, you aren't cool enough.")
       user.one 'becameInvalid', =>
         @controllerFor('application').pushNotification ("Sorry, you aren't cool enough.")
+        #user.one 'didLoad', =>
       user.one 'didCreate', =>
-        # @modelFor('referralBatch').set 'sender', @controllerFor('authentication').get 'user'
+        Ember.run.next =>
+          @modelFor('referralBatch').set 'sender', @controllerFor('authentication').get 'user'
         @send 'startReferring'
 
     updateEmail: (email)->
@@ -88,7 +90,6 @@ Weave.ReferralBatchRoute = Ember.Route.extend
 
 
     startReferring: ->
-      @modelFor('referralBatch').set 'sender', @controllerFor('authentication').get 'user'
       @controllerFor('referral').set 'firstReferralSent', false
       @transitionTo 'referral.select_recipient',
 
