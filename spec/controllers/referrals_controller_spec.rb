@@ -165,7 +165,7 @@ describe ReferralsController do
             assigns(:valid).should eq true
           end
           it "returns the correct attributes re: message, recipient_email, customization_ids" do
-            assigns(:attributes).keys.should =~ [:recipient_email, :message, :customization_ids].map(&:to_s)
+            assigns(:attributes).keys.should =~ [:recipient_email, :message].map(&:to_s)
           end
         end
         it "sets @valid to false when referral fails to deliver" do
@@ -239,57 +239,6 @@ describe ReferralsController do
     end
 
   end
-  pending "#add_recipient_email" do
-    before :each do
-      @recipient_email = "new_email@examples.org"
-      @referral = create :referral
-      @referral_params = {recipient_attributes: {id: @referral.recipient.id, email: @recipient_email}}
-    end
-    let(:params) { {id: @referral.id, referral: @referral_params, format: :json} }
-    it "looks up @referral by id" do
-      get :add_recipient_email, params
-      assigns(:referral).should eq @referral
-    end
-    it "raises error if no referral is found" do
-      expect{get :add_recipient_email, params.merge(id: "nonexistent_id")}.to raise_error ActiveRecord::RecordNotFound
-    end
-    it "raises error if referral is missing recipient" do
-      @referral.update_attribute :recipient, nil
-      expect{get :add_recipient_email, params}.to raise_error /missing.*recipient/
-    end
-    it "adds the email if it's valid" do
-      get :add_recipient_email, params
-      @referral.reload.recipient.email.should eq @recipient_email
-    end
-    it "should not create a new recipient" do
-      expect{put :add_recipient_email, params}.to_not change{User.count}
-    end
-  end
-  pending "#set_active_referral_helper"
-  pending "#set_active_referral_batch_helper"
-
-  pending "#update_body" do
-    before :each do
-      @referral = create :blank_referral
-      @referral_params = attributes_for :referral, message: "buy this!"
-      @referral_params.merge! customization_ids: @customizations.map(&:id)
-    end
-    let(:params) { super().merge id: @referral.id }
-
-    it "updates referral's customizations and message" do
-      put :update_body, params
-      @referral.reload
-      @referral.message.should eq @referral_params[:message]
-      @referral.customizations.should have(3).customizations
-      @referral.customizations.should eq @customizations
-    end
-    describe "errors" do
-      it "responds with errors if message or customizations are invalid"
-    end
-    pending "requested with referral id and customization ids"
-    pending "calls @referral.send if params send"
-  end
-
   describe "#update" do
   end
 

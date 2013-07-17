@@ -50,7 +50,7 @@ class ReferralsController < ApplicationController
 
   def update_body_and_deliver
     @referral.status = Referral.STATUSES[:attempting_delivery]
-    required_attributes = [:message, :recipient_email, :customization_ids]
+    required_attributes = [:message, :recipient_email]
     @attributes = referral_params.slice(*required_attributes)
 
     # We need to set recipient_email explicitly to pass the .deliverable? validation in @referral.deliver
