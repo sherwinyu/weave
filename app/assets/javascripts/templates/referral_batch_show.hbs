@@ -2,38 +2,47 @@
 
 <div class="content">
   <p>Share your socially responsible purchase with your friends. Select your friends, write them a message highlighting why they too would appreciate it, and track your social impact. </p>
-  <a {{action attemptAuthAndRefer}} >
 
-<div class="fb-login-button" data-show-faces="false" data-width="500" data-max-rows="2"></div>
-
-
+  <div class="login-options">
     <div class="pluginSkinLight">
       <div class="pluginLoginButton pluginLoginButtonLarge">
         <div>
-          <div class="pluginFaviconButton pluginFaviconButtonEnabled pluginFaviconButtonLarge" role="button" tabindex="0" id="u_0_0">
-            <table class="uiGrid" cellspacing="0" cellpadding="0">
-              <tbody>
-                <tr>
-                  <td>
-                    <i class="pluginFaviconButtonIcon img sp_login-button sx_login-button_Large"></i><i class="pluginFaviconButtonIconActive img sp_login-button sx_login-button_Largea"></i><span class="pluginFaviconButtonIconThrobber"><i class="img sp_login-button sx_login-button_"></i></span>
-                  </td>
-                  <td>
-                    <span class="pluginFaviconButtonBorder"><span class="pluginFaviconButtonText fwb fbLarge">Log In with Facebook</span></span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <a {{action attemptAuthAndRefer}} >
+            <div class="pluginFaviconButton pluginFaviconButtonEnabled pluginFaviconButtonLarge" role="button" tabindex="0" id="u_0_0">
+              <table class="uiGrid" cellspacing="0" cellpadding="0">
+                <tbody>
+                  <tr>
+                    <td>
+                      <i class="pluginFaviconButtonIcon img sp_login-button sx_login-button_Large"></i><i class="pluginFaviconButtonIconActive img sp_login-button sx_login-button_Largea"></i><span class="pluginFaviconButtonIconThrobber"><i class="img sp_login-button sx_login-button_"></i></span>
+                    </td>
+                    <td>
+                      <span class="pluginFaviconButtonBorder"><span class="pluginFaviconButtonText fwb fbLarge">Log In with Facebook</span></span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </a>
         </div>
       </div>
     </div>
 
-  </a>
-</br>
-
-Whats your name? {{view Ember.TextField valueBinding="view._senderName" id="sender-name"}}
-And your email? {{view Ember.TextField valueBinding="view._senderEmail" id="sender-email"}}
-<a {{action attemptAuthNoFacebook view._senderName view._senderEmail}} >
-  Auth without facebook
-</a>
-</div>
+    <br>
+    <hr class="login-options-or"/>
+    <br>
+    <div class="new-auth">
+      <a class="btn btn-large btn-authenticate" data-target="#new-auth-fields" data-toggle="collapse">
+        Share with your friends
+      </a>
+      <br>
+      <div class="new-auth-fields collapse" id="new-auth-fields">
+        <label> What's your name?</label> {{view Ember.TextField valueBinding="view._senderName" id="sender-name" placeholder="Jane Doe"}} <br>
+        <label>And your email? </label>{{view Ember.TextField valueBinding="view._senderEmail" id="sender-email" placeholder="jane@example.com"}}
+        <br>
+        <a class="btn btn-large btn-authenticate" {{action attemptAuthNoFacebook view._senderName view._senderEmail}}>
+          Share!
+        </a>
+      </div>
+    </div> {{!new auth}}
+  </div> {{! login-options}}
+</div> {{! content }}

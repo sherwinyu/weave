@@ -22,7 +22,18 @@ describe "Referrals" do
       # it has the referral batch show url
       URI.parse(current_url).fragment.should eq '/inStore/stories/1/show'
 
-      page.should have_text "Login via Facebook"
+      page.should have_text "Log In with Facebook"
+      page.should have_text "Share with your friends"
+      page.should_not have_text "What's your name?"
+      page.should_not have_text "And your email?"
+
+      # click the share with your friends link
+      find("a", text: "Share with your friends").click
+
+      # the new forms should be revealed
+      page.should have_text "What's your name?"
+      page.should have_text "And your email?"
+
 
       fill_in "sender-name", with: "sherwin yu"
       fill_in "sender-email", with: "xyn.xhuwin@gmail.com"
@@ -31,8 +42,7 @@ describe "Referrals" do
       peek("$('input#sender-email').val()").should eq "xyn.xhuwin@gmail.com"
 
       # should have the authenticate link
-      auth_link = find('a', text: 'Auth without facebook')
-      auth_link.should have_text "Auth without facebook"
+      auth_link = find('a', text: 'Share!')
 
       # click the link
       expect{auth_link.click; sleep 2}.to change{User.count}.by 1

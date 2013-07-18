@@ -1,0 +1,52 @@
+.login-options {
+  text-align: center;
+  margin: 0 auto;
+}
+.btn-authenticate {
+  background: $dim-teal;
+  border: none;
+  font-weight:bold;
+  text-decoration: none;
+  text-shadow: none;
+  font-size: 16px;
+
+  &:hover {
+  background: $accent-teal;
+  color: white;
+  }
+}
+
+.new-auth{
+}
+.new-auth-fields {
+  margin: 10px;
+}
+
+/*
+hr.style-eight {
+    padding: 0;
+    border: none;
+    border-top: medium double #333;
+    color: #333;
+    text-align: center;
+}
+*/
+hr.login-options-or {
+    border: 0;
+    border-top: 1px dashed $light-white;
+    // background: #999;
+}
+hr.login-options-or:after {
+    color: $light-white;
+    content: "      OR     ";
+    font-style: italic;
+    display: inline-block;
+    position: relative;
+    top: -0.7em;
+    font-size: 1.0em;
+    padding: 0 0.25em;
+    background: $accent-blue;
+    padding: 0 10px;
+}
+
+
