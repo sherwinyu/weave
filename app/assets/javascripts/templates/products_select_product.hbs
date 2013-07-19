@@ -1,16 +1,16 @@
 <div class="content">
   <h3> Spread the love! </h3>
-  <h4>   Tell your friends about NewLiving's socially responsible products.<br> Get a $50 Whole Foods Gift Card! </h4>
+  <h4>   Tell your friends about New Living's socially responsible products. <br> Get a $50 Whole Foods Gift Card! </h4>
 <p class="instructions">
-  <ol>
+</p>
+  <ol class="instructions">
     <li> Select something below that you think your friend would be interested in.</li>
     <li> Login via Facebook to select friends friends</li>
     <li> Personalize your message by explaining why they should care</li>
     <li> If any of your friends purchases something from New Living, we'll give you a whole foods gift card!</li>
   </ol>
-</p>
 
-<hr class="style-two">
+<hr class="dashed">
 <ul class="products">
   {{#each product in content}}
     <li class="product"><a {{action startCampaignForProduct product}} class="product-link"> {{product.name}} </a></li>

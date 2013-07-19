@@ -1,0 +1,77 @@
+.select-product {
+  @extend .pane;
+  .content {
+    @extend .span8;
+    margin: 0 auto;
+  }
+  background: $dim-teal;
+  background-clip: padding-box;
+  border-top: 2px dashed $dim-teal;
+  border-bottom: 2px dashed $dim-teal;
+  color: white;
+  a {
+    color: white;
+  }
+  margin: auto;
+  h3 {
+    text-align: center;
+    font-size: 2em;
+    line-height: 1em;
+  }
+  h4{
+    text-align: center;
+    font-size: 1.5em;
+    line-height: 1em;
+  }
+
+
+  .instructions {
+    line-height: 2.5em;
+    font-size: 1.3em;
+
+    li {
+      margin: 10px 0;
+      line-height: 1.2em;
+    }
+
+  }
+
+
+  li.product {
+    list-style: none;
+    margin: 15px 15px;
+    font-size: 1.5em;
+  }
+}
+hr.bottom {
+  border: none;
+  position: relative;
+  top:14px;
+  height: 14px;
+  overflow:hidden;
+  &:after {
+    content:"................................................................................................................................................................";
+    color: $dim-teal;
+    font-size: 30px;
+  }
+}
+
+hr.dashed {
+    border: 0;
+    border-top: 1px dashed $light-white;
+    // background: #999;
+}
+hr.dashed2:after {
+    color: $light-white;
+    content: "      OR     ";
+    font-style: italic;
+    display: inline-block;
+    position: relative;
+    top: -0.7em;
+    font-size: 1.0em;
+    padding: 0 0.25em;
+    background: $accent-blue;
+    padding: 0 10px;
+}
+
+

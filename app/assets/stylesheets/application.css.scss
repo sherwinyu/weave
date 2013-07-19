@@ -13,6 +13,7 @@
 @import "compass/utilities";
 @import "bootstrap";
 @import "referral_batch";
+@import "product";
 @import "auth_status";
 @import "facebook";
 
@@ -24,7 +25,7 @@
 
 }
 
-hr {
+hr.zug {
   background: rgba(gray, 0.5);
   height: 1px;
 }
@@ -81,27 +82,6 @@ li.ui-menu-item {
   }
 }
 
-.select-product {
-  @extend .pane;
-  .content {
-    @extend .span8;
-    margin: 0 auto;
-  }
-  background: $accent-teal;
-  color: white;
-  a {
-    color: white;
-  }
-  margin: auto;
-  h3 {
-    text-align: center;
-  }
-  li.product {
-    list-style: none;
-    margin: 15px 15px;
-    font-size: 1.5em;
-  }
-}
 
 /*
  * Utils
@@ -120,9 +100,13 @@ li.ui-menu-item {
   border-radius: 50%;
   width: 300px;
   height: 300px;
-  background: rgba($accent-teal, .24);
+  // background: rgba($accent-teal, .24);
+
   position: relative;
   top: -122%;
+
+  background: radial-gradient(ellipse at center, rgba(255,255,255,0.75) 59%, $light-teal3 98%);
+  border: 1px desaturate($light-teal1, 5%) solid
 }
 
 /*

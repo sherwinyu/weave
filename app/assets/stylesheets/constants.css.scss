@@ -2,10 +2,15 @@ $wala: adjust-lightness(whitesmoke, 10);
 $light-white: #f0f0f0;
 $accent-blue: #326bb0;
 $shadow-blue: darken($accent-blue, 5%);
+
 $accent-teal: #0faa8f;
+$light-teal1: lighten($accent-teal, 10%);
+$light-teal2: lighten($accent-teal, 20%);
+$light-teal3: lighten($accent-teal, 30%);
 $dim-teal: lighten(desaturate($accent-teal, 25%), 3%);
 $trans-teal: rgba($accent-teal, 0.6);
 $shadow-teal: darken($accent-teal, 5%);
+
 $trans-white: rgba(white, 0.75);
 $accent-gray: #444444;
 $neutral-gray: #777777;
