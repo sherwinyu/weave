@@ -1,5 +1,3 @@
-$wala: adjust-lightness(whitesmoke, 10);
-$light-white: #f0f0f0;
 $accent-blue: #326bb0;
 $shadow-blue: darken($accent-blue, 5%);
 
@@ -11,6 +9,7 @@ $dim-teal: lighten(desaturate($accent-teal, 25%), 3%);
 $trans-teal: rgba($accent-teal, 0.6);
 $shadow-teal: darken($accent-teal, 5%);
 
+$light-white: #f0f0f0;
 $trans-white: rgba(white, 0.75);
 $accent-gray: #444444;
 $neutral-gray: #777777;
@@ -18,7 +17,9 @@ $trans-gray: rgba($accent-gray, 0.75);
 $light-gray: adjust-lightness($neutral-gray, 40);
 $light-gray2: adjust-lightness($neutral-gray, 50);
 $light-gray3: adjust-lightness($neutral-gray, 60);
+
 $fabric: image-url('fabric.png');
+
 $teal-glow: 0px 0px 5px $trans-teal, inset 0px 0px 5px $trans-teal;
 $inset-chiseled: 0px 0px 3px $neutral-gray;
 
@@ -26,6 +27,10 @@ $inset-chiseled: 0px 0px 3px $neutral-gray;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
+}
+
+.pane {
+  padding: 45px 0px;
 }
 
 @font-face {

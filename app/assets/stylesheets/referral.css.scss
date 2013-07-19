@@ -1,0 +1,83 @@
+/*
+ *  Referral > Select Recipient
+ */
+
+.select-recipient {
+  @extend .pane;
+  text-align: center;
+  width: 100%;
+  background: $shadow-blue;
+  .content {
+    @extend .span8;
+    margin: 0 auto;
+  }
+  .step-name {
+    color: white;
+    &:hover {text-decoration: none}
+  }
+  .step-subheader {
+    color: white;
+    font-weight: normal;
+  }
+  input.recipient-name-or-email {
+    text-align: center;
+  }
+}
+.select-recipient .friend-suggestions {
+  margin: auto;
+  // width: 60%;
+  text-align: left;
+  background: lighten($light-gray, 5);
+  padding: 3px;
+  border-radius: 3px;
+  display: table;
+}
+
+$friend-suggestion-height: 50px;
+
+.select-recipient .friend-suggestion {
+  height: $friend-suggestion-height;
+  padding: 5px;
+  background: $light-gray;
+  background-clip: padding-box;
+  border: 1px solid transparent;
+  border-top: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+  .friend-name {
+    color: $accent-gray;
+    font-weight: bold;
+  }
+  img.friend-picture {
+    display: inline;
+    float: left;
+  }
+  .friend-location {
+    color: darken($neutral-gray, 5);
+  }
+  div.friend-info {
+    float: left;
+    padding-left: 5px;
+  }
+  border-radius: 2px;
+  padding: 3px;
+
+  &:hover {
+    background: $trans-teal;
+    .friend-name {
+      color: white;
+    }
+    .friend-location {
+      color: darken(white, 5);
+    }
+    color: white;
+  }
+
+}
+.friend-suggestion.friend-new {
+  padding: 3px 8px;
+  span.friend-suggestion-instruction {
+    font-weight: bold;
+    font-size: 1.3em;
+    line-height: $friend-suggestion-height;
+  }
+}

@@ -7,14 +7,19 @@
     {{view Ember.TextField class="recipient-name-or-email" id="name-or-email" valueBinding="view.query"}}
   </div>
 
+
+  {{#if view.displayingFriends}}
   <div class="friend-suggestions">
     <div class='friend-suggestion friend-new' {{action newFriendClicked view.query target="view"}}>
-      <img class="friend-picture"> </img>
-      <div class="friend-info">
-        <span class="friend-name">Add a friend {{view.query}}</span> <br>
-      </div>
+
+      {{!<img class="friend-picture" src="<%= asset_path "facebook_profile_50.PNG" %>"> </img> }}
+      <span class="friend-suggestion-instruction">
+      Tell {{view.query}} about New Living!
+      </span>
     </div>
-    {{#if view.displayedFriends.length}}
+    {{#if view.displayNewFriendSuggestion}}
+    {{/if}}
+
     {{#each friend in view.displayedFriends}}
     <div class='friend-suggestion' {{action friendClicked friend target="view"}}>
       <img class="friend-picture" {{bindAttr src='friend.pictureUrl'}}></img>
@@ -24,6 +29,7 @@
       </div>
     </div>
     {{/each}}
-    {{/if}}
+
   </div>
+  {{/if}}
 </div>

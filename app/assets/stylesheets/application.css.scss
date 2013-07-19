@@ -13,6 +13,7 @@
 @import "compass/utilities";
 @import "bootstrap";
 @import "referral_batch";
+@import "referral";
 @import "product";
 @import "auth_status";
 @import "facebook";
@@ -25,31 +26,12 @@
 
 }
 
-hr.zug {
-  background: rgba(gray, 0.5);
-  height: 1px;
-}
-hr.style-two {
-  border: 0;
-  height: 2px;
-  background-image: -webkit-linear-gradient(left, rgba(0,0,0,0.05), rgba(0,0,0,0.55), rgba(0,0,0,0.05));
-  background-image:    -moz-linear-gradient(left, rgba(0,0,0,0.05), rgba(0,0,0,0.55), rgba(0,0,0,0.05));
-  background-image:     -ms-linear-gradient(left, rgba(0,0,0,0.05), rgba(0,0,0,0.55), rgba(0,0,0,0.05));
-  background-image:      -o-linear-gradient(left, rgba(0,0,0,0.05), rgba(0,0,0,0.55), rgba(0,0,0,0.05));
-}
-
-hr.style-three {
-  border: 0;
-  border-bottom: 1px dashed #ccc;
-  background: #999;
+.weave, body {
+  background: $fabric;
 }
 
 h2 {
   text-align: center;
-}
-
-p {
-  font-size: 1.2em;
 }
 
 .weave input, textarea {
@@ -62,14 +44,6 @@ p {
 .ui-autocomplete {
   display:none !important;
 }
-/*
- .invisible {
- display: none;
-}
-.visible {
-display: block;
-}
-*/
 
 .ui-helper-hidden-accessible {
   display: none;
@@ -116,6 +90,7 @@ li.ui-menu-item {
   height: 150px;
   background: $fabric;// image-url('fabric.png');// $light-white;
 }
+
 .logo {
   margin-left: auto;
   margin-right: auto;
@@ -123,9 +98,6 @@ li.ui-menu-item {
   z-index: 1;
   position: relative;
   top: -184%;
-  // width: 200px;
-  // height: 100px;
-  // background: image-url('weave_logo.png')
 }
 /*
  *  Notifications
@@ -150,84 +122,6 @@ li.ui-menu-item {
   z-index: 3;
 }
 
-.pane {
-  padding: 45px 0px;
-}
-
-/*
- *  Referral > Select Recipient
- */
-
-.select-recipient {
-  @extend .pane;
-  text-align: center;
-  width: 100%;
-  background: $shadow-blue;
-  .content {
-    @extend .span8;
-    margin: 0 auto;
-  }
-  .step-name {
-    color: white;
-    &:hover {text-decoration: none}
-  }
-  .step-subheader {
-    color: white;
-    font-weight: normal;
-  }
-  input.recipient-name-or-email {
-    text-align: center;
-  }
-}
-.select-recipient .friend-suggestions {
-  margin: auto;
-  width: 60%;
-  text-align: left;
-  background: lighten($light-gray, 5);
-  padding: 3px;
-  border-radius: 3px;
-}
-.select-recipient .friend-suggestion {
-  height: 50px;
-  padding: 5px;
-  background: $light-gray;
-  background-clip: padding-box;
-  border: 1px solid transparent;
-  border-top: 2px solid transparent;
-  border-bottom: 2px solid transparent;
-  .friend-name {
-    color: $accent-gray;
-    font-weight: bold;
-  }
-  img.friend-picture {
-    display: inline;
-    float: left;
-  }
-  .friend-location {
-    color: darken($neutral-gray, 5);
-  }
-  div.friend-info {
-    float: left;
-    padding-left: 5px;
-  }
-  border-radius: 2px;
-  padding: 3px;
-
-  &:hover {
-    background: $trans-teal;
-    .friend-name {
-      color: white;
-    }
-    .friend-location {
-      color: darken(white, 5);
-    }
-    color: white;
-  }
-
-}
-.friend-suggestion.friend-new {
-  border: 1px red solid;
-}
 
 .edit-body .z-index-container {
   position: relative;
@@ -414,8 +308,5 @@ li.ui-menu-item {
     margin: auto;
   }
   background: white-smoke;
-}
-.weave, body {
-  background: $fabric;
 }
 

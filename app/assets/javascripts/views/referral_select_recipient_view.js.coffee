@@ -2,9 +2,21 @@
 Weave.ReferralSelectRecipientView = Ember.View.extend
   # dependencies: 'referalView'
   _rankedFriends: null
+  query: ""
+
+  displayingFriends: (->
+    @get('query')?.length > 2
+  ).property('query')
+
+  displayingNewFriendSuggestion: (->
+    @get('query')?.length > 3
+  ).property 'query'
   displayedFriends: (->
     @get('_rankedFriends')
   ).property '_rankedFriends', '_rankedFriends.@each'
+
+  focusOut: (e) ->
+  focusIn: (e) ->
 
   newFriendClicked: (friendName) ->
     recipient = Weave.User.createRecord
