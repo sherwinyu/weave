@@ -123,14 +123,19 @@ Weave.ReferralSelectRecipientRoute = Ember.Route.extend
       @controllerFor('application').pushNotification ("Sorry, you need to login via Facebook to refer friends")
       @transitionTo "referralBatch.show", @modelFor('referralBatch')
 
-  model: (params)->
+  _createReferral: ->
     sender = @controllerFor('authentication').get('user')
-    console.log('sender email from facebook', sender.get 'email')
-    console.log('sender email from rails params', Weave.rails.vars.landing_email)
+    model = Weave.Referral.createRecord
+      referralBatch: @modelFor('referralBatch')
+      sender: sender
+      sender_email: sender?.get('email')
 
-    model = Weave.Referral.createRecord referralBatch: @modelFor('referralBatch'), sender: sender, sender_email: sender.get('email')
+  model: (params)->
+    return # do nothing
+    @_createReferral()
 
   setupController: (controller, model) ->
+    model = @_createReferral()
     @controllerFor('referral').set('content', model)
 
   renderTemplate: ->
@@ -153,11 +158,11 @@ Weave.ReferralSelectRecipientRoute = Ember.Route.extend
 
   events:
     recipientSelected: ->
-      @modelFor('referral.select_recipient').one 'didCreate', =>
+      @controllerFor('referral').get('content').one 'didCreate', =>
+        # @modelFor('referral.select_recipient').one 'didCreate', =>
         Ember.run.next @, =>
-          rf = @controllerFor('referral').get 'content'
-          # rf.get('stateManager').send('finishedMaterializing')
-          @send 'editBody', rf
+          referral = @controllerFor('referral').get 'content'
+          @send 'editBody', referral
       @controllerFor('referral').createWithRecipient()
 
 Weave.ReferralEditBodyRoute = Ember.Route.extend

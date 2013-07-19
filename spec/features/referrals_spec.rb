@@ -55,11 +55,10 @@ describe "Referrals" do
       URI.parse(current_url).fragment.should eq '/inStore/stories/1/referrals/select_recipient'
       page.should have_text "Select a friend"
       page.should have_field "name-or-email"
-      find('.friend-new').should have_text /^Add a friend$/
 
       # fill in the name with a new name
       fill_in 'name-or-email', with: "janet chien"
-      find('.friend-new').should have_text /^Add a friend janet chien$/
+      find('.friend-new').should have_text /Tell janet chien about New Living/
 
       # click the link
       expect{find('.friend-new').click; sleep 2}.to change{Referral.count}.by 1
