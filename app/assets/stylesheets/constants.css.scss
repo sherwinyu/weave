@@ -16,6 +16,8 @@ $accent-gray: #444444;
 $neutral-gray: #777777;
 $trans-gray: rgba($accent-gray, 0.75);
 $light-gray: adjust-lightness($neutral-gray, 40);
+$light-gray2: adjust-lightness($neutral-gray, 50);
+$light-gray3: adjust-lightness($neutral-gray, 60);
 $fabric: image-url('fabric.png');
 $teal-glow: 0px 0px 5px $trans-teal, inset 0px 0px 5px $trans-teal;
 $inset-chiseled: 0px 0px 3px $neutral-gray;

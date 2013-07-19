@@ -21,11 +21,19 @@
   h4{
     text-align: center;
     font-size: 1.5em;
-    line-height: 1em;
+    line-height: 1.25em;
+    color: $light-gray2;
   }
 
 
   .instructions {
+    @extend .well;
+    border-radius: 3px;
+    color: $light-gray2;
+    color: darken($neutral-gray, 10%);
+    box-shadow: $inset-chiseled;
+    background: $fabric;
+
     line-height: 2.5em;
     font-size: 1.3em;
 
@@ -34,6 +42,10 @@
       line-height: 1.2em;
     }
 
+  }
+  ul.products {
+    display: table;
+    margin: 0 auto;
   }
 
 
