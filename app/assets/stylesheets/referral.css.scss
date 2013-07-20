@@ -31,6 +31,7 @@
   padding: 3px;
   border-radius: 3px;
   display: table;
+  min-width: 60%;
 }
 
 $friend-suggestion-height: 50px;
@@ -46,6 +47,7 @@ $friend-suggestion-height: 50px;
   .friend-name {
     color: $accent-gray;
     font-weight: bold;
+    font-size: 1.3em;
   }
   img.friend-picture {
     display: inline;
@@ -62,6 +64,7 @@ $friend-suggestion-height: 50px;
   padding: 3px;
 
   &:hover {
+    background-clip: padding-box;
     background: $trans-teal;
     .friend-name {
       color: white;
@@ -74,10 +77,39 @@ $friend-suggestion-height: 50px;
 
 }
 .friend-suggestion.friend-new {
-  padding: 3px 8px;
+  background: $light-blue3;
+  text-align: center;
+  position: relative;
+  background-clip: padding-box;
+
+  span.friend-suggestion-facebook {
+    display: none;
+  }
   span.friend-suggestion-instruction {
-    font-weight: bold;
     font-size: 1.3em;
     line-height: $friend-suggestion-height;
+    text-align: center;
+  }
+}
+
+.friend-suggestion.friend-new.facebook {
+  padding: 0px;
+  height: $friend-suggestion-height + 15px;
+  background-clip: padding-box;
+  span.friend-suggestion-facebook {
+    display: inline-block;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 2px 0px 4px 0px;
+    background: rgba(173, 166, 144, 0.7);
+    padding: 2px 4px;
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    line-height: 18px;
+    color: rgb(87, 68, 7);
+  }
+  span.friend-suggestion-instruction {
+    line-height: $friend-suggestion-height + 15px;
   }
 }

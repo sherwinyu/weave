@@ -1,4 +1,9 @@
+$orange: #fbeed5;
+
 $accent-blue: #326bb0;
+$light-blue1: lighten($accent-blue, 10%);
+$light-blue2: lighten($accent-blue, 20%);
+$light-blue3: lighten($accent-blue, 30%);
 $shadow-blue: darken($accent-blue, 5%);
 
 $accent-teal: #0faa8f;

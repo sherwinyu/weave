@@ -10,13 +10,6 @@
 
   {{#if view.displayingFriends}}
   <div class="friend-suggestions">
-    <div class='friend-suggestion friend-new' {{action newFriendClicked view.query target="view"}}>
-
-      {{!<img class="friend-picture" src="<%= asset_path "facebook_profile_50.PNG" %>"> </img> }}
-      <span class="friend-suggestion-instruction">
-      Tell {{view.query}} about New Living!
-      </span>
-    </div>
     {{#if view.displayNewFriendSuggestion}}
     {{/if}}
 
@@ -29,6 +22,7 @@
       </div>
     </div>
     {{/each}}
+    {{partial new_friend_suggestion}}
 
   </div>
   {{/if}}

@@ -5,12 +5,23 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
   query: ""
 
   displayingFriends: (->
-    @get('query')?.length > 2
+    @get('query')?.length > 0
   ).property('query')
 
   displayingNewFriendSuggestion: (->
-    @get('query')?.length > 3
+    @get('query')?.length > 0
   ).property 'query'
+
+  newFriendSuggestionMessage: (->
+    if ctrl('authentication').get('authenticated') # @get('_rankedFriends').length
+      "Not Facebook friends? Tell <span class='name'>#{@get('query')}</span> about New Living!"
+    else
+      "Tell <span class='name'>#{@get('query')}</span> about New Living!"
+  ).property 'query', '_rankedFriends'
+  facebook: (->
+    ctrl('authentication').get('auths.facebook')
+  ).property()
+
   displayedFriends: (->
     @get('_rankedFriends')
   ).property '_rankedFriends', '_rankedFriends.@each'
