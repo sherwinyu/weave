@@ -17,4 +17,5 @@ class Product < ActiveRecord::Base
   has_many :referral_batches, inverse_of: :product
   has_many :referrals, inverse_of: :product
   has_and_belongs_to_many :segments
+  belongs_to :client, inverse_of: :products
 end
