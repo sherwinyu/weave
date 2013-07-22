@@ -4,4 +4,4 @@ Weave.Campaign = DS.Model.extend
   senderPageContent: DS.attr 'string'
   recipientPageContent: DS.attr 'string'
   live: DS.attr 'boolean'
-  # product: DS.belongsTo 'Weave.Product'
+  client: DS.attr 'json'
