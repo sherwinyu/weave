@@ -6,6 +6,17 @@ describe Referral do
     @time = Time.now
     Time.stub(:now).and_return @time
   end
+  describe "associations" do
+    it "responds to campaign" do
+      referral.should respond_to :campaign
+    end
+    it "responds to client_id" do
+      referral.should respond_to :client
+    end
+    it "responds to referral_batch" do
+      referral.should respond_to :referral_batch
+    end
+  end
 
   describe "#deliver" do
     context "when sendable, receivable, and not delivered yet" do
@@ -111,40 +122,4 @@ describe Referral do
     end
 
   end
-  pending "validations" do
-    it "adds an error if missing sender" do
-      referral.update_attribute :sender, nil
-      referral.deliver.should be false
-      referral.errors[:sender_email].to_s.should match /sender/i
-    end
-    it "adds an error if no sender email" do
-      referral.sender.update_attribute :email, nil
-      referral.deliver.should be false
-      referral.errors[:sender_email].to_s.should match /sender/i
-    end
-
-    it "adds an error if sender email not confirmed" do
-      referral.sender.update_attribute :email_provided, false
-      referral.deliver.should be false
-      referral.errors[:sender_email].to_s.should match /sender.*unconfirmed/i
-    end
-
-    it "adds an error if missing recipient" do
-      referral.update_attribute :recipient, nil
-      referral.deliver.should be false
-      referral.errors[:recipient_email].to_s.should match /recipient/i
-    end
-    it "adds an error if no recipient email" do
-      referral.recipient.update_attribute :email, nil
-      referral.deliver.should be false
-      referral.errors[:recipient_email].to_s.should match /recipient/i
-    end
-
-    it "adds an error if no recipient email" do
-      referral.recipient.update_attribute :email, nil
-      referral.deliver.should be false
-      referral.errors[:recipient_email].to_s.should match /recipient/i
-    end
-  end
-  pending "#attach_incentive_instances"
 end

@@ -2,6 +2,14 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe ReferralBatch do
   let(:referral_batch) { build_stubbed :referral_batch}
+  describe "association" do
+    it "responds to campaign" do
+      referral_batch.should respond_to :campaign
+    end
+    it "responds to campaign" do
+      referral_batch.should respond_to :client
+    end
+  end
   describe "visit_sender_page" do
     before (:each) do
       @time = Time.now

@@ -94,6 +94,7 @@ FactoryGirl.define do
     sender_page_content ""
     recipient_page_content ""
     trait :with_incentives do
+    client
     end
 
   end
@@ -111,6 +112,15 @@ FactoryGirl.define do
 
   factory :customization do |customization|
     description { "#{generate :random_string} this product is perfect for the tech savvy asshole! totally rad!" }
+  end
+
+  factory :client do |client|
+    name "New Living"
+    trait(:with_campaign_referral_batches_and_referrals) {
+      after :create do |cli|
+        create_list :campaigns, 1, client: cli
+      end
+    }
   end
 
 end

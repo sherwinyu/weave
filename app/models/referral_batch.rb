@@ -22,6 +22,7 @@ class ReferralBatch < ActiveRecord::Base
   belongs_to :sender, class_name: "User", inverse_of: :referral_batches
   has_many :referrals, inverse_of: :referral_batch
   belongs_to :campaign, inverse_of: :referral_batches
+  has_one :client, through: :campaign
   has_many :sender_incentives, class_name: "IncentiveInstance", inverse_of: :referral_batch
   belongs_to :product, inverse_of: :referral_batches
 

@@ -37,6 +37,7 @@ class Referral < ActiveRecord::Base
   belongs_to :recipient, class_name: "User", inverse_of: :received_referrals
   belongs_to :product, inverse_of: :referrals
   has_and_belongs_to_many :customizations
+  has_one :client, through: :campaign
 
   belongs_to :referral_batch, inverse_of: :referrals
   has_one :campaign, through: :referral_batch # TODO(syu): does this get cached?
