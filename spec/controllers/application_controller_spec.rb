@@ -10,7 +10,7 @@ describe ApplicationController do
     end
   end
   describe "#inject_ember_params: filter" do
-    let(:params) { super().merge(landing_email: "wagawaga@gmail.com") }
+    let(:params) { super().merge(landing_email: "wagawaga@gmail.com", campaign_id: "555") }
     before :each do
       # controller.stub(:index).and_return
       get :index, params
@@ -20,6 +20,15 @@ describe ApplicationController do
     end
     it "sets @rails.landing_email" do
       assigns(:rails)[:landing_email].should eq "wagawaga@gmail.com"
+    end
+    it "sets @rails.campaign_id" do
+      assigns(:rails)[:campaign_id].should eq "555"
+    end
+    describe "@rails.campaign_id" do
+      let(:params) { super().merge campaign_id: nil }
+      it "defaults to 1" do
+        assigns(:rails)[:campaign_id].should eq 1
+      end
     end
   end
 
