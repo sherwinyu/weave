@@ -1,13 +1,12 @@
 Weave.Router.map (match)->
-  @resource "products", path: "/products", ->
-    @route "selectProduct"
+  @resource "campaign", path :"/campaign/:campaign_id", ->
+    @resource "products", path: "/products", ->
+      @route "selectProduct"
 
   @resource "product", path: "/products/:product_id", ->
-    @resource "campaign", path: "/campaigns/:campaign_id", ->
-
-      @resource "referralBatches", path: "/stories", ->
-         @route "new"
-         @route "lookup"
+    @resource "referralBatches", path: "/stories", ->
+       @route "new"
+       @route "lookup"
 
   @resource "referralBatch", path: "/stories/:story_id", ->
     @route "show"
@@ -45,9 +44,12 @@ Weave.ApplicationRoute = Ember.Route.extend
       outlet: "auth_status"
       into: "application"
 
+Weave.CampaignRoute = Ember.Route.extend
+  model: ->
+
 Weave.IndexRoute = Ember.Route.extend
   redirect: ->
-    @transitionTo "products.selectProduct"
+    @transitionTo "products.selectProduct", Weave.Campaign.find Weave.rails.vars.campaign_id
 
 Weave.OtherIndex = Ember.Route.extend
   redirect: ->
@@ -61,9 +63,9 @@ Weave.ProductsSelectProductRoute = Ember.Route.extend
     startCampaignForProduct: (product)->
       if Weave.rails.isOnlineCampaign()
         ## TODO(syu): figure out actual implementation here
-        @transitionTo 'referralBatches.lookup', product, Weave.Campaign.find Weave.rails.vars.campaign_id
+        @transitionTo 'referralBatches.lookup', product #, @modelFor("campaign") # Weave.Campaign.find Weave.rails.vars.campaign_id
       else
-        @transitionTo 'referralBatches.new', product, Weave.Campaign.find 1
+        @transitionTo 'referralBatches.new', product #, @modelFor("campaign") # Weave.Campaign.find 1
 
 Weave.CampaignRoute = Ember.Route.extend()
 

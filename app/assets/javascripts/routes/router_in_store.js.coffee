@@ -57,9 +57,9 @@ Weave.ReferralBatchRoute = Ember.Route.extend
     attemptAuthNoFacebook: (name, email) ->
       user = @controllerFor('authentication').createAndAuthenticateUser(name, email)
       user.one 'becameError', =>
-        @controllerFor('application').pushNotification ("Sorry, you aren't cool enough.")
+        @controllerFor('application').pushNotification ("Sorry, there was an error. Try again.")
       user.one 'becameInvalid', =>
-        @controllerFor('application').pushNotification ("Sorry, you aren't cool enough.")
+        @controllerFor('application').pushNotification ("Sorry, there was an error. Try again.")
         #user.one 'didLoad', =>
       user.one 'didCreate', =>
         Ember.run.next =>

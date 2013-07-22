@@ -9,7 +9,7 @@ describe "Referrals" do
     it "works", js: true do
       visit '#'
       # The route redirects to ProductsSelectProduct
-      URI.parse(current_url).fragment.should eq '/products/selectProduct'
+      URI.parse(current_url).fragment.should eq '/campaign/1/products/selectProduct'
 
       # click the product link for the nest thermostat
       product_link = find('li.product a')
@@ -58,7 +58,7 @@ describe "Referrals" do
 
       # fill in the name with a new name
       fill_in 'name-or-email', with: "janet chien"
-      find('.friend-new').should have_text /Tell janet chien about New Living/
+      find('.friend-new').should have_text /Tell janet chien about/
 
       # click the link
       expect{find('.friend-new').click; sleep 2}.to change{Referral.count}.by 1
