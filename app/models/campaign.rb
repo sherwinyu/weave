@@ -11,7 +11,10 @@
 #  live                   :boolean
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
-#  product_id             :integer
+#  mailchimp_campaign_id  :string(255)
+#  mailchimp_list_id      :string(255)
+#  mailing_campaign       :boolean
+#  client_id              :integer
 #
 
 class Campaign < ActiveRecord::Base

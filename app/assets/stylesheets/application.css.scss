@@ -91,6 +91,15 @@ li.ui-menu-item {
   background: $fabric;// image-url('fabric.png');// $light-white;
 }
 
+.banner a.logo {
+  margin-left: auto;
+  margin-right: auto;
+  display: table;
+  z-index: 1;
+  position: relative;
+  top: -184%;
+}
+
 .logo {
   margin-left: auto;
   margin-right: auto;

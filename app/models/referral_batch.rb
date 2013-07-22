@@ -12,6 +12,8 @@
 #  sender_id                :integer
 #  url_code                 :string(255)
 #  sender_page_visited_at   :datetime
+#  sender_email             :string(255)
+#  product_id               :integer
 #
 
 class ReferralBatch < ActiveRecord::Base
