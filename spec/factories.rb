@@ -93,8 +93,8 @@ FactoryGirl.define do
     outreach_email_content ""
     sender_page_content ""
     recipient_page_content ""
+    association :client
     trait :with_incentives do
-    client
     end
 
   end
