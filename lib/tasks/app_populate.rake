@@ -1,4 +1,5 @@
 namespace :weave do
+
   desc 'Fill dev database with test data'
 
   task :resetAndPopulate => [:environment, "db:reset"] do
@@ -48,12 +49,15 @@ namespace :weave do
   task :populateE3 => [:environment] do
     client = Client.find_by_name "E3 Innovate"
     if client
-      logger.info "destroying existing client #{client}"
+      puts "destroying existing client #{client.inspect}"
       client.clean!
       client.destroy
     end
-    client = Client.create name: "E3 Innovate"
-    p "Populating E3 objects"
+    client = Client.create name: "E3 Innovate",
+      referral_message: "Yo, refer E3 dawg.",
+      intro_message: "Yo, E3 is dope"
+
+    puts "Populating E3 objects"
 
     product = client.products.create name: "E3 Innovate product 1"
     product.customizations.create description: "product1 description1"
@@ -69,21 +73,38 @@ namespace :weave do
     product.customizations.create description: "product2 description4"
     product.customizations.create description: "product2 description5"
 
-    campaign = client.campaigns.create description: "default online campaign", mailing_campaign: true
+    campaign = client.campaigns.create(
+      description: "default online campaign",
+      referral_message: "Yo, refer E3 dawg.",
+      intro_message: "Yo, E3 is dope",
+      mailing_campaign: true
+    )
     client.save
-
   end
+
+  ##################################################
+  ##################################################
+  ##################################################
+  #
   task :populateNewLiving => [:environment] do
     client = Client.find_by_name "New Living"
     if client
-      logger.info "destroying existing client #{client}"
+      puts "destroying existing client #{client.inspect}"
       client.clean!
       client.destroy
     end
-    client = Client.create name: "New Living"
-    p "Populating New Living objects"
+    client = Client.create name: "New Living",
+      referral_message: "I just shopped at New Living, a mission-driven Certified Benefit Corporation that has made a commitment to measure success on a social, environmental and economic level. I know you care a lot about where you shop, so I thought I'd let you know about New Living.",
+      intro_message: "Tell your friends about New Living's socially responsible products. Get a $50 Whole Foods Gift Card!"
 
-    campaign = client.campaigns.create description: "default online campaign", mailing_campaign: true
+    puts "Populating New Living objects"
+
+    campaign = client.campaigns.create(
+      description: "default online campaign",
+      referral_message: "I just shopped at New Living, a mission-driven Certified Benefit Corporation that has made a commitment to measure success on a social, environmental and economic level. I know you care a lot about where you shop, so I thought I'd let you know about New Living.",
+      intro_message: "Tell your friends about New Living's socially responsible products. Get a $50 Whole Foods Gift Card!",
+      mailing_campaign: true
+    )
     client.save
 
     ### Air Filter::
