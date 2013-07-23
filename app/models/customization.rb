@@ -15,4 +15,5 @@ class Customization < ActiveRecord::Base
   belongs_to :product, inverse_of: :customizations
 
   has_and_belongs_to_many :segments
+
 end
