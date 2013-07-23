@@ -26,5 +26,11 @@ Weave.register('friendFilter:main', Weave.FriendFilter)
 Weave.inject('controller:referral', 'friendFilter', 'friendFilter:main')
 
 Weave.register('controller:authentication', Weave.AuthenticationController)
+Weave.register('manager:copy', Weave.CopyController)
 Weave.inject('friendFilter', 'auth', 'controller:authentication')
 Weave.inject('model', 'applicationController', 'controller:application')
+
+# Weave.inject('controller:application', 'copy', 'controller:copy')
+# Weave.inject('controller:*', 'copy', 'controller:copy')
+Weave.inject('controller', 'copy', 'manager:copy')
+# Weave.inject('controller:', 'copy', 'manager:copy')

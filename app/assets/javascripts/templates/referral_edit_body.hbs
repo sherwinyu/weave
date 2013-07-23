@@ -2,7 +2,7 @@
     <h2 class="step-name">2. Finish your message and send!</h2>
     <hr class="style-one">
     <div class="body">
-    <h4 class="step-subheader">Personalize your referral by adding a short message {{recipientFirstName}}.</h4>
+    <h4 class="step-subheader">Personalize your referral by adding a short message for {{recipientFirstName}}.</h4>
     {{view Ember.TextArea valueBinding="message" class="referral-message"}}
 
     <h4 class="step-subheader">Select a few of the following highlights {{recipientFirstName}} might be interested in.</h4>
@@ -10,7 +10,6 @@
       availableCustomizationsBinding=
       "availableCustomizations"
     }}
-    {{! TODO(syu): though REALLY should be creating a user info for the recipient}}
     <div class='center'>
       <h4 class='step-subheader'> What&#039;s {{recipientFirstName}}&#039;s email address?</h4>
       {{view Ember.TextField class="recipient-email-address" valueBinding="recipient_email" label="Your friend's email address"}}

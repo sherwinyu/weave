@@ -1,5 +1,5 @@
 Weave.ReferralController = Ember.ObjectController.extend
-  needs: ['referralBatch', 'campaign', 'authentication']
+# needs: ['referralBatch', 'campaign', 'authentication']
   myView: null
   firstReferralSent: false
   editingBody: false
@@ -15,9 +15,6 @@ Weave.ReferralController = Ember.ObjectController.extend
     ctrl('referralBatch').set('meta.action', 'update_add_sender')
     @get('content.transaction').commit()
 
-    # @get('content').save()
-    # .then (referral) -> @send 'editBody', referral
-    # @send 'editBody', @get('content')
   updateAndDeliver: ->
     @get('content.recipient').set('email', @get 'content.recipient_email')
     @get('content').set('meta.action', 'update_body_and_deliver')

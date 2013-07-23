@@ -1,6 +1,7 @@
 .login-options {
   text-align: center;
   margin: 0 auto;
+  margin-top: 35px;
 }
 .btn-authenticate {
   background: $dim-teal;
@@ -25,6 +26,7 @@
 hr.login-options-or {
     border: 0;
     border-top: 1px dashed $light-white;
+    margin-bottom: 10px;
     // background: #999;
 }
 hr.login-options-or:after {
