@@ -58,7 +58,10 @@ Weave.OtherIndex = Ember.Route.extend
 Weave.ProductsRoute = Ember.Route.extend()
 Weave.ProductsSelectProductRoute = Ember.Route.extend
   model: ->
-    Weave.Product.find()
+    console.log "waga waga"
+    window.product_ids = @modelFor("campaign").get("client.product_ids")
+    console.log "client.product_ids", window.product_ids
+    Weave.Product.find() # ids: product_ids)
   events:
     startCampaignForProduct: (product)->
       if Weave.rails.isOnlineCampaign()

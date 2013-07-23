@@ -22,8 +22,8 @@ describe CampaignsController do
       end
       it "contains the embedded client" do
         @campaign_json.should have_key "client"
+        @campaign_json["client"].should have_key "product_ids"
       end
-
     end
   end
 end

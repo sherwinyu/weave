@@ -3,8 +3,10 @@ require 'spec_helper'
 describe "Referrals" do
   describe "non faceboko auth, new recipient" do
     before(:each) do
-      @campaign = create :campaign
-      @product = create :product, :with_customizations
+      @product1 = create :product, :with_customizations
+      @product2 = create :product, :with_customizations
+      @client = create :client, products: [@product1, @product2]
+      @campaign = create :campaign, client: @client
     end
     it "works", js: true do
       visit '#'
@@ -12,7 +14,7 @@ describe "Referrals" do
       URI.parse(current_url).fragment.should eq '/campaign/1/products/selectProduct'
 
       # click the product link for the nest thermostat
-      product_link = find('li.product a')
+      product_link = all('li.product a').first
       product_link.should have_text "Nest Thermostat"
 
       # it creates a referral batch
@@ -76,18 +78,18 @@ describe "Referrals" do
       page.should have_text "Select a few of the following highlights"
 
       # 3 customziations
-      all('label.customization').count.should eq @product.customizations.count
+      all('label.customization').count.should eq @product1.customizations.count
       # nothing is selected
       all('.customization.selected').should be_empty
 
       # customziatinos match text
-      find('label.customization', text: @product.customizations.first.description)
-      find('label.customization', text: @product.customizations.second.description)
+      find('label.customization', text: @product1.customizations.first.description)
+      find('label.customization', text: @product1.customizations.second.description)
       # click the last one
-      find('label.customization', text: @product.customizations.third.description).click
+      find('label.customization', text: @product1.customizations.third.description).click
 
       all('.customization.selected').count.should be 1
-      find('.customization.selected').should have_text @product.customizations.third.description
+      find('.customization.selected').should have_text @product1.customizations.third.description
 
       # fill in the message
       # fill_in
@@ -95,7 +97,7 @@ describe "Referrals" do
 
       # click send
       find('a', text: "SEND!").click
-      sleep 2
+      sleep 3
 
       @referral.reload.should be_delivered
       @referral.recipient_email.should eq "janet@example.com"
