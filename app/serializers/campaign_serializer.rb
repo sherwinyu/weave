@@ -1,6 +1,6 @@
 class CampaignSerializer < ActiveModel::Serializer
   embed :ids, include: true
-  attributes :id, :name, :description, :sender_page_content, :recipient_page_content
+  attributes :id, :name, :description, :sender_page_content, :recipient_page_content, :intro_message
   has_one :client, embed: :objects
   # has_many :sender_incentives, embed: :objects
   # has_many :recipient_incentives, embed: :objects
