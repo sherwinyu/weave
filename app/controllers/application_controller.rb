@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
     fb_oauth.get_user_info_from_cookies cookies
   end
 
-  before_filter :redirect_always
+  # before_filter :redirect_always
   def redirect_always
     if request.url =~ /friends\.weaveenergy/
       redirect_to "#{request.protocol}www.weaveenergy.com/friends"
