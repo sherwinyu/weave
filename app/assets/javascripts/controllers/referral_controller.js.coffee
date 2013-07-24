@@ -1,5 +1,5 @@
 Weave.ReferralController = Ember.ObjectController.extend
-# needs: ['referralBatch', 'campaign', 'authentication']
+  needs: ['referralBatch'] #, 'campaign', 'authentication']
   myView: null
   firstReferralSent: false
   editingBody: false
