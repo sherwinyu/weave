@@ -14,49 +14,6 @@ namespace :weave do
     puts "Updating #{campaigns.count} campaigns: assign new client_id #{client.id}"
   end
 
-  desc 'Fill dev database with test data'
-
-  task :resetAndPopulate => [:environment, "db:reset"] do
-    require 'factory_girl'
-
-    p "Manifacturing Objects..."
-    FactoryGirl.create :referral_batch
-    camp = Campaign.create name: "non incentives", description: "testing whether people will refer based on good will", outreach_email_content: "", sender_page_content: "", recipient_page_content: ""
-    product = Product.create name: "Nest thermostat", description: "thermostat up yo ass"
-    custos = %w[wala zug mug].map{|w| Customization.create description: w}
-    product.customizations = custos
-    campaign.product = product
-    campaign.save
-
-
-  end
-
-  task :populate => :environment do
-    require 'factory_girl'
-    # require 'spec/factories.rb'
-    # require Rails.root.join("spec", "factories.rb")
-
-    p "Manifacturing Objects..."
-    FactoryGirl.create :referral_batch
-    # FactoryGirl.create :campaign
-  end
-
-  task :herokuPopulate => [:environment] do
-    p "Manifacturing Objects..."
-    camp = Campaign.create name: "non incentives", description: "testing whether people will refer based on good will", outreach_email_content: "", sender_page_content: "", recipient_page_content: ""
-    product = Product.create name: "Nest thermostat", description: "thermostat up yo ass"
-    custos = %w[wala zug mug].map{|w| Customization.create description: w}
-    product.customizations = custos
-    camp.product = product
-    camp.save
-  end
-
-
-
-
-
-
-
 
   ##################################################
 
@@ -175,13 +132,54 @@ namespace :weave do
   end
 
   ##################################################
+  #
+  task :populateDemo => [:environment] do
+    client = Client.find_by_name "New Living (demo)"
+    if client
+      puts "destroying existing client #{client.inspect}"
+      client.clean!
+      client.destroy
+    end
+    client = Client.create name: "New Living (demo)",
+      referral_message: "I just shopped at New Living (demo), a mission-driven Certified Benefit Corporation that has made a commitment to measure success on a social, environmental and economic level. I know you care a lot about where you shop, so I thought I'd let you know about New Living.",
+      intro_message: "Tell your friends about New Living (demo)'s socially responsible products. Get a $50 Whole Foods Gift Card!"
+
+    puts "Populating New Living (demo) objects"
+
+    campaign = client.campaigns.create(
+      description: "default online campaign",
+      referral_message: "I just shopped at New Living, a mission-driven Certified Benefit Corporation that has made a commitment to measure success on a social, environmental and economic level. I know you care a lot about where you shop, so I thought I'd let you know about New Living.",
+      intro_message: "Tell your friends about New Living's socially responsible products. Get a $50 Whole Foods Gift Card!",
+      mailing_campaign: true
+    )
+    client.save
+
+    ### Air Filter::
+    product = client.products.create name: "Premium Air Filtration System"
+    product.customizations.create description: "According to the EPA, indoor air is about 200% more polluted than outside air."
+    product.customizations.create description: "Houston has the highest rate of childhood asthma among any major US city."
 
 
+    ### Water Filter:
+    product = client.products.create name: "Premium Water Filtration System"
+    product.customizations.create description: "Traditional filters don't cut it. Our body is composed of 70% water, and more water absorbs into our skin when we bathe than when we drink."
 
 
+    ### Green Painter
+    product = client.products.create name: "Green Painter VOC free paint"
+    product.customizations.create description: "The average lifespan of a painter is only 54 years old according to the World Health Organization. You can help change that by using healthier chemicals in your home improvement project!"
+    product.customizations.create description: "Painted surfaces, like homes and buildings, give off 25% more toxins per day than gas stations and oil refineries."
 
 
+    ### Furniture
+    product = client.products.create name: "'Made @ New Living' artisan furniture"
+    product.customizations.create description: "Instead of supporting sweatshop or child labor oversees, you are able to directly support local jobs that are building a new responsible workforce."
+    product.customizations.create description: "Instead of the money going to companies based in other places, you are able to directly invest in local jobs that stay in your community."
 
+    campaign = client.campaigns.create name: "in-store-version sender:no-incentives recipient:noncontingnet-plant"
+    client.save
+  end
 
+  ##################################################
 
 end
