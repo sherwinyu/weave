@@ -1,4 +1,18 @@
 namespace :weave do
+  desc 'Converts from single-client to multi-client architecture'
+  task :createNewLivingClient => [:environment ] do
+    client = Client.find_or_initialize_by_name "New Living"
+    puts "find or initialize by name for new living: #{client.inspect}"
+    client.save(validate: false)
+
+    products = Product.where(client_id: nil)
+    products.update_all client_id: client.id
+    puts "Updating #{products.count} products: assign new client_id #{client.id}"
+
+    campaigns = Campaign.where(client_id: nil)
+    campaigns.update_all client_id: client.id
+    puts "Updating #{campaigns.count} campaigns: assign new client_id #{client.id}"
+  end
 
   desc 'Fill dev database with test data'
 
