@@ -6,12 +6,12 @@ namespace :weave do
     client.save(validate: false)
 
     products = Product.where(client_id: nil)
-    products.update_all client_id: client.id
     puts "Updating #{products.count} products: assign new client_id #{client.id}"
+    products.update_all client_id: client.id
 
     campaigns = Campaign.where(client_id: nil)
-    campaigns.update_all client_id: client.id
     puts "Updating #{campaigns.count} campaigns: assign new client_id #{client.id}"
+    campaigns.update_all client_id: client.id
   end
 
 

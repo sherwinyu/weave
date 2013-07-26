@@ -16,7 +16,7 @@ Weave.CopyController = Ember.ObjectController.extend
     ret = ""
     ret ||= ctrl('campaign')?.get('introMessage')
     ret ||= ctrl('campaign')?.get('client.intro_message')
-    ret ||= "|AYO|"
+    ret ||= "|intro message|"
   ).property('controllers.product.content', 'controllers.campaign.content')
 
   referralMessage: (->
