@@ -45,7 +45,10 @@ Weave.ApplicationRoute = Ember.Route.extend
       into: "application"
 
 Weave.CampaignRoute = Ember.Route.extend
-  model: ->
+  model: (params)->
+    console.log params
+  setupController: (controller, model) ->
+    debugger
 
 Weave.IndexRoute = Ember.Route.extend
   redirect: ->
@@ -58,10 +61,29 @@ Weave.OtherIndex = Ember.Route.extend
 Weave.ProductsRoute = Ember.Route.extend()
 Weave.ProductsSelectProductRoute = Ember.Route.extend
   setupController: (controller, model)->
-    ans = @modelFor("campaign").then (campaign) ->
+    debugger
+    ###
+    @modelFor("campaign").addObserver('client', =>
+      campaign = @modelFor("campaign")
+      product_ids = campaign.get('client.product_ids')
+      console.log "client.product_ids", product_ids
+      if product_ids && !campaign.get('_products')
+        campaign.set '_products', Weave.Product.find ids: product_ids
+    )
+    ###
+
+
+    ###
+    ###
+    # ans = @modelFor("campaign").on "didLoad", => # then (campaign) ->
+    ###
+    ans = @modelFor("campaign").then (cpg) ->
+      # campaign = @modelFor("campaign")
+      campaign = cpg
       window.product_ids = campaign.get("client.product_ids")
       console.log "client.product_ids", window.product_ids
       controller.set 'content', Weave.Product.find ids: product_ids
+    ###
 
   events:
     startCampaignForProduct: (product)->
