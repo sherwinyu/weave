@@ -4,11 +4,6 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
   _rankedFriends: null
   query: ""
 
-  referredItem: (->
-    "waga"
-
-  ).property()
-
   displayingFriends: (->
     @get('query')?.length > 0
   ).property('query')
