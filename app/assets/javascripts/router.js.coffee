@@ -61,6 +61,14 @@ Weave.OtherIndex = Ember.Route.extend
 Weave.ProductsRoute = Ember.Route.extend()
 Weave.ProductsSelectProductRoute = Ember.Route.extend
   setupController: (controller, model)->
+    # HACKY.
+    # Only do a find for products and set the controller's content if campaign has resolved:
+    #
+    # Context:
+    # When arriving at this route through transitionTo, Weave.Campaign.find has not
+    # finished materializing, so campaign.client.product_ids is still undefined.
+    # Instead, to fetch the products, we use an clientChanged observer defined on
+    # the Campaign model.
     if (product_ids = @modelFor("campaign").get('client.product_ids'))
       products = Weave.Product.find ids: product_ids
       controller.set 'content', products
