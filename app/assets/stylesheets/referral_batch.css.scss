@@ -42,4 +42,9 @@ hr.login-options-or:after {
     padding: 0 10px;
 }
 
+span.invalid-helper.email {
+  &.invalid {
+    display: block;
+  }
+}
 

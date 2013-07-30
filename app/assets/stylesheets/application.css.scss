@@ -19,11 +19,8 @@
 @import "facebook";
 
 .pluginFaviconButtonLarge span.pluginFaviconButtonText.fbLarge {
-  // @extend .pluginFaviconButtonText;
   line-height: 20px;
   padding: 8px;
-
-
 }
 
 .weave, body {
@@ -39,6 +36,21 @@ h2 {
   border: none;
   &:focus {
     box-shadow: $teal-glow;
+  }
+  &.invalid:focus {
+    box-shadow: $red-glow;
+  }
+  &.invalid {
+    background: lighten($soft-red, 14%);
+    box-shadow: $inset-chiseled-red;
+  }
+}
+span.invalid-helper {
+  display: none;
+  &.invalid {
+    display: inline;
+    font-weight: bold;
+    color: $soft-red;
   }
 }
 .ui-autocomplete {

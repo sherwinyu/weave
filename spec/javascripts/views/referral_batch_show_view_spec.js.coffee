@@ -1,6 +1,9 @@
 describe "ReferralBatchShowView", ->
   beforeEach ->
-    @context = Ember.Object.create()
+    @send = sinon.stub()
+
+    @context = Ember.Object.create
+      send: @send
     @view = Weave.ReferralBatchShowView.create
       controller: @context
     Ember.run =>
@@ -31,6 +34,14 @@ describe "ReferralBatchShowView", ->
         expect(@view.$('#new-auth-fields')).toHaveClass('collapse')
         expect(@view.$('#new-auth-fields')).toHaveClass('in')
         ###
+    describe "invalid email binding", ->
+      it "is hidden by default", ->
+        expect(@view.$('.invalid-helper.email')).not.toHaveClass 'invalid'
+      it "is shown when view._invalidEmail is true", ->
+        Ember.run => @view.set('_invalidEmail', true)
+        expect(@view.$('.invalid-helper.email')).toHaveClass 'invalid'
+        expect(@view.$('input#sender-email')).toHaveClass 'invalid'
+
   describe "share button", ->
     beforeEach ->
       @shareClicked = sinon.spy(@view, "shareClicked")
@@ -45,10 +56,19 @@ describe "ReferralBatchShowView", ->
       @view.$('#sender-email').val 'sherwin.yu@example.com'
       @view.$('#sender-email').blur()
       @view.$('#share-now').click()
-      expect(shareClicked).toHaveBeenCalled()
-      expect(shareClicked).toHaveBeenCalledWith( 'sherwin yu', 'sherwin.yu@example.com')
+      expect(@shareClicked).toHaveBeenCalled()
+      expect(@shareClicked).toHaveBeenCalledWith( 'sherwin yu', 'sherwin.yu@example.com')
   describe "shareClicked", ->
-    describe "valid email", ->
-      @view.shareClicked('sherwin yu', 'sherwin.yu@example.com')
+    describe "when clicked with valid email", ->
+      it "sends attemptAuthNoFacebook with the name and email", ->
+        Ember.run =>
+          @view.shareClicked('sherwin yu', 'sherwin.yu@example.com')
+        expect(@send).toHaveBeenCalledOnce()
+        expect(@send).toHaveBeenCalledWith 'attemptAuthNoFacebook', 'sherwin yu', 'sherwin.yu@example.com'
 
-
+    describe "when clicked with invalid email", ->
+      it "sends attemptAuthNoFacebook with the name and email", ->
+        Ember.run =>
+          @view.shareClicked('sherwin yu', 'notarealemail')
+        expect(@send).not.toHaveBeenCalled()
+        expect(@view.get('_invalidEmail')).toBeTruthy()

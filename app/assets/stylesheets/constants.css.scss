@@ -1,4 +1,6 @@
 $orange: #fbeed5;
+$red: rgb(255, 100, 100);
+$soft-red: lighten($red, 10%);
 
 $accent-blue: #326bb0;
 $light-blue1: lighten($accent-blue, 10%);
@@ -25,8 +27,10 @@ $light-gray3: adjust-lightness($neutral-gray, 60);
 
 $fabric: image-url('fabric.png');
 
-$teal-glow: 0px 0px 5px $trans-teal, inset 0px 0px 5px $trans-teal;
+$teal-glow: 0px 0px 1px 1px $trans-teal, inset 0px 0px 2px 2px $trans-teal;
+$red-glow: 0px 0px 1px 1px $soft-red, inset 0px 0px 2px 2px $soft-red;
 $inset-chiseled: 0px 0px 3px $neutral-gray;
+$inset-chiseled-red: 0px 0px 3px $red;
 
 .center {
   margin-left: auto;

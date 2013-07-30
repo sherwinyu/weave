@@ -37,7 +37,8 @@
       <br>
       <div class="new-auth-fields collapse" id="new-auth-fields">
         <label> What's your name?</label> {{view Ember.TextField valueBinding="view._senderName" id="sender-name" placeholder="Jane Doe"}} <br>
-        <label>And your email? </label>{{view Ember.TextField valueBinding="view._senderEmail" id="sender-email" placeholder="jane@example.com"}}
+        <label>And your email? </label>{{view Ember.TextField classBinding="view._invalidEmail:invalid" valueBinding="view._senderEmail" id="sender-email" placeholder="jane@example.com"}}
+        <span {{bindAttr class=":invalid-helper :email view._invalidEmail:invalid"}}> Please enter a valid email address! </span>
         <br>
         <a id="share-now" class="btn btn-large btn-authenticate validate-sharing" {{action shareClicked view._senderName view._senderEmail target="view" }}>
           Share!
