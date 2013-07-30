@@ -1,7 +1,3 @@
-Weave.ReferralBatchShowView = Ember.View.extend
-  classNames: ['referral-batch-show']
-  templateName: "referral_batch_show"
-
 Weave.ReferralView = Ember.View.extend
   classNames: ['referral']
   didInsertElement: ->

@@ -31,7 +31,7 @@
     <hr class="login-options-or"/>
     <br>
     <div class="new-auth">
-      <a class="btn btn-large btn-authenticate" data-target="#new-auth-fields" data-toggle="collapse">
+      <a class="btn btn-large btn-authenticate start-sharing" data-target="#new-auth-fields" data-toggle="collapse">
         Share with your friends
       </a>
       <br>
@@ -39,7 +39,7 @@
         <label> What's your name?</label> {{view Ember.TextField valueBinding="view._senderName" id="sender-name" placeholder="Jane Doe"}} <br>
         <label>And your email? </label>{{view Ember.TextField valueBinding="view._senderEmail" id="sender-email" placeholder="jane@example.com"}}
         <br>
-        <a class="btn btn-large btn-authenticate" {{action attemptAuthNoFacebook view._senderName view._senderEmail}}>
+        <a id="share-now" class="btn btn-large btn-authenticate validate-sharing" {{action shareClicked view._senderName view._senderEmail target="view" }}>
           Share!
         </a>
       </div>
