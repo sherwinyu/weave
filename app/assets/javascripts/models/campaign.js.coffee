@@ -10,7 +10,7 @@ Weave.Campaign = DS.Model.extend
   clientChanged: (->
     product_ids = @get('client.product_ids')
     console.log "client.product_ids", product_ids
-    if product_ids && !@get('_products')
+    if product_ids && !ctrl('productSelectProduct')?.get('content')
       _products = Weave.Product.find ids: product_ids
       Ember.run.next ->
         ctrl('productsSelectProduct').set 'content', _products
