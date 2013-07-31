@@ -23,7 +23,9 @@ describe "AuthStatusView", ->
     describe "facebook: already logged in", ->
       beforeEach ->
         Ember.run =>
-          @context.set('auths.facebook', "true")
+          @context.set('facebookAuthed', true)
+      it "shows the auth-status-facebook div", ->
+        expect(@view.$()).toContain "div.auth-status-facebook"
       it "shows logout link", ->
         expect(@view.$()).toContainText "Logout"
       it "hides Facebook: login link", ->
@@ -36,17 +38,9 @@ describe "AuthStatusView", ->
         @view.$('#logout-facebook').click()
         expect(@logoutClickedSpy).toHaveBeenCalledOnce()
         expect(@logoutClickedSpy).toHaveBeenCalledWith "facebook"
-
-
-    xdescribe "facebook: already logged out", ->
+    describe "facebook: not logged in", ->
       beforeEach ->
         Ember.run =>
-          @context.set('auths.facebook', false)
-      it "shows Facebook: login link", ->
-        expect(@view.$()).toContainText "Facebook: Login"
-      it "hides Facebook: logout link", ->
-        expect(@view.$()).not.toContainText "Facebook: Logout"
-      it "sends loginClicked event with 'facebook' as argument", ->
-        @view.$('#login-facebook').click()
-        expect(@loginClickedSpy).toHaveBeenCalledOnce()
-        expect(@loginClickedSpy).toHaveBeenCalledWith "facebook"
+          @context.set('facebookAuthed', false)
+      it "shows nothing", ->
+        expect(@view.$()).not.toContain "div.auth-status-facebook"

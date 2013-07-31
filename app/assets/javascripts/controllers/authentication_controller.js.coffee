@@ -3,9 +3,18 @@ Weave.AuthenticationController = Ember.ObjectController.extend
   user: null
   facebookStatus: ""
   auths: null
+
+  # Omniauthed: if a third party authentication service was used
   omniauthed: (->
     !!@get('auths.facebook')
   ).property( 'auths.facebook', 'auths.gmail')
+
+  # facebookAuthed: true if authenticated via Facebook
+  facebookAuthed: (->
+    !!@get('auths.facebook')
+  ).property 'auths.facebook'
+
+  # Authenticated: true if a user is present
   authenticated :(->
     !!@get 'user'
   ).property('user')
