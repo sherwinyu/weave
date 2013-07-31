@@ -1,39 +1,115 @@
-.select-product {
-  @extend .well;
-}
+/*
+ *  Referral > Select Recipient
+ */
 
-.referral-batch {
-  @extend .span8;
-  margin: auto;
-}
-
-.referral-batch-done {
-  @extend .well;
-}
-
-.confirm-sender {
-  a.btn {
-    position: relative;
-    top: -5px;
-  }
-}
-
-.edit-body {
-  @extend .well;
+.select-recipient {
+  @extend .pane;
   text-align: center;
-
-  .referral-message {
-    width: 80%;
+  width: 100%;
+  background: $shadow-blue;
+  .content {
+    @extend .span8;
+    margin: 0 auto;
   }
-  .customizations {
+  .step-name {
+    color: white;
+    &:hover {text-decoration: none}
+  }
+  .step-subheader {
+    color: white;
+    font-weight: normal;
+  }
+  input.recipient-name-or-email {
     text-align: center;
-    margin: auto;
+  }
+}
+.select-recipient .friend-suggestions {
+  margin: auto;
+  // width: 60%;
+  text-align: left;
+  background: lighten($light-gray, 5);
+  padding: 3px;
+  border-radius: 3px;
+  display: table;
+  min-width: 60%;
+}
+
+$friend-suggestion-height: 50px;
+
+.select-recipient .friend-suggestion {
+  height: $friend-suggestion-height;
+  padding: 5px;
+  background: $light-gray;
+  background-clip: padding-box;
+  border: 1px solid transparent;
+  border-top: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+  .friend-name {
+    color: $accent-gray;
+    font-weight: bold;
+    font-size: 1.3em;
+  }
+  img.friend-picture {
     display: inline;
-    label {
-      display: inline-block;
+    float: left;
+  }
+  .friend-location {
+    color: darken($neutral-gray, 5);
+  }
+  div.friend-info {
+    float: left;
+    padding-left: 5px;
+  }
+  border-radius: 2px;
+  padding: 3px;
+
+  &:hover {
+    background-clip: padding-box;
+    background: $trans-teal;
+    .friend-name {
+      color: white;
     }
-    li {
-      list-style: none;
+    .friend-location {
+      color: darken(white, 5);
     }
+    color: white;
+  }
+
+}
+.friend-suggestion.friend-new {
+  background: $light-blue3;
+  text-align: center;
+  position: relative;
+  background-clip: padding-box;
+
+  span.friend-suggestion-facebook {
+    display: none;
+  }
+  span.friend-suggestion-instruction {
+    font-size: 1.3em;
+    line-height: $friend-suggestion-height;
+    text-align: center;
+  }
+}
+
+.friend-suggestion.friend-new.facebook {
+  padding: 0px;
+  height: $friend-suggestion-height + 15px;
+  background-clip: padding-box;
+  span.friend-suggestion-facebook {
+    display: inline-block;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 2px 0px 4px 0px;
+    background: rgba(173, 166, 144, 0.7);
+    padding: 2px 4px;
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    line-height: 18px;
+    color: rgb(87, 68, 7);
+  }
+  span.friend-suggestion-instruction {
+    line-height: $friend-suggestion-height + 15px;
   }
 }

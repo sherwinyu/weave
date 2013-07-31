@@ -1,0 +1,161 @@
+.edit-body .z-index-container {
+  position: relative;
+}
+
+.edit-body {
+  // border-top: 1px dashed $light-white;
+  @extend .pane;
+
+  background: $fabric; // remove this
+  background: rgba(0, 0, 0, 0.070); // tint the background
+
+
+  .content {
+    @extend .span8;
+    margin: 0 auto;
+  }
+  .content .body {
+    @extend .well;
+    margin-bottom: 0px;
+  }
+
+  .step-name {
+    color: $accent-blue;
+  }
+  .step-subheader{
+    font-weight: normal;
+    color: $accent-blue;
+  }
+  textarea.referral-message {
+    width: 90%;
+    display: block;
+    margin: auto;
+    border: none;
+    padding: 10px;
+    box-shadow: $inset-chiseled;
+    resize: none;
+    background: $trans-white;
+    overflow: hidden;
+    vertical-align: top;
+    min-height: 100px;
+    &:focus {
+      // border: none;
+      box-shadow: $teal-glow;
+    }
+  }
+}
+.edit-body .deliver-button {
+  $vertical-clip: 40px;
+  display: block;
+  border-radius: 0% 0% 125px 125px;
+
+  height: 125px;
+  width: 250px;
+
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -1*$vertical-clip;
+
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  clip: rect($vertical-clip, 250px, 250px, 0px);
+  background: $accent-blue;
+
+  color: white;
+  font-weight: bold;
+  font-size: 3em;
+  text-align: center;
+  padding-top: 10px;
+  z-index: 0;
+  span.deliver {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0px;
+    right: 0px;
+    bottom: 35%;
+    font-family: "Univers 67 Condensed Bold";
+  }
+  &:hover{
+    background: $accent-teal;
+  }
+}
+
+.customizations {
+  width: 90%;
+  margin: auto;
+  padding: 7px 7px;
+  background: lighten($light-gray, 5);
+  label.customization{
+    padding-left: 24px;
+  }
+  /*
+   * This works by completley hiding the input and instead, showing our own custom span indicator via JS bindings.
+   * We use `pointer-events: none` on the customization-selection-indicator to make clicks pass through
+   * to the underlying label.
+   */
+  input.hidden-checkbox {
+    display: none;
+    position: absolute;
+    left: -4000px;
+    top: -4000px;
+  }
+  div.customization {
+    padding: 5px;
+    background: $light-gray;
+    background-clip: padding-box;
+    border: 1px solid transparent;
+    border-top: 2px solid transparent;
+    border-bottom: 2px solid transparent;
+    color: darken($neutral-gray, 5);
+    position: relative;
+  }
+  div.customization.selected {
+    background: $accent-teal;
+    text-color: white;
+    background-clip: padding-box;
+    label {
+      color: white;
+    }
+  }
+  div.customization:hover {
+
+    box-shadow: inset 0px 0px 2px $accent-teal;
+    .customization-selection-circle-indicator {
+      top: 10%;
+      position: relative;
+      width: 80%;
+      height: 80%;
+      margin: auto;
+      background: $accent-teal;
+      border-radius: 50%;
+    }
+  }
+  span.customization-selection-indicator {
+    pointer-events: none;
+    background: rgba(white, 0.75);
+    width: 18px;
+    height: 18px;
+    display: block;
+    position: absolute;
+    top: 25%;
+    content: "X";
+    border-radius: 15%;
+    &.selected {
+      background: white;
+
+      .customization-selection-circle-indicator {
+        top: 10%;
+        position: relative;
+        width: 80%;
+        height: 80%;
+        margin: auto;
+        background: $accent-teal;
+        border-radius: 50%;
+      }
+    }
+  }
+  div.customization.unselected {
+  }
+}

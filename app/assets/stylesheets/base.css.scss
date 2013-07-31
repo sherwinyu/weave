@@ -1,0 +1,135 @@
+//=============== FACEBOOK
+.pluginFaviconButtonLarge span.pluginFaviconButtonText.fbLarge {
+  line-height: 20px;
+  padding: 8px;
+}
+
+//=============== BASE
+.weave, body {
+  background: $fabric;
+}
+
+h2 {
+  text-align: center;
+}
+
+//================= OVER RIDES
+
+.weave a {
+  color: $accent-teal;
+}
+.weave input, textarea {
+  box-shadow: $inset-chiseled;
+  border: none;
+  &:focus {
+    box-shadow: $teal-glow;
+  }
+  &.invalid:focus {
+    box-shadow: $red-glow;
+  }
+  &.invalid {
+    background: lighten($soft-red, 14%);
+    box-shadow: $inset-chiseled-red;
+  }
+}
+span.invalid-helper {
+  display: none;
+  &.invalid {
+    display: inline;
+    font-weight: bold;
+    color: $soft-red;
+  }
+}
+
+//================ AUTO COMPLETE
+.ui-autocomplete {
+  display:none !important;
+}
+
+.ui-helper-hidden-accessible {
+  display: none;
+}
+
+li.ui-menu-item {
+  list-style: none;
+  a {
+    background: whitesmoke;
+  }
+}
+
+
+/*
+ * Utils
+ */
+.circle-big {
+  border-radius: 50%;
+  width: 550px;
+  height: 550px;
+  background: $accent-blue;
+  position: relative;
+  top: -300px;
+  z-index: -10;
+}
+
+.circle-small {
+  border-radius: 50%;
+  width: 300px;
+  height: 300px;
+  // background: rgba($accent-teal, .24);
+
+  position: relative;
+  top: -122%;
+
+  background: radial-gradient(ellipse at center, rgba(255,255,255,0.75) 59%, $light-teal3 98%);
+  border: 1px desaturate($light-teal1, 5%) solid
+}
+
+/*
+ * Banner
+ */
+.banner {
+  height: 150px;
+  background: $fabric;// image-url('fabric.png');// $light-white;
+}
+
+.banner a.logo {
+  margin-left: auto;
+  margin-right: auto;
+  display: table;
+  z-index: 1;
+  position: relative;
+  top: -184%;
+}
+
+.logo {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  z-index: 1;
+  position: relative;
+  top: -184%;
+}
+/*
+ *  Notifications
+ */
+.notifications {
+  margin: auto;
+  @extend .span8;
+}
+
+/*
+ *  Instructions
+ */
+
+/*
+ *  Referral
+ */
+
+.referral {
+  width: 100%;
+  box-shadow: 0px 5px 5px rgba(black, 0.5);
+  position: relative;
+  z-index: 3;
+}
+
+

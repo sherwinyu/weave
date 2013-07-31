@@ -1,6 +1,15 @@
 .auth-status {
   float: right;
 }
+.auth-status-facebook {
+  padding: 8px;
+  border-bottom: 1px dashed $dim-teal;
+  border-left: 1px dashed $dim-teal;
+  border-bottom-left-radius: 5px;
+  background: lighten($light-teal3, 30%);
+  background: $light-white;
+
+}
 .facebook-icon {
   height: 20px;
 }
