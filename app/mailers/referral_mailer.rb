@@ -5,7 +5,7 @@ class ReferralMailer < ActionMailer::Base
     @sender = referral.sender
     @recipient = referral.recipient
     @product = referral.product
-    @client = "New Living"
+    @client = referral.client
     mail(
       to: @referral.recipient_email,
       subject: "#{@sender.full_name} thought you'd be interested in NewLiving",

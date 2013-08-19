@@ -6,7 +6,7 @@ Your friend, <%= @sender.first_name %>, just made a values-based purchase at <%=
 
     -- <%= @sender.first_name %>
 
-  <%= @sender.first_name %> also chose some reasons you might be interested in shopping at <%= @client %>:
+  <%= @sender.first_name %> also chose some reasons you might be interested in shopping at <%= @client.name %>:
 
   <% @referral.customizations.each do |customization| %>
     * <%= customization.description %>
