@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130722221521) do
+ActiveRecord::Schema.define(:version => 20130726010209) do
 
   create_table "authorizations", :force => true do |t|
     t.string   "uid"
@@ -35,8 +35,8 @@ ActiveRecord::Schema.define(:version => 20130722221521) do
     t.string   "mailchimp_list_id"
     t.boolean  "mailing_campaign"
     t.integer  "client_id"
-    t.string   "referral_message"
-    t.string   "intro_message"
+    t.text     "referral_message",       :limit => 255
+    t.text     "intro_message",          :limit => 255
   end
 
   create_table "campaigns_recipient_incentives", :id => false, :force => true do |t|
@@ -51,10 +51,10 @@ ActiveRecord::Schema.define(:version => 20130722221521) do
 
   create_table "clients", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
-    t.string   "referral_message"
-    t.string   "intro_message"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+    t.text     "referral_message", :limit => 255
+    t.text     "intro_message",    :limit => 255
   end
 
   create_table "customizations", :force => true do |t|
@@ -186,5 +186,10 @@ ActiveRecord::Schema.define(:version => 20130722221521) do
   end
 
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+
+  create_table "walas", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
 end
