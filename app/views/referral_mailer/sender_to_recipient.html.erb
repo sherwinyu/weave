@@ -1,7 +1,7 @@
 Hi <%= @recipient.first_name  %>,
 
 <p>
-Your friend, <%= @sender.first_name %>, just made a values-based purchase at <%= @client %> and wanted to share why you would care as well:
+Your friend, <%= @sender.first_name %>, just made a values-based purchase at <%= @client.name %> and wanted to share why you would care as well:
 </p>
 
 <p><i> <%= @referral.message %> </i></p>
@@ -9,7 +9,7 @@ Your friend, <%= @sender.first_name %>, just made a values-based purchase at <%=
     -- <%= @sender.first_name %>
 <br>
 
-<p> <%= @sender.first_name %> also chose some reasons you might be interested in shopping at <%= @client %>: </p>
+<p> <%= @sender.first_name %> also chose some reasons you might be interested in shopping at <%= @client.name %>: </p>
 
   <ul>
   <% @referral.customizations.each do |customization| %>

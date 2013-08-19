@@ -128,7 +128,7 @@ JANSI RANI SETHURAJ	JANSIELAN@GMAIL.COM	Our focus on personal health
 
     sender = User.find_or_create_by_name_and_email "Elangovan Krishnan", "docelan@gmail.com"
 
-    recipient = User.find_or_create_by_email "JANSIELAN@GMAIL.com"
+    recipient = User.find_or_create_by_email "jansielan@gmail.com"
     recipient.name = "Jansi Rani sethuraj"
     customization = customization_health
     referral = sender.sent_referrals.create customizations: [customization], campaign: campaign, product: client_product, recipient: recipient, sender_email: sender.email, recipient_email: recipient.email
