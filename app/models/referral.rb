@@ -45,7 +45,6 @@ class Referral < ActiveRecord::Base
 
   accepts_nested_attributes_for :recipient
 
-  # validate :deliverable?
   validate :receivable?, unless: "status.to_s == Referral.STATUSES[:recipient_selected]"
   validates_presence_of :recipient, message: "needs to be present"
   validates_presence_of :referral_batch
@@ -76,9 +75,6 @@ class Referral < ActiveRecord::Base
 
   def deliverable?
     valid = sendable? && receivable? && !delivered?  # sender && sender.emailable? && sender.email_provided? && recipient && recipient.emailable? && !delivered?
-    # errors[:sender_email] << "Sender email invalid" unless sender && sender.emailable?
-    # errors[:sender_email] << "Sender email unconfirmed" unless sender && sender.email_provided?
-    # errors[:recipient_email] << "Recipient needs a valid email" unless recipient && recipient.emailable?
     errors[:deliverable] << "already delivered" if delivered?
     valid
   end
@@ -88,8 +84,6 @@ class Referral < ActiveRecord::Base
     valid = Utils.valid_email? self.sender_email
     errors[:sender_email] << "Sender email invalid" unless valid
     valid
-    # || sender && sender.emailable?
-    # errors[:sender_email] << "Sender email unconfirmed" unless sender && sender.email_provided?
   end
 
   def receivable?
