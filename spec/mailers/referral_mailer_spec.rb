@@ -2,23 +2,26 @@ require "spec_helper"
 
 describe ReferralMailer do
   describe "deliver" do
-    before :each do
-      @referral = create :referral
+    let (:customization) do
+      build :customization, description: 'waga waga'
     end
-    context "sender_to_recipient" do
+    let (:referral) do
+      r = create :referral
+      r.customizations << customization
+      r
+    end
+    context "template: sender_to_recipient_referral_newliving" do
       before :each do
-        @mail = ReferralMailer.send :sender_to_recipient, @referral
+        ReferralMailer.should_receive(:sender_to_recipient_referral_newliving).and_call_original
+        ReferralMailer.deliver referral, template: :sender_to_recipient_referral_newliving
       end
-      it "has proper to and from addresses" do
-        @mail.to.should include @referral.recipient_email
-        @mail.from.should include @referral.sender_email
-      end
-      it "" do
-        @mail.to.should include @referral.recipient_email
-        @mail.from.should include @referral.sender_email
+      let(:options){ {template: :sender_to_recipient_newliving} }
+      it "calls sender_to_recipient_referral_newliving with the referral" do
+        ReferralMailer.should have_received(:sender_to_recipient_referral_newliving).with referral
       end
     end
   end
+
   describe "referral_to_data_hash" do
     before :each do
       @data = ReferralMailer.referral_to_data_hash referral, options
@@ -30,7 +33,6 @@ describe ReferralMailer do
         @data[:to].flatten.should include referral.recipient_email
         @data[:from].flatten.should include referral.sender_email
       end
-
     end
   end
 

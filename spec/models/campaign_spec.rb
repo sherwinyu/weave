@@ -10,7 +10,6 @@ describe Campaign do
     before :each do
       Campaign::MailChimpProxy.stub(:new).and_return mail_chimp_proxy
       Gibbon.stub(:new).and_call_original
-      # Figaro.env.stub(:[]).with("MAILCHIMP_CLIENT_API_KEY").and_return api_key
     end
     it "creates a new Gibbon instance with the api_key" do
       Figaro.stub(env: Figaro::Env.from("MAILCHIMP_CLIENT_API_KEY" => api_key))

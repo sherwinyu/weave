@@ -74,6 +74,9 @@ FactoryGirl.define do
     after :stub do |referral|
       referral.product = referral.referral_batch.product
     end
+    after :create do |referral|
+      referral.product = referral.referral_batch.product
+    end
     callback(:unify_sender_recipent_emails) do |referral|
       referral.sender_email = referral.sender.email
       referral.recipient_email = referral.recipient.email

@@ -21,31 +21,31 @@ namespace :weave do
     recipient.name = "David Kaplan"
     customization = customization_labor
     referral = sender.sent_referrals.create customizations: [customization], campaign: campaign, product: client_product, recipient: recipient, sender_email: sender.email, recipient_email: recipient.email
-    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver}"
+    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver template: :sender_to_recipient_referral_newliving}"
 
     recipient = User.find_or_create_by_email "paul@pauleason.com"
     recipient.name = "Paul"
     customization = customization_health
     referral = sender.sent_referrals.create customizations: [customization], campaign: campaign, product: client_product, recipient: recipient, sender_email: sender.email, recipient_email: recipient.email
-    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver}"
+    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver template: :sender_to_recipient_referral_newliving}"
 
     recipient = User.find_or_create_by_email "hopah33@gmail.com"
     recipient.name = "Hope"
     customization = customization_health
     referral = sender.sent_referrals.create customizations: [customization], campaign: campaign, product: client_product, recipient: recipient, sender_email: sender.email, recipient_email: recipient.email
-    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver}"
+    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver template: :sender_to_recipient_referral_newliving}"
 
     recipient = User.find_or_create_by_email "anneason1@msn.com"
     recipient.name = "Anne"
     customization = customization_comfort
     referral = sender.sent_referrals.create customizations: [customization], campaign: campaign, product: client_product, recipient: recipient, sender_email: sender.email, recipient_email: recipient.email
-    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver}"
+    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver template: :sender_to_recipient_referral_newliving}"
 
     recipient = User.find_or_create_by_email "csl@yahoo.com"
     recipient.name = "Chuck"
     customization = customization_labor
     referral = sender.sent_referrals.create customizations: [customization], campaign: campaign, product: client_product, recipient: recipient, sender_email: sender.email, recipient_email: recipient.email
-    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver}"
+    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver template: :sender_to_recipient_referral_newliving}"
 
 =begin
 7/17/2013 14:58:13	Lulu Lopez	lulu@lululopez.com	VOC free paint
@@ -60,25 +60,25 @@ Mojdeh	mojdehp@gmail.com	Our focus on personal health
     recipient.name = "Michelle"
     customization = customization_health
     referral = sender.sent_referrals.create customizations: [customization], campaign: campaign, product: client_product, recipient: recipient, sender_email: sender.email, recipient_email: recipient.email
-    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver}"
+    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver template: :sender_to_recipient_referral_newliving}"
 
     recipient = User.find_or_create_by_email "aboulomania@gmail.com"
     recipient.name = "Emily"
     customization = customization_enviro
     referral = sender.sent_referrals.create customizations: [customization], campaign: campaign, product: client_product, recipient: recipient, sender_email: sender.email, recipient_email: recipient.email
-    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver}"
+    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver template: :sender_to_recipient_referral_newliving}"
 
     recipient = User.find_or_create_by_email "heyrhia@gmail.com"
     recipient.name = "Rhia"
     customization = customization_health
     referral = sender.sent_referrals.create customizations: [customization], campaign: campaign, product: client_product, recipient: recipient, sender_email: sender.email, recipient_email: recipient.email
-    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver}"
+    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver template: :sender_to_recipient_referral_newliving}"
 
     recipient = User.find_or_create_by_email "mojdehp@gmail.com"
     recipient.name = "Mojdeh"
     customization = customization_health
     referral = sender.sent_referrals.create customizations: [customization], campaign: campaign, product: client_product, recipient: recipient, sender_email: sender.email, recipient_email: recipient.email
-    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver}"
+    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver template: :sender_to_recipient_referral_newliving}"
 
 =begin
 7/17/2013 15:58:57	Prarthy	prathydurgam@gmail.com	VOC free paint
@@ -95,31 +95,31 @@ Anitha	an_nu8@yahoo.com	Our focus on personal health
     recipient.name = "Pratibha"
     customization = customization_health
     referral = sender.sent_referrals.create customizations: [customization], campaign: campaign, product: client_product, recipient: recipient, sender_email: sender.email, recipient_email: recipient.email
-    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver}"
+    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver template: :sender_to_recipient_referral_newliving}"
 
     recipient = User.find_or_create_by_email "lakshmi_gummadi@yahoo.com"
     recipient.name = "Lakshmi Gummadi"
     customization = customization_health
     referral = sender.sent_referrals.create customizations: [customization], campaign: campaign, product: client_product, recipient: recipient, sender_email: sender.email, recipient_email: recipient.email
-    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver}"
+    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver template: :sender_to_recipient_referral_newliving}"
 
     recipient = User.find_or_create_by_email "jayprana08@gmail.com"
     recipient.name = "Jay Pranavamurthi"
     customization = customization_health
     referral = sender.sent_referrals.create customizations: [customization], campaign: campaign, product: client_product, recipient: recipient, sender_email: sender.email, recipient_email: recipient.email
-    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver}"
+    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver template: :sender_to_recipient_referral_newliving}"
 
     recipient = User.find_or_create_by_email "ksrosamond@comcast.net"
     recipient.name = "Kathi Rosamond"
     customization = customization_enviro
     referral = sender.sent_referrals.create customizations: [customization], campaign: campaign, product: client_product, recipient: recipient, sender_email: sender.email, recipient_email: recipient.email
-    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver}"
+    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver template: :sender_to_recipient_referral_newliving}"
 
     recipient = User.find_or_create_by_email "an_nu8@yahoo.com"
     recipient.name = "Anitha"
     customization = customization_health
     referral = sender.sent_referrals.create customizations: [customization], campaign: campaign, product: client_product, recipient: recipient, sender_email: sender.email, recipient_email: recipient.email
-    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver}"
+    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver template: :sender_to_recipient_referral_newliving}"
 
 =begin
 7/18/2013 12:06:59	Dr. Elangovan Krishnan	DOCELAN@GMAIL.COM	VOC free paint
@@ -132,7 +132,7 @@ JANSI RANI SETHURAJ	JANSIELAN@GMAIL.COM	Our focus on personal health
     recipient.name = "Jansi Rani sethuraj"
     customization = customization_health
     referral = sender.sent_referrals.create customizations: [customization], campaign: campaign, product: client_product, recipient: recipient, sender_email: sender.email, recipient_email: recipient.email
-    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver}"
+    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver template: :sender_to_recipient_referral_newliving}"
 
 
 =begin
@@ -149,25 +149,25 @@ John Kapla	johnkapla@yahoo.com	Our environmental impact
     recipient.name = "Michael Craig"
     customization = customization_enviro
     referral = sender.sent_referrals.create customizations: [customization], campaign: campaign, product: client_product, recipient: recipient, sender_email: sender.email, recipient_email: recipient.email
-    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver}"
+    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver template: :sender_to_recipient_referral_newliving}"
 
     recipient = User.find_or_create_by_email "andrea@bambooleasing.com"
     recipient.name = "Andrea Lightfoot"
     customization = customization_comfort
     referral = sender.sent_referrals.create customizations: [customization], campaign: campaign, product: client_product, recipient: recipient, sender_email: sender.email, recipient_email: recipient.email
-    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver}"
+    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver template: :sender_to_recipient_referral_newliving}"
 
     recipient = User.find_or_create_by_email "sbrandford1@gmail.com"
     recipient.name = "Sherwin Brandford"
     customization = customization_comfort
     referral = sender.sent_referrals.create customizations: [customization], campaign: campaign, product: client_product, recipient: recipient, sender_email: sender.email, recipient_email: recipient.email
-    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver}"
+    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver template: :sender_to_recipient_referral_newliving}"
 
     recipient = User.find_or_create_by_email "johnkapla@yahoo.com"
     recipient.name = "John Kapla"
     customization = customization_enviro
     referral = sender.sent_referrals.create customizations: [customization], campaign: campaign, product: client_product, recipient: recipient, sender_email: sender.email, recipient_email: recipient.email
-    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver}"
+    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver template: :sender_to_recipient_referral_newliving}"
 
 =begin
 8/7/2013 20:27:03	Rob	ronaldkristene@gmail.com	Organic mattress
@@ -180,7 +180,7 @@ Aaron	aron.harris.1614@facebook.com	Our environmental impact
     recipient.name = "Aaron Harris"
     customization = customization_enviro
     referral = sender.sent_referrals.create customizations: [customization], campaign: campaign, product: client_product, recipient: recipient, sender_email: sender.email, recipient_email: recipient.email
-    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver}"
+    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver template: :sender_to_recipient_referral_newliving}"
 
 =begin
 8/17/2013 2:13:06	Kimberly Meyer	meyerhill@hotmail.com	VOC free paint
@@ -197,30 +197,30 @@ Angela Apte	angela297@hotmail.com	Our commitment to fair labor and social practi
     recipient.name = "Georgina Key"
     customization = customization_enviro
     referral = sender.sent_referrals.create customizations: [customization], campaign: campaign, product: client_product, recipient: recipient, sender_email: sender.email, recipient_email: recipient.email
-    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver}"
+    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver template: :sender_to_recipient_referral_newliving}"
 
     recipient = User.find_or_create_by_email "gmayabrazil@hotmail.com"
     recipient.name = "Gabriela Maya"
     customization = customization_enviro
     referral = sender.sent_referrals.create customizations: [customization], campaign: campaign, product: client_product, recipient: recipient, sender_email: sender.email, recipient_email: recipient.email
-    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver}"
+    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver template: :sender_to_recipient_referral_newliving}"
 
     recipient = User.find_or_create_by_email "lmhammill@gmail.com"
     recipient.name = "Leona Hamill"
     customization = customization_enviro
     referral = sender.sent_referrals.create customizations: [customization], campaign: campaign, product: client_product, recipient: recipient, sender_email: sender.email, recipient_email: recipient.email
-    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver}"
+    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver template: :sender_to_recipient_referral_newliving}"
 
     recipient = User.find_or_create_by_email "tracy@growingforgood.com"
     recipient.name = "Tracy Donaldson"
     customization = customization_labor
     referral = sender.sent_referrals.create customizations: [customization], campaign: campaign, product: client_product, recipient: recipient, sender_email: sender.email, recipient_email: recipient.email
-    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver}"
+    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver template: :sender_to_recipient_referral_newliving}"
 
     recipient = User.find_or_create_by_email "angela297@hotmail.com"
     recipient.name = "Angela Apte"
     customization = customization_labor
     referral = sender.sent_referrals.create customizations: [customization], campaign: campaign, product: client_product, recipient: recipient, sender_email: sender.email, recipient_email: recipient.email
-    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver}"
+    puts "#{referral.recipient.email} -> #{referral.sender.email}: #{referral.customizations.first.description} -- success: #{referral.deliver template: :sender_to_recipient_referral_newliving}"
   end
 end
