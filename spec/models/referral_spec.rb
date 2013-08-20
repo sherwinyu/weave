@@ -23,7 +23,7 @@ describe Referral do
       before :each do
         @referral = referral
         # it appears that .should_receive stubs mailgun_send
-        @referral.should_receive(:mailgun_send)
+        @referral.should_receive(:mailgun_send).with( {} )
         @ret = @referral.deliver
       end
 

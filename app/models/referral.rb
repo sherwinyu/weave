@@ -60,9 +60,9 @@ class Referral < ActiveRecord::Base
     raise "wala"
   end
 
-  def deliver
+  def deliver(options= {})
     if deliverable?
-      mailgun_send
+      mailgun_send options
       self.update_attribute :delivered_at, Time.now
       true
     else
@@ -99,8 +99,8 @@ class Referral < ActiveRecord::Base
   end
 
  private
-  def mailgun_send
-    ReferralMailer.deliver(self)
+  def mailgun_send(options={})
+    ReferralMailer.deliver(self, options)
   end
 
 end
