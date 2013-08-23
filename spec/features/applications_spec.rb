@@ -4,16 +4,17 @@ describe "Application" do
   let(:url) {'/'}
   describe "injects correct parameters to the client side application:" do
     let(:url) {super()}
+    let(:campaign) {create :campaign}
     before :each do
       visit url
     end
     describe "including online out reach params: " do
-      let (:url) {super() + '/?landing_email=waga@gmail.com&campaign_id=314one5'}
+      let (:url) {super() + "/?landing_email=waga@gmail.com&campaign_id=#{campaign.id}"}
       it "embeds landing_email", js: true do
         ev("Weave.rails.vars.landing_email").should eq "waga@gmail.com"
       end
       it "embeds campaign_id", js: true do
-        ev("Weave.rails.vars.campaign_id").should eq "314one5"
+        ev("Weave.rails.vars.campaign_id").should eq "#{campaign.id}"
       end
     end
     describe "visiting a different path: " do
