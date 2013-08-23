@@ -55,6 +55,16 @@ class ApplicationController < ActionController::Base
     }
   end
 
+  def compute_campaign_id
+
+  end
+  def client_from_domain
+    request.host
+    binding.pry
+
+  end
+
+
   # TODO(syu): TEST this. Also, this doesn't work with doubly nested hashes! -- Post -> post.comments_attributes -> post.comments_attributes.0.author_attriibutes
   before_filter :normalize_params
   def normalize_params

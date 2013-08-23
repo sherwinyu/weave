@@ -67,7 +67,6 @@ class ReferralBatchesController < ApplicationController
       logger.warn "ReferralBatches#index hit, meta_action was NOT lookup_by_email, params: #{params}"
     end
     if @referral_batch
-      logger.info "is this cached? #{json_for(@referral_batch)} "
       render json: [@referral_batch]
     else
       render json: nil, status: 404

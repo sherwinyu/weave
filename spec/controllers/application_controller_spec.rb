@@ -35,6 +35,16 @@ describe ApplicationController do
   describe "#normalize_params: filter" do
 
   end
+  describe "client_from_domain" do
+    context "e3.weaveenergy.com" do
+      it "works" do
+        request.host = "e3.weaveenergy.com"
+        binding.pry
+        client = controller.client_from_domain
+        client.name.should eq "New Living"
+      end
+    end
+  end
   describe "redirect_always" do
     it "redirects if the uri is http://friends.weaveenergy.com" do
       request.host = "friends.weaveenergy.com"
