@@ -67,9 +67,9 @@ FactoryGirl.define do
     sender
     recipient
     referral_batch
+    # campaign
     sender_email { sender.try(:email) }
     recipient_email { recipient.try(:email) }
-    campaign
     # association :product, :with_customizations
     after :stub do |referral|
       referral.product = referral.referral_batch.product
@@ -97,7 +97,6 @@ FactoryGirl.define do
     client
     trait :with_incentives do
     end
-
   end
 
   factory :product do |product|
