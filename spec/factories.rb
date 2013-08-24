@@ -124,6 +124,9 @@ FactoryGirl.define do
         create_list :campaigns, 1, client: cli
       end
     }
+    trait(:with_campaigns) do
+      campaigns { create_list :campaign, 3 }
+    end
   end
 
 end

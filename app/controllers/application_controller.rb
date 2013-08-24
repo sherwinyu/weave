@@ -55,13 +55,43 @@ class ApplicationController < ActionController::Base
     }
   end
 
+  # Return the campaign_id to be embedded in the @rails payload to the ember app
+  #  * If no campaign_id param is specified, fallback to the client's default campaign_id
+  #  * If the specified campaign_id is incompatiblew ith the client_id, fallback to the client's
+  # default campaign_id
+  #  * If a valid campaign_id param is specified, use that
   def compute_campaign_id
+    if params[:campaign_id].present?
+      if client_from_domain.campaign_ids.include? params[:campaign_id]
+        params[:campaign_id]
+      else
+        client_from_domain.campaigns.first.id
+      end
+    else
+      client_from_domain.campaigns.first.id
+    end
 
   end
-  def client_from_domain
-    request.host
-    binding.pry
 
+  def client_from_domain
+    host = request.host
+    subdomain = host.partition(".").first
+    client_key = if subdomain.starts_with? environment_tag
+                    subdomain.partition(environment_tag).last
+                  else
+                    logger.fatal "Attempted to decode client with unrecognizable subdomain"
+                    raise "invalid subdomain"
+                  end
+
+    Client.find_by_key client_key
+  end
+
+  def environment_tag
+    if Rails.env.production?
+      ""
+    else
+      "#{Rails.env}-"
+    end
   end
 
 
