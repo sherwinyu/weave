@@ -10,14 +10,25 @@ describe ReferralMailer do
       r.customizations << customization
       r
     end
-    context "template: sender_to_recipient_referral_newliving" do
+    context "method: sender_to_recipient_referral_newliving" do
       before :each do
         ReferralMailer.should_receive(:sender_to_recipient_referral_newliving).and_call_original
-        ReferralMailer.deliver referral, template: :sender_to_recipient_referral_newliving
+        ReferralMailer.deliver referral, options
       end
-      let(:options){ {template: :sender_to_recipient_newliving} }
+      let(:options){ {method: :sender_to_recipient_referral_newliving} }
       it "calls sender_to_recipient_referral_newliving with the referral" do
-        ReferralMailer.should have_received(:sender_to_recipient_referral_newliving).with referral
+        ReferralMailer.should have_received(:sender_to_recipient_referral_newliving).with referral, an_instance_of(Hash)
+      end
+    end
+
+    context "method: sender_to_recipient" do
+      before :each do
+        ReferralMailer.should_receive(:sender_to_recipient).and_call_original
+        ReferralMailer.deliver referral, options
+      end
+      let(:options){ {method: :sender_to_recipient} }
+      it "calls sender_to_recipient_referral_newliving with the referral" do
+        ReferralMailer.should have_received(:sender_to_recipient).with referral, an_instance_of(Hash)
       end
     end
   end
