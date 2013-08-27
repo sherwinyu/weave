@@ -14,6 +14,13 @@ namespace :weave do
     campaigns.update_all client_id: client.id
   end
 
+  task :addKeyToNewLivingClient => [:environment] do
+    client = Client.find_or_initialize_by_name "New Living"
+    puts "find or initialize by name for new living: #{client.inspect}"
+    client.key = "newliving"
+    client.save(validate: false)
+  end
+
 
   ##################################################
 
@@ -141,6 +148,7 @@ namespace :weave do
       client.destroy
     end
     client = Client.create name: "New Living (demo)",
+      key: "newliving",
       referral_message: "I just shopped at New Living (demo), a mission-driven Certified Benefit Corporation that has made a commitment to measure success on a social, environmental and economic level. I know you care a lot about where you shop, so I thought I'd let you know about New Living.",
       intro_message: "Tell your friends about New Living (demo)'s socially responsible products. Get a $50 Whole Foods Gift Card!"
 
@@ -182,4 +190,41 @@ namespace :weave do
 
   ##################################################
 
+  ##################################################
+  ##################################################
+  ##################################################
+  #
+  task :populateSunpro => [:environment] do
+    client = Client.find_by_name "Sunpro"
+    if client
+      puts "destroying existing client #{client.inspect}"
+      client.clean!
+      client.destroy
+    end
+    client = Client.create name: "Sunpro",
+      key: "sunpro",
+      referral_message: "I just went solar with Sunpro Solar Home Specialists, the #1 rated solar company on Angie's List. It's a great investment for me and I thought you might be interested too.",
+      intro_message: "Share the Sunpro Solar love with your friends and family"
+    puts "Populating Sunpro objects"
+
+    campaign = client.campaigns.create(
+      description: "default online campaign",
+      referral_message: "I just went solar with Sunpro Solar Home Specialists, the #1 rated solar company on Angie's List. It's a great investment for me and I thought you might be interested too.",
+      intro_message: "Share the Sunpro Solar love with your friends and family",
+      mailing_campaign: true
+    )
+    client.save
+
+    ### Sunpro services
+    product = client.products.create name: "Sunpro"
+    product.customizations.create description: " Louisiana has the best solar rebates in the country: get tax breaks to pay for 80% of your system."
+    product.customizations.create description: "You can own solar for less than it costs to lease it."
+    product.customizations.create description: "The average out of pocket cost is less than $4,000."
+    product.customizations.create description: "Reduce your carbon footprint: A solar installation reduces your footprint by 4,000 lbs of CO2 -- equivalent to planting 8,000 trees"
+    product.customizations.create description: "Worry free: get a 25 year product and labor warranty and a 20 year energy production guarantee"
+
+    client.save
+  end
+
+  ##################################################
 end
