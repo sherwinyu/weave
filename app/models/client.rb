@@ -25,8 +25,14 @@ class Client < ActiveRecord::Base
   def self.E3
     find_by_name "E3 Innovate"
   end
+
   def self.NL
-    find_by_name "New Living"
+    find_by_name "newliving"
   end
+
+  def self.sunpro
+    find_by_key "sunpro"
+  end
+
   validates_uniqueness_of :key
 end

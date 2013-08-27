@@ -204,20 +204,20 @@ namespace :weave do
     client = Client.create name: "Sunpro",
       key: "sunpro",
       referral_message: "I just went solar with Sunpro Solar Home Specialists, the #1 rated solar company on Angie's List. It's a great investment for me and I thought you might be interested too.",
-      intro_message: "Share the Sunpro Solar love with your friends and family"
+      intro_message: "Share the solar love at Sunpro with your friends and family"
     puts "Populating Sunpro objects"
 
     campaign = client.campaigns.create(
       description: "default online campaign",
       referral_message: "I just went solar with Sunpro Solar Home Specialists, the #1 rated solar company on Angie's List. It's a great investment for me and I thought you might be interested too.",
-      intro_message: "Share the Sunpro Solar love with your friends and family",
+      intro_message: "Share the solar love at Sunpro with your friends and family",
       mailing_campaign: true
     )
     client.save
 
     ### Sunpro services
-    product = client.products.create name: "Sunpro"
-    product.customizations.create description: " Louisiana has the best solar rebates in the country: get tax breaks to pay for 80% of your system."
+    product = client.products.create name: "Tell a friend about Sunpro Solar"
+    product.customizations.create description: "Louisiana has the best solar rebates in the country: get tax breaks to pay for 80% of your system."
     product.customizations.create description: "You can own solar for less than it costs to lease it."
     product.customizations.create description: "The average out of pocket cost is less than $4,000."
     product.customizations.create description: "Reduce your carbon footprint: A solar installation reduces your footprint by 4,000 lbs of CO2 -- equivalent to planting 8,000 trees"
