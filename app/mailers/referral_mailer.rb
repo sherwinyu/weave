@@ -89,7 +89,7 @@ class ReferralMailer < ActionMailer::Base
   private
 
   def compute_template_name referral, method_name, options
-    client_template_name = "#{method_name}_#{referral.client.name.gsub(" ", "_").downcase}"
+    client_template_name = "#{method_name}_#{referral.client.key.downcase}"
     default_template_name = if lookup_context.exists?("referral_mailer/#{client_template_name}")
       client_template_name
     else

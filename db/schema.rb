@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130726010209) do
+ActiveRecord::Schema.define(:version => 20130827155046) do
 
   create_table "authorizations", :force => true do |t|
     t.string   "uid"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(:version => 20130726010209) do
     t.datetime "updated_at",                      :null => false
     t.text     "referral_message", :limit => 255
     t.text     "intro_message",    :limit => 255
+    t.string   "key"
   end
 
   create_table "customizations", :force => true do |t|

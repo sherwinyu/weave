@@ -119,6 +119,7 @@ FactoryGirl.define do
 
   factory :client do |client|
     name "New Living"
+    key { "newliving#{generate :number}" }
     trait(:with_campaign_referral_batches_and_referrals) {
       after :create do |cli|
         create_list :campaigns, 1, client: cli

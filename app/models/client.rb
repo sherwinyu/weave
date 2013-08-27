@@ -28,4 +28,5 @@ class Client < ActiveRecord::Base
   def self.NL
     find_by_name "New Living"
   end
+  validates_uniqueness_of :key
 end
