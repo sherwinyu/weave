@@ -73,6 +73,17 @@ describe ApplicationController do
         end
       end
 
+      context "staging.weaveenergy.com" do
+        let(:host){"staging.weaveenergy.com"}
+        it "calls Client.find_by_key e3" do
+          expect{
+          ret = controller.client_from_domain
+          }.to_not raise_error
+          # Client.should have_received(:find_by_key).with("e3")
+          # ret.should be client
+        end
+
+      end
     end
   end
   describe "compute_campaign_id" do
@@ -110,6 +121,7 @@ describe ApplicationController do
         ret.should_not be '5555'
       end
     end
+
 
   end
   pending "redirect_always" do

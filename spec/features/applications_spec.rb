@@ -40,6 +40,15 @@ describe "Application" do
           ev("Weave.rails.vars.campaign_id").should eq client_sunpro.campaigns.first.id
         end
       end
+    end
+
+    describe "staging.weaveenergy.com" do
+      let(:host) {"staging.weaveenergy.com"}
+      describe "embedded params" do
+        it "embeds the default campaign_id", js: true do
+          ev("Weave.rails.vars.campaign_id").should eq client_sunpro.campaigns.first.id
+        end
+      end
 
     end
   end

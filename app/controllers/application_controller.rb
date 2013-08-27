@@ -97,12 +97,15 @@ class ApplicationController < ActionController::Base
       host = "test-sunpro.localhost"
     end
     subdomain = host.partition(".").first
-    client_key = if subdomain.starts_with? environment_tag
-                    subdomain.partition(environment_tag).last
-                  else
-                    logger.fatal "Attempted to decode client with unrecognizable subdomain #{host}"
-                    raise "invalid subdomain #{host}"
-                  end
+    client_key =
+      if subdomain == "staging"
+        "sunpro"
+      elsif subdomain.starts_with? environment_tag
+        subdomain.partition(environment_tag).last
+      else
+        logger.fatal "Attempted to decode client with unrecognizable subdomain #{host}"
+        raise "invalid subdomain #{host}"
+      end
 
     client = Client.find_by_key client_key
     client # or (raise "Couldn't find client with key '#{client_key}'")
