@@ -1,10 +1,10 @@
 <div class="content">
     <h2 class="step-name">2. Finish your message and send!</h2>
     <div class="body">
-    <h4 class="step-subheader">Personalize your referral by adding a short message for {{recipientFirstName}}.</h4>
+      <h4 class="step-subheader"> Help <b>{{recipientFirstName}}</b> understand why you made your purchase at {{copy.clientName}}: add a personalized message!</h4>
     {{view Ember.TextArea valueBinding="message" class="referral-message"}}
 
-    <h4 class="step-subheader">Select a few of the following highlights {{recipientFirstName}} might be interested in.</h4>
+    <h4 class="step-subheader">Why should <b>{{recipientFirstName}}</b> care? Select a few of the following highlights <b>{{recipientFirstName}}</b> might be interested in.</h4>
     {{view Weave.ReferralCustomizationsSelectView
       availableCustomizationsBinding=
       "availableCustomizations"

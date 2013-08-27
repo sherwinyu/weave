@@ -52,7 +52,7 @@ Weave.ReferralBatchRoute = Ember.Route.extend
       p = @controllerFor('authentication').facebookLogin()
       p.then(
         (success) => @send 'startReferring',
-        (failure) => @controllerFor('application').pushNotification ("Sorry, you need to login via Facebook to refer friends")
+        (failure) => @controllerFor('application').pushNotification ("Sorry, somethign went wrong. Try logging in via Facebook again.")
       )
     attemptAuthNoFacebook: (name, email) ->
       user = @controllerFor('authentication').createAndAuthenticateUser(name, email)
