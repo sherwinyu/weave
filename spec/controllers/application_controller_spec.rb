@@ -54,6 +54,15 @@ describe ApplicationController do
           ret.should be client
         end
       end
+
+      context "sunpro.weaveenergy.com" do
+        let(:host){"sunpro.weaveenergy.com"}
+        it "calls Client.find_by_key with the proper key" do
+          ret = controller.client_from_domain
+          Client.should have_received(:find_by_key).with("sunpro")
+          ret.should be client
+        end
+      end
     end
     context "environment: staging" do
       let(:environment_tag){"staging-"}
