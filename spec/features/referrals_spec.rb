@@ -1,11 +1,13 @@
 require 'spec_helper'
 
 describe "Referrals" do
+  let(:host) {"test-newliving.weaveenergy.com"}
   describe "non faceboko auth, new recipient" do
     before(:each) do
+      ApplicationController.any_instance.stub(:get_host).and_return host
       @product1 = create :product, :with_customizations
       @product2 = create :product, :with_customizations
-      @client = create :client, products: [@product1, @product2]
+      @client = create :client, :newliving, products: [@product1, @product2]
       @campaign = create :campaign, client: @client
     end
     it "works", js: true do

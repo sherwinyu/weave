@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>NewLiving @ Weave</title>
+    <title> <%= @rails.client.name %> @ Weave</title>
     <%= stylesheet_link_tag "application" %>
     <%= javascript_tag do %>
       window._rails = <%=raw  @rails.to_json if @rails %>;
@@ -12,5 +12,11 @@
     <%= yield(:head) %>
   </head>
   <body>
+    <% if Rails.env.development? %>
+      <div class="well">
+        <%= simple_format @rails.to_yaml %>
+        <%= simple_format session.to_yaml %>
+      </div>
+    <% end %>
     </body>
   </html>

@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :inject_ember_params
   def inject_ember_params
-    @rails = {
+    @rails = Hashie::Mash.new({
       pathHelpers: {
         userOmniauthCallbackPathFacebook: user_omniauth_callback_path(:facebook),
         destroyUserSessionPath: destroy_user_session_path
@@ -51,8 +51,9 @@ class ApplicationController < ActionController::Base
         FACEBOOK_APP_ID: Figaro.env.FACEBOOK_APP_ID
       },
       landing_email: params[:landing_email],
-      campaign_id: params[:campaign_id] || 1 # Campaign.first.try(:id)
-    }
+      campaign_id: compute_campaign_id,
+      client: compute_client,
+    })
   end
 
   # Return the campaign_id to be embedded in the @rails payload to the ember app
@@ -61,29 +62,50 @@ class ApplicationController < ActionController::Base
   # default campaign_id
   #  * If a valid campaign_id param is specified, use that
   def compute_campaign_id
-    if params[:campaign_id].present?
-      if client_from_domain.campaign_ids.include? params[:campaign_id]
-        params[:campaign_id]
+    begin
+      if params[:campaign_id].present?
+        if client_from_domain.campaign_ids.include? params[:campaign_id]
+          params[:campaign_id]
+
+        else
+          client_from_domain.try(:campaigns).try(:first).try(:id)
+          client_from_domain.campaigns.first.id
+        end
       else
+        client_from_domain.try(:campaigns).try(:first).try(:id)
         client_from_domain.campaigns.first.id
       end
-    else
-      client_from_domain.campaigns.first.id
+    rescue
+      params[:campaign_id] || 0
     end
 
   end
 
+  def compute_client
+    client_from_domain
+  end
+
+  def get_host
+    request.host
+  end
+
   def client_from_domain
-    host = request.host
+    host = get_host
+    if Rails.env.development?
+      host = "development-sunpro.localhost"
+    elsif Rails.env.test? && host == "test.host"
+      host = "test-sunpro.localhost"
+    end
     subdomain = host.partition(".").first
     client_key = if subdomain.starts_with? environment_tag
                     subdomain.partition(environment_tag).last
                   else
-                    logger.fatal "Attempted to decode client with unrecognizable subdomain"
-                    raise "invalid subdomain"
+                    logger.fatal "Attempted to decode client with unrecognizable subdomain #{host}"
+                    raise "invalid subdomain #{host}"
                   end
 
-    Client.find_by_key client_key
+    client = Client.find_by_key client_key
+    client # or (raise "Couldn't find client with key '#{client_key}'")
   end
 
   def environment_tag

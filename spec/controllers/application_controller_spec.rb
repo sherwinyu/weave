@@ -24,7 +24,7 @@ describe ApplicationController do
     it "sets @rails.campaign_id" do
       assigns(:rails)[:campaign_id].should eq "555"
     end
-    describe "@rails.campaign_id" do
+    pending "@rails.campaign_id" do
       let(:params) { super().merge campaign_id: nil }
       it "defaults to 1" do
         assigns(:rails)[:campaign_id].should eq 1

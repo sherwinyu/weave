@@ -39,7 +39,6 @@ describe ReferralMailer do
         let(:deliver!) { nil }
         it "renders 'sender_to_recipient'" do
           ReferralMailer.any_instance.stub(:render)
-          binding.pry
           expect { ReferralMailer.deliver referral, options }.to raise_error /Bad Request/
           ReferralMailer.any_instance.should have_received(:render) #.with('sender_to_recipient_new_living')
         end
