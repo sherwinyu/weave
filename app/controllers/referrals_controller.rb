@@ -56,7 +56,7 @@ class ReferralsController < ApplicationController
     # We need to set recipient_email explicitly to pass the .deliverable? validation in @referral.deliver
     # TODO(syu): test this
     @referral.recipient_email =  @attributes[:recipient_email]
-    @referral.customization_ids =  @attributes[:customization_ids]
+    @referral.customization_ids =  referral_params[:customization_ids]
     @referral.message =  @attributes[:message]
     @referral.recipient.email = referral_params["recipient_attributes"][:email]
     logger.warn "referral.recipient_email (#{@referral.recipient_email}) and referral.recipient.email (#{@referral.recipient.email}) mismatch!" if @referral.recipient.email != @referral.recipient_email
