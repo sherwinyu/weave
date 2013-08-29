@@ -1,7 +1,7 @@
 <div class="banner">
   {{outlet "auth_status"}}
-  <div class="circle-small center"></div>
-  {{#linkTo "index" class="logo"}} <image class="logo" src="<%= asset_path('weave_logo.png') %>"></image> {{/linkTo}}
+  <div class="circle-small center"> <div class="powered-by">powered by</div> </div>
+  {{#linkTo "index" class="logo"}} <image class="weave-logo" src="<%= asset_path('weave_logo.png') %>"></image> {{/linkTo}}
 </div>
 <div class="notifications">
 {{#each notification in notifications}}
@@ -11,4 +11,5 @@
   </div>
 {{/each}}
 </div>
+<image class="client-logo" src="<%= asset_path('logo_sunpro.png') %>"></image>
 {{outlet}}
