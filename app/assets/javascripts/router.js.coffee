@@ -52,7 +52,7 @@ Weave.CampaignRoute = Ember.Route.extend
 
 Weave.IndexRoute = Ember.Route.extend
   redirect: ->
-    mixpanel.track 'test',
+    utils.track "test",
       time: new Date()
       wala: "winkle"
     @transitionTo "products.selectProduct", Weave.Campaign.find Weave.rails.vars.campaign_id

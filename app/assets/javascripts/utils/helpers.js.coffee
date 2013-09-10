@@ -59,3 +59,6 @@ window.utils =
 
   delayed: (ms, callback) ->
     setTimeout(callback, ms)
+  track: (eventName, eventOptions) ->
+    $.extend(eventOptions, client: Weave.rails.vars.client.key)
+    mixpanel.track eventName, eventOptions
