@@ -48,7 +48,8 @@ class ApplicationController < ActionController::Base
       path: request.path || "products/selectProduct",
       current_user: current_user && current_user.active_model_serializer.new(current_user).to_json,
       env: {
-        FACEBOOK_APP_ID: Figaro.env.FACEBOOK_APP_ID
+        FACEBOOK_APP_ID: Figaro.env.FACEBOOK_APP_ID,
+        MIXPANEL_TOKEN: Figaro.env.MIXPANEL_TOKEN
       },
       landing_email: params[:landing_email],
       campaign_id: compute_campaign_id,

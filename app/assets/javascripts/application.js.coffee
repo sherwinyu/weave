@@ -12,6 +12,8 @@
 #= require facebook
 #= require referrals
 #= require suggester
+
+
 window.Weave = Ember.Application.create
   LOG_TRANSITIONS: true
 
