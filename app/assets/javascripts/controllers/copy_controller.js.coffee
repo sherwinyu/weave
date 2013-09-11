@@ -49,10 +49,8 @@ Weave.CopyController = Ember.ObjectController.extend
   ).property('controllers.product.content', 'controllers.campaign.content', 'controllers.campaign.client.referral_message', 'controllers.campaign.referralMessage')
 
   logoUrl: (->
-    key = Weave.rails.vars.client.key # || @get('controllers.campaign.client.key')
-    assetRoot  = "/assets_dev/"
-    "#{assetRoot}logo_#{key}.png"
-  ).property('controllers.campaign.client')
+    key = Weave.rails.vars.client.logoUrl
+  ).property('')
 
 Weave.ProductController = Ember.ObjectController.extend()
 Weave.CampaignController = Ember.ObjectController.extend()
