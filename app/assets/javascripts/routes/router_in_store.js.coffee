@@ -34,6 +34,10 @@ Weave.ReferralBatchesNewRoute = Ember.Route.extend
       )
 
 Weave.ReferralBatchRoute = Ember.Route.extend
+  activate: ->
+    utils.track "route activate",
+      route: "referral batch"
+
   model: (params)->
     Weave.ReferralBatch.find params.story_id
   events:
@@ -118,6 +122,9 @@ Weave.ReferralRoute = Ember.Route.extend
     @_super()
 
 Weave.ReferralSelectRecipientRoute = Ember.Route.extend
+  activate: ->
+    utils.track "route activate",
+      route: "referral select recipient"
   redirect: (model) ->
     unless @controllerFor('authentication').get('authenticated')
       @controllerFor('application').pushNotification ("Sorry, you need to login via Facebook to refer friends")
@@ -166,6 +173,9 @@ Weave.ReferralSelectRecipientRoute = Ember.Route.extend
       @controllerFor('referral').createWithRecipient()
 
 Weave.ReferralEditBodyRoute = Ember.Route.extend
+  activate: ->
+    utils.track "route activate",
+      route: "referral edit body"
   redirect: (model) ->
     @transitionTo 'referral.select_recipient' unless model?.get('id')
 

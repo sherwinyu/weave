@@ -51,10 +51,11 @@ Weave.CampaignRoute = Ember.Route.extend
     debugger
 
 Weave.IndexRoute = Ember.Route.extend
+  activate: ->
+    utils.track "route activate",
+      route: "index"
+
   redirect: ->
-    utils.track "test",
-      time: new Date()
-      wala: "winkle"
     @transitionTo "products.selectProduct", Weave.Campaign.find Weave.rails.vars.campaign_id
 
 Weave.OtherIndex = Ember.Route.extend
@@ -63,6 +64,9 @@ Weave.OtherIndex = Ember.Route.extend
 
 Weave.ProductsRoute = Ember.Route.extend()
 Weave.ProductsSelectProductRoute = Ember.Route.extend
+  activate: ->
+    utils.track "route activate",
+      route: "products select product"
   setupController: (controller, model)->
     # HACKY.
     # Only do a find for products and set the controller's content if campaign has resolved:
