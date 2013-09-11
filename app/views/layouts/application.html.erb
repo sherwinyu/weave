@@ -16,7 +16,7 @@ mixpanel.init("<%= Figaro.env.MIXPANEL_TOKEN %>");</script><!-- end Mixpanel -->
     <%= yield(:head) %>
   </head>
   <body>
-    <% if Rails.env.development? %>
+    <% if false #Rails.env.development? %>
       <div class="well">
         <%= simple_format @rails.to_yaml %>
         <%= simple_format session.to_yaml %>
