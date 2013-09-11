@@ -80,10 +80,12 @@ namespace :weave do
       client.destroy
     end
     client = Client.create name: "New Living",
+      key: "newliving",
       referral_message: "I just shopped at New Living, a mission-driven Certified Benefit Corporation that has made a commitment to measure success on a social, environmental and economic level. I know you care a lot about where you shop, so I thought I'd let you know about New Living.",
       intro_message: "Tell your friends about New Living's socially responsible products. Get a $50 Whole Foods Gift Card!"
 
     puts "Populating New Living objects"
+    binding.pry
 
     campaign = client.campaigns.create(
       description: "default online campaign",
