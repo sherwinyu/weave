@@ -23,11 +23,11 @@ class Client < ActiveRecord::Base
     logger.info "deleting customizations: #{self.customizations.destroy_all}"
   end
   def self.E3
-    find_by_name "E3 Innovate"
+    find_by_key "e3innovate"
   end
 
   def self.NL
-    find_by_name "newliving"
+    find_by_key "newliving"
   end
 
   def self.sunpro
