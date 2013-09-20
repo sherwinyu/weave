@@ -93,7 +93,7 @@ class ApplicationController < ActionController::Base
   def client_from_domain
     host = get_host
     if Rails.env.development?
-      host = "development-newliving.localhost"
+      host = "development-1bog.localhost"
     elsif Rails.env.test? && host == "test.host"
       host = "test-sunpro.localhost"
     end

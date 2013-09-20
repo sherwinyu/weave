@@ -237,4 +237,41 @@ namespace :weave do
   end
 
   ##################################################
+
+
+  ##################################################
+  ##################################################
+  ##################################################
+
+  task :populate1BOG => [:environment] do
+    client = Client.find_by_key "1bog"
+    if client
+      puts "destroying existing client #{client.inspect}"
+      client.clean!
+      client.destroy
+    end
+    client = Client.create name: "One Block Off the Grid",
+      key: "1bog",
+      referral_message: "One Block Off the Grid helped me go solar, and I thought you'd be interested too",
+      intro_message: "Share the solar love at One Block off the Grid with your friends and family"
+    puts "Populating 1BOG objects"
+
+    campaign = client.campaigns.create(
+      description: "default online campaign",
+      referral_message: "One Block Off the Grid helped me go solar, and I thought you'd be interested too",
+      intro_message: "Share the solar love at One Block off the Grid with your friends and family",
+    )
+    client.save
+
+    ### 1BOG
+    product = client.products.create name: "Tell a friend about One Block Off the Grid"
+    product.customizations.create description: "No Upfront costs: go solar for $0 down with free installation"
+    product.customizations.create description: "Lock in your energy rate for 20 years: energy prices volatile, so going solar makes sure you know what you'll pay"
+    product.customizations.create description: "Increase your home value: solar is one of the best investments in increasing your hoem's resale value"
+    product.customizations.create description: "Save money every month: see your savings on every utility bill"
+    product.customizations.create description: "Reduce your carbon foot print: A typical 5kW solar system offsets 260,000 lbs of CO2 over 25 years. THat's 400,000 miles of driving!"
+    product.customizations.create description: "Reduce your carbon foot print: A typical 5kW solar system offsets 260,000 lbs of CO2 over 25 years. That's 400,000 miles of driving!"
+
+    client.save
+  end
 end

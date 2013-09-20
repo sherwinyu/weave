@@ -23,14 +23,17 @@ Weave.CopyController = Ember.ObjectController.extend
 
   client_sunpro:
     (->
-      ctrl('campaign')?.get('client.key') == 'sunpro'
       Weave.rails.vars.client.key == 'sunpro'
     ).property('controllers.campaign.client')
 
   client_newliving:
     (->
-      ctrl('campaign')?.get('client.key') == 'newliving'
       Weave.rails.vars.client.key == 'newliving'
+    ).property('controllers.campaign.client')
+
+  client_1bog:
+    (->
+      Weave.rails.vars.client.key == '1bog'
     ).property('controllers.campaign.client')
 
 
