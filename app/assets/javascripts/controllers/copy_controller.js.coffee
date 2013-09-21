@@ -7,12 +7,11 @@ Weave.CopyController = Ember.ObjectController.extend
   ).property('controllers.product.content', 'controllers.campaign.content', 'controllers.product.content.name')
 
   tellYourFriendsAboutReferredItem: (->
-    ret = get('referredItem')
-    referTag = /Tell a friend about/
-    if ret.match referTag
-      ret = ret.replace tag, ""
+    ret = @get('referredItem')
+    referTag = /^Tell a friend about/
+    if referTag.test ret
+      ret = ret.replace referTag, ""
     ret
-
   ).property('controllers.product.content', 'controllers.campaign.content', 'controllers.product.content.name')
 
   clientName: (->

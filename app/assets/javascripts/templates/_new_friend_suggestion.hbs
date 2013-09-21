@@ -1,10 +1,8 @@
 <div  {{action newFriendClicked view.query target="view"}}
     {{bindAttr class="view.facebook:facebook:not-facebook :friend-suggestion :friend-new"}} >
-  {{!<img class="friend-picture" src="<%= asset_path "facebook_profile_50.PNG" %>"> </img> }}
   <span class="friend-suggestion-facebook">
   Not Facebook friends?</span>
   <span class="friend-suggestion-instruction">
-    Tell <strong>{{view.query}} </strong> about {{copy.referredItem}}!
-    {{!view.newFriendSuggestionMessage}}
+    Tell <strong>{{view.query}} </strong> about {{copy.tellYourFriendsAboutReferredItem}}!
   </span>
 </div>
