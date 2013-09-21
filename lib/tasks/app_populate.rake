@@ -270,7 +270,7 @@ namespace :weave do
     product.customizations.create description: "Increase your home value: solar is one of the best investments in increasing your hoem's resale value"
     product.customizations.create description: "Save money every month: see your savings on every utility bill"
     product.customizations.create description: "Reduce your carbon foot print: A typical 5kW solar system offsets 260,000 lbs of CO2 over 25 years. THat's 400,000 miles of driving!"
-    product.customizations.create description: "Reduce your carbon foot print: A typical 5kW solar system offsets 260,000 lbs of CO2 over 25 years. That's 400,000 miles of driving!"
+    product.customizations.create description: " Create local jobs: Install solar and create great jobs in your community."
 
     client.save
   end
