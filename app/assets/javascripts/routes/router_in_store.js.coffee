@@ -123,6 +123,7 @@ Weave.ReferralRoute = Ember.Route.extend
 
 Weave.ReferralSelectRecipientRoute = Ember.Route.extend
   activate: ->
+    utils.registerTrackingProperty "sender_email", @controllerFor('authentication').get('user.email')
     utils.track "route activate",
       route: "referral select recipient"
   redirect: (model) ->
@@ -157,11 +158,6 @@ Weave.ReferralSelectRecipientRoute = Ember.Route.extend
       into: 'referral'
       outlet: 'referralSelectRecipient'
       controller: 'referral'
-
-  activate: ->
-    # @controllerFor('referral').set('selectingRecipient', true)
-  deactivate: ->
-    # @controllerFor('referral').set('selectingRecipient', false)
 
   events:
     recipientSelected: ->

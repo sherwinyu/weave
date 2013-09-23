@@ -21,6 +21,12 @@ Weave.ReferralController = Ember.ObjectController.extend
     @get('content').one 'didUpdate', =>
       @get('controllers.referralBatch.referrals').pushObject @get('content')
     @get('content.transaction').commit()
+    utils.track('deliver',
+      from: @get 'content.sender_email'
+      to: @get 'content.recipient_email'
+      customizations: @get 'content.customizations.length'
+    )
+
 
   formatUpdate:  ->
     # clone the referral object

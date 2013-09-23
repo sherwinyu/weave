@@ -59,6 +59,15 @@ window.utils =
 
   delayed: (ms, callback) ->
     setTimeout(callback, ms)
+
   track: (eventName, eventOptions) ->
-    $.extend(eventOptions, client: Weave.rails.vars.client.key)
+    $.extend(eventOptions, @_trackProperties)
     mixpanel.track eventName, eventOptions
+
+  _trackProperties:
+    client: window._rails.client.key
+    # sender_email: "not registered"
+    # recipient_email: "not registered"
+
+  registerTrackingProperty: (key, val) ->
+    @_trackProperties[key] = val
