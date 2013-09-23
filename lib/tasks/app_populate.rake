@@ -227,9 +227,9 @@ namespace :weave do
 
     ### Sunpro services
     product = client.products.create name: "Tell a friend about Sunpro Solar"
-    product.customizations.create description: "Louisiana has the best solar rebates in the country: get tax breaks to pay for 80% of your system."
-    product.customizations.create description: "You can own solar for less than it costs to lease it."
-    product.customizations.create description: "The average out of pocket cost is less than $4,000."
+    product.customizations.create description: "Louisiana has the best solar rebates in the country: get tax breaks to pay for 80% of your system"
+    product.customizations.create description: "You can own solar for less than it costs to lease it"
+    product.customizations.create description: "The average out of pocket cost is less than $4,000"
     product.customizations.create description: "Reduce your carbon footprint: A solar installation reduces your footprint by 4,000 lbs of CO2 -- equivalent to planting 8,000 trees"
     product.customizations.create description: "Worry free: get a 25 year product and labor warranty and a 20 year energy production guarantee"
 
@@ -252,13 +252,13 @@ namespace :weave do
     end
     client = Client.create name: "One Block Off the Grid",
       key: "1bog",
-      referral_message: "One Block Off the Grid helped me go solar, and I thought you'd be interested too",
+      referral_message: "One Block Off the Grid helped me go solar, and I thought you'd be interested too.",
       intro_message: "Share the solar love at One Block off the Grid with your friends and family"
     puts "Populating 1BOG objects"
 
     campaign = client.campaigns.create(
       description: "default online campaign",
-      referral_message: "One Block Off the Grid helped me go solar, and I thought you'd be interested too",
+      referral_message: "One Block Off the Grid helped me go solar, and I thought you'd be interested too.",
       intro_message: "Share the solar love at One Block off the Grid with your friends and family",
     )
     client.save
@@ -266,11 +266,11 @@ namespace :weave do
     ### 1BOG
     product = client.products.create name: "Tell a friend about One Block Off the Grid"
     product.customizations.create description: "No Upfront costs: go solar for $0 down with free installation"
-    product.customizations.create description: "Lock in your energy rate for 20 years: energy prices volatile, so going solar makes sure you know what you'll pay"
+    product.customizations.create description: "Lock in your energy rate for 20 years: energy prices are volatile, so going solar makes sure you know what you'll pay"
     product.customizations.create description: "Increase your home value: solar is one of the best investments in increasing your hoem's resale value"
     product.customizations.create description: "Save money every month: see your savings on every utility bill"
-    product.customizations.create description: "Reduce your carbon foot print: A typical 5kW solar system offsets 260,000 lbs of CO2 over 25 years. THat's 400,000 miles of driving!"
-    product.customizations.create description: "Create local jobs: Install solar and create great jobs in your community."
+    product.customizations.create description: "Reduce your carbon footprint: A typical 5kW solar system offsets 260,000 lbs of CO2 over 25 years. That's 400,000 miles of driving!"
+    product.customizations.create description: "Create local jobs: Install solar and create great jobs in your community"
 
     client.save
   end
