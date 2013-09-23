@@ -3,6 +3,8 @@
   <div class="circle-small center"> <div class="powered-by">powered by</div> </div>
   {{#linkTo "index" class="logo"}} <image class="weave-logo" src="<%= asset_path('weave_logo.png') %>"></image> {{/linkTo}}
 </div>
+<image class="client-logo" {{bindAttr src=copy.logoUrl}}> </image>
+
 <div class="notifications">
 {{#each notification in notifications}}
   <div class="alert" {{bindAttr class="notification.type"}}>
@@ -11,5 +13,4 @@
   </div>
 {{/each}}
 </div>
-<image class="client-logo" {{bindAttr src=copy.logoUrl}}> </image>
 {{outlet}}
