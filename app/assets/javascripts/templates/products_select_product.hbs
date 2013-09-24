@@ -1,6 +1,17 @@
 <div class="content">
-  <h3> Spread the love! </h3>
-  <h4> {{copy.introMessage}} </h4>
+  <h3>
+    {{#if copy.client_1bog}}
+      Invite Your Friends to Switch to Clean Solar Power!
+    {{else}}
+      Spread the love!
+    {{/if}}
+  </h3>
+  <h4> {{#if copy.client_1bog}}
+    <b>Get $400</b> for each referral that installs solar panels through 1BOG. <b>Solar is $0 down</b> with free installation from the industry’s top solar providers
+    {{else}}
+      {{copy.introMessage}}
+    {{/if}}
+  </h4>
   <div class="instructions">
     <ol>
       {{#if copy.client_newliving }}
@@ -18,7 +29,7 @@
       <li> Click "Tell a friend about Solar at One Block Off the Grid" below </li>
       <li> Login via Facebook to select friends</li>
       <li> Personalize your message to help your friends understand why they should go solar with 1BOG </li>
-      <li> Congrats on spreading solar!  </li>
+      <li> Energy savings for all your friends!</li>
       {{/if}}
     </ol>
   </div>

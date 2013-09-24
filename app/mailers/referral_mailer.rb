@@ -105,6 +105,7 @@ class ReferralMailer < ActionMailer::Base
     @recipient = @referral.recipient
     @product = @referral.product
     @client = @referral.client
+    @campaign = @referral.campaign
   end
 
 end

@@ -1,7 +1,12 @@
 <!-- binds against referralBatch -->
 
 <div class="content">
-  <p>Share your socially responsible purchase with your friends. Select your friends, write them a message highlighting why they too would appreciate it, and track your social impact. </p>
+  <p>{{#if copy.client_1bog}}
+    Select your friends, write them a message explaining why they would be interested in solar, and track your social impact.
+    {{else}}
+    Share your socially responsible purchase with your friends. Select your friends, write them a message highlighting why they too would appreciate it, and track your social impact.
+    {{/if}}
+  </p>
 
   <div class="login-options">
     <div class="pluginSkinLight">
