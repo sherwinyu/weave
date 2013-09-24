@@ -76,9 +76,10 @@ class ReferralMailer < ActionMailer::Base
   def sender_to_recipient(referral, options={})
     setup_instance_variables(referral)
     template_name = compute_template_name referral, __method__, options
+    binding.pry
     mail(
       to: @referral.recipient_email,
-      subject: "#{@sender.full_name} thought you'd be interested in NewLiving",
+      subject: @campaign.email_subject % {sender_first_name: @sender.first_name},
       from: "#{@sender.full_name} <#{@referral.sender_email}>"
         ) do |format|
       format.text { render template_name }
@@ -93,7 +94,7 @@ class ReferralMailer < ActionMailer::Base
     default_template_name = if lookup_context.exists?("referral_mailer/#{client_template_name}")
       client_template_name
     else
-      method_name
+      raise "No template found at referral_mailer/#{client_template_name}"
     end
     template_name = options[:template] || default_template_name
   end

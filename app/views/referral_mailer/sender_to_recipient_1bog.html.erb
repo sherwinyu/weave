@@ -1,0 +1,32 @@
+Hi <%= @recipient.first_name  %>,
+
+<p>
+Your friend, <%= @sender.first_name %>, just purchased solar with One Block off the Grid and wanted to share why you would care also.
+</p>
+
+<p><i> <%= @referral.message %> </i></p>
+
+    -- <%= @sender.first_name %>
+<br>
+
+<p> <%= @sender.first_name %> also chose some reasons you might be interested in solar with One Block Off the Grid. </p>
+
+  <ul>
+  <% @referral.customizations.each do |customization| %>
+    <li> <i><%= customization.description %></i></li>
+  <% end %>
+</ul>
+
+<p>
+  One Block Off the Grid compares solar providers in your area to get you the best deal. <a href="http://get.1bog.org/free-solar-panels">Learn more.</a>
+</p>
+
+<br>
+<br>
+Thanks! <br>
+The One Block Off the Grid team
+<br>
+<br>
+----
+<br>
+Weave is a community of values-based healthy home and energy products. Checkout <a href="http://weaveenergy.com">weaveenergy.com</a> to learn more.

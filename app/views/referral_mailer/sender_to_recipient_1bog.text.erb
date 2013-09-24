@@ -1,0 +1,19 @@
+Hi <%= @recipient.first_name  %>,
+
+Your friend, <%= @sender.first_name %>, just purchased solar with One Block off the Grid and wanted to share why you would care also.
+
+    <%= @referral.message %>
+
+    -- <%= @sender.first_name %>
+
+  <%= @sender.first_name %> also chose some reasons you might be interested in solar with One Block Off the Grid
+
+  <% @referral.customizations.each do |customization| %>
+    * <%= customization.description %>
+  <% end %>
+
+Thanks!
+The Sunpro team
+
+----
+Weave is a community of values-based healthy home and energy products. Checkout http://weaveenergy.com to learn more.
