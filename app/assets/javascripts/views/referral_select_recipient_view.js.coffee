@@ -4,9 +4,7 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
   _rankedFriends: null
   query: ""
 
-  displayingFriends: (->
-    @get('query')?.length > 0
-  ).property('query')
+  displayingFriends: false
 
   displayingNewFriendSuggestion: (->
     @get('query')?.length > 0
@@ -29,11 +27,13 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
     recipient.set('meta.role', 'recipient-new')
     @get('context').set('recipient', recipient)
     @get('controller').send 'recipientSelected'
+    @set('displayingFriends', false)
 
   friendClicked: (friend)->
     recipient = Weave.User.createRecord friend.user
     recipient.set('meta.role', 'recipient')
     @get('context').set('recipient', recipient)
+    @set('displayingFriends', false)
 
     # Fill in the input fields
     @$("#name-or-email").val friend.user.name
@@ -69,6 +69,7 @@ Weave.ReferralSelectRecipientView = Ember.View.extend
 
       source: (request, response) =>
         @get('friendFilter').filterAndRankAgainst(request.term).then (friends) =>
+          @set('displayingFriends', true)
           @updateDisplayedFriends(friends)
 
   # updateDisplayedFriends
