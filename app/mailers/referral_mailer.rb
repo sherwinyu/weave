@@ -76,7 +76,6 @@ class ReferralMailer < ActionMailer::Base
   def sender_to_recipient(referral, options={})
     setup_instance_variables(referral)
     template_name = compute_template_name referral, __method__, options
-    binding.pry
     mail(
       to: @referral.recipient_email,
       subject: @campaign.email_subject % {sender_first_name: @sender.first_name},

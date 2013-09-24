@@ -85,7 +85,6 @@ namespace :weave do
       intro_message: "Tell your friends about New Living's socially responsible products."
 
     puts "Populating New Living objects"
-    binding.pry
 
     campaign = client.campaigns.create(
       description: "default online campaign",

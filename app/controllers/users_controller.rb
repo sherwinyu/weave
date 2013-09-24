@@ -17,7 +17,7 @@ class UsersController < Devise::RegistrationsController
     end
 
     @user.attributes = @attributes
-    if @valid && @user.save
+    if @valid && @user.save(validate: false)
       render json: @user
     else
       logger.debug "validation error: #{@user.try(:errors).to_a}"
